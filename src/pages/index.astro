@@ -5,7 +5,8 @@ import lockSteps from '../assets/brand/lock-steps.webp';
 import Staircase from '../components/Staircase.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getArticles } from '../lib/articles';
-import { commitments, status, steps, tagline } from '../data/product';
+import { about, commitments, heroNote, status, steps, tagline } from '../data/product';
+import { site } from '../data/site';
 
 const [latest, ...recent] = await getArticles();
 ---
@@ -22,9 +23,10 @@ const [latest, ...recent] = await getArticles();
           {tagline.headline.split(/(?<=\.) /).map((line) => <span class="hero__line">{line}</span>)}
         </h1>
         <p class="lead enter" style="--i: 2">{tagline.summary}</p>
+        <p class="hero__note enter" style="--i: 2">{heroNote}</p>
         <div class="button-row enter" style="--i: 3">
-          <a class="button" href="/how-it-works/">See how it works <span class="arrow" aria-hidden="true">→</span></a>
-          <a class="button button--secondary" href="/articles/">Read our articles</a>
+          <a class="button" href={site.appStoreUrl}>Download on the App Store <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="button button--secondary" href="/how-it-works/">See how it works</a>
         </div>
       </div>
 
@@ -58,22 +60,16 @@ const [latest, ...recent] = await getArticles();
 
   <section class="section section--dark" aria-labelledby="what-heading">
     <div class="container what">
-      <h2 id="what-heading" class="what__statement reveal">
-        Stay in control, without being told what that control must look like.
-      </h2>
+      <h2 id="what-heading" class="what__statement reveal">What is Lockstep</h2>
       <div class="what__body reveal">
-        <p>
-          We recognise that gambling exists on a spectrum, and that different people need
-          different levels of structure at different times. Rather than pushing abstinence or
-          reflection alone, Lockstep focuses on practical support: helping you redirect urges,
-          maintain balance and keep your priorities aligned with what you value most.
-        </p>
-        <p>
-          Alongside individual tools, Lockstep offers access to relevant meetings and a
-          community of people navigating similar challenges. The emphasis is on agency,
-          continuity and support that fits real life, not on labels or rigid rules.
-        </p>
+        {about.paragraphs.slice(0, 2).map((text) => <p>{text}</p>)}
       </div>
+      <ul class="what__highlights reveal" role="list">
+        {about.highlights.map((item) => <li>{item}</li>)}
+      </ul>
+      <p class="reveal">
+        <a class="text-link what__more" href="/about/">More about Lockstep <span class="arrow" aria-hidden="true">→</span></a>
+      </p>
     </div>
   </section>
 
@@ -106,8 +102,8 @@ const [latest, ...recent] = await getArticles();
       <div class="stack">
         <h2 id="partner-heading">Working with universities, charities and funders</h2>
         <p>
-          Prevention and treatment work best together. If your organisation supports young
-          people, we'd like to hear from you.
+          If your organisation supports people affected by gambling, or you'd like to help
+          Lockstep grow, we'd like to hear from you.
         </p>
       </div>
       <a class="button" href="/partner/">Partner with us <span class="arrow" aria-hidden="true">→</span></a>
@@ -155,6 +151,11 @@ const [latest, ...recent] = await getArticles();
 
   .hero .lead {
     max-width: 46ch;
+  }
+
+  .hero__note {
+    color: var(--color-green);
+    font-weight: 600;
   }
 
   .status {
@@ -265,7 +266,50 @@ const [latest, ...recent] = await getArticles();
   @media (min-width: 48rem) {
     .what__body {
       grid-template-columns: 1fr 1fr;
-      gap: var(--space-xl);
+      gap: var(--space-md) var(--space-xl);
+    }
+  }
+
+  .what__more {
+    color: var(--color-cream);
+  }
+
+  .what__highlights {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-md) 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-cream) 18%, transparent);
+    list-style: none;
+  }
+
+  .what__highlights li {
+    display: flex;
+    gap: var(--space-xs);
+    max-width: none;
+    color: var(--color-cream);
+    font-weight: 600;
+  }
+
+  /* Tick drawn in CSS, so no icon library is needed */
+  .what__highlights li::before {
+    content: '';
+    flex: none;
+    width: 0.4em;
+    height: 0.75em;
+    margin: 0.2em 0.35em 0 0.15em;
+    border: solid currentColor;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  @media (min-width: 48rem) {
+    .what__more {
+    color: var(--color-cream);
+  }
+
+  .what__highlights {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
     }
   }
 

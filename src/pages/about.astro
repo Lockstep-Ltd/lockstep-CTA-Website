@@ -2,19 +2,16 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Figure from '../components/Figure.astro';
-import { principles } from '../data/product';
-// PLACEHOLDER copy: replace with final wording before launch.
+import { about, principles } from '../data/product';
+// Copy from the original lockstep.uk site; founder section is still a placeholder.
 ---
 
 <BaseLayout
   title="About"
-  description="Lockstep is a UK social venture on a mission to reduce gambling-related harm among young adults through preventative digital tools."
+  description="Lockstep is designed for people who want to stay in control of gambling without being told what that control must look like."
 >
-  <PageHero eyebrow="About Lockstep" title="Helping young adults build healthy habits around gambling">
-    <p>
-      We're a UK social venture. Our mission is to reduce gambling-related harm among young
-      adults by giving them simple, preventative tools that keep them in control.
-    </p>
+  <PageHero eyebrow="About Lockstep" title="What is Lockstep">
+    {about.paragraphs.map((text) => <p>{text}</p>)}
   </PageHero>
 
   <section class="section section--surface" aria-labelledby="principles-heading">
@@ -22,8 +19,8 @@ import { principles } from '../data/product';
       <div class="stack reveal principles-head">
         <h2 id="principles-heading">Philosophy &amp; principles</h2>
         <p class="lead">
-          A small set of principles guides every design decision. They keep us focused on what
-          matters most: real support, real progress and real choice.
+          Lockstep is built around a small set of principles that guide every design decision.
+          They keep us focused on what matters most: real support, real progress, and real choice.
         </p>
       </div>
       <ol class="principles">
@@ -31,34 +28,15 @@ import { principles } from '../data/product';
           <li class="principle reveal">
             <span class="principle__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <h3>{item.title}</h3>
-            <p>{item.text}</p>
+            <p class="principle__text">{item.text}</p>
+            <p>{item.detail}</p>
           </li>
         ))}
       </ol>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="prevention-heading">
-    <div class="container stack reveal">
-      <h2 id="prevention-heading">Why preventative tools matter</h2>
-      <p>
-        Gambling is easier to access than ever, and for many young adults it's part of
-        everyday life online. Most support only becomes available once someone is already
-        struggling. We think people deserve good tools earlier, before habits become hard to
-        change.
-      </p>
-      <p>
-        Prevention means meeting people where they are, without judgement. It means helping
-        them notice patterns, make choices that feel right for them, and know where to turn if
-        they want to talk to someone.
-      </p>
-      <p class="placeholder">
-        [PLACEHOLDER: supporting evidence or research, with sources linked.]
-      </p>
-    </div>
-  </section>
-
-  <section class="section section--surface" aria-labelledby="founder-heading">
+  <section class="section" aria-labelledby="founder-heading">
     <div class="container founder reveal">
       <Figure
         class="founder__photo"
@@ -116,6 +94,11 @@ import { principles } from '../data/product';
 
   .principle p {
     margin-top: var(--space-2xs);
+  }
+
+  .principle__text {
+    color: var(--color-green);
+    font-weight: 600;
   }
 
   .founder {

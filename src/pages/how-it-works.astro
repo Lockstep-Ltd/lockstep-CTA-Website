@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import Staircase from '../components/Staircase.astro';
 import Figure from '../components/Figure.astro';
 import { ethics, status, steps } from '../data/product';
+import { site } from '../data/site';
 ---
 
 <BaseLayout
@@ -70,8 +71,10 @@ import { ethics, status, steps } from '../data/product';
       <h2 id="status-heading">{status.label}</h2>
       <p class="lead">{status.text}</p>
       <p>{status.note}</p>
-      <!-- TODO: add the early access / download link once confirmed -->
-      <p><a class="button" href="/contact/">Get in touch <span class="arrow" aria-hidden="true">→</span></a></p>
+      <div class="button-row">
+        <a class="button" href={site.appStoreUrl}>Download on the App Store <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="button button--secondary" href="/contact/">Get in touch</a>
+      </div>
     </div>
   </section>
 </BaseLayout>

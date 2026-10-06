@@ -11,6 +11,8 @@ export const site = {
   ogImage: '/og/default.png',
   ogImageAlt: 'Lockstep: Regain control. Redirect the urge.',
   locale: 'en_GB',
+  // The "Download" link on the original site (Lockstep: Habit Management App, iOS).
+  appStoreUrl: 'https://apps.apple.com/app/id6772143111',
 };
 
 export const navigation = [
