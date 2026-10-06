@@ -1,70 +1,327 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
-// PLACEHOLDER copy: replace with final wording before launch.
+import LogoMark from '../components/LogoMark.astro';
+import Staircase from '../components/Staircase.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getArticles } from '../lib/articles';
+import { commitments, status, steps, tagline } from '../data/product';
+
+const [latest, ...recent] = await getArticles();
 ---
 
-<BaseLayout
-  title="Tools to help young adults stay in control of gambling"
-  description="Lockstep builds preventative digital tools that help 18–25 year olds in the UK build healthy habits and stay in control of gambling."
->
-  <PageHero title="Simple tools to help you stay in control of gambling, before it becomes a problem.">
-    <p>
-      Lockstep is a UK social venture building digital tools for young adults aged
-      18–25. They help you notice your habits, set limits that suit you, and get support
-      early.
-    </p>
-    <div class="button-row">
-      <a class="button" href="/how-it-works/">See how Lockstep works</a>
-      <a class="button button--secondary" href="/partner/">Partner with us</a>
-    </div>
-  </PageHero>
+<BaseLayout title="Regain control. Redirect the urge." description={tagline.summary}>
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="status enter">
+          <span class="status__dot" aria-hidden="true"></span>
+          {status.label}, UK
+        </p>
+        <h1 class="enter" style="--i: 1">
+          {tagline.headline.split(/(?<=\.) /).map((line) => <span class="hero__line">{line}</span>)}
+        </h1>
+        <p class="lead enter" style="--i: 2">{tagline.summary}</p>
+        <div class="button-row enter" style="--i: 3">
+          <a class="button" href="/how-it-works/">See how it works <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="button button--secondary" href="/articles/">Read our articles</a>
+        </div>
+      </div>
 
-  <section class="section section--surface" aria-labelledby="who-heading">
-    <div class="container stack-lg">
-      <h2 id="who-heading">Who Lockstep is for</h2>
-      <div class="grid grid--3">
-        <article class="card stack">
-          <h3>Young adults</h3>
-          <p>
-            Practical tools to help you keep gambling in check and stay in charge of
-            your time and money.
-          </p>
-          <a href="/how-it-works/">How our tools work</a>
-        </article>
-        <article class="card stack">
-          <h3>Universities and support services</h3>
-          <p>
-            Give students and young people an early, stigma-free way to look after their
-            wellbeing.
-          </p>
-          <a href="/partner/">Work with us</a>
-        </article>
-        <article class="card stack">
-          <h3>Funders and supporters</h3>
-          <p>
-            Help us grow prevention-first support that reaches young people before harm
-            takes hold.
-          </p>
-          <a href="/partner/#funders">Support our work</a>
-        </article>
+      <div class="hero__art enter" style="--i: 2" aria-hidden="true">
+        <LogoMark id="hero" class="hero__mark" animated />
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="why-heading">
-    <div class="container stack">
-      <h2 id="why-heading">Why prevention matters</h2>
-      <p>
-        Most support is designed for when things have already gone wrong. Lockstep focuses on
-        the earlier moments: building healthy habits and giving people the tools to stay in
-        control from the start.
-      </p>
-      <p class="placeholder">
-        [PLACEHOLDER: one sourced fact about gambling harm among young adults in the UK, with
-        a link to the source.]
-      </p>
-      <p><a href="/about/">Read about our mission</a></p>
+  <section class="commitments" aria-label="What we stand for">
+    <ul class="container commitments__list" role="list">
+      {commitments.map((item) => (
+        <li class="reveal">{item}</li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="how-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="stack">
+          <h2 id="how-heading">How Lockstep works</h2>
+          <p class="lead">Practical support that goes beyond high-risk moments.</p>
+        </div>
+        <a class="text-link" href="/how-it-works/">More on how it works <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <Staircase steps={steps} />
+    </div>
+  </section>
+
+  <section class="section section--dark" aria-labelledby="what-heading">
+    <div class="container what">
+      <h2 id="what-heading" class="what__statement reveal">
+        Stay in control, without being told what that control must look like.
+      </h2>
+      <div class="what__body reveal">
+        <p>
+          We recognise that gambling exists on a spectrum, and that different people need
+          different levels of structure at different times. Rather than pushing abstinence or
+          reflection alone, Lockstep focuses on practical support: helping you redirect urges,
+          maintain balance and keep your priorities aligned with what you value most.
+        </p>
+        <p>
+          Alongside individual tools, Lockstep offers access to relevant meetings and a
+          community of people navigating similar challenges. The emphasis is on agency,
+          continuity and support that fits real life, not on labels or rigid rules.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {latest && (
+    <section class="section" aria-labelledby="articles-heading">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="stack">
+            <h2 id="articles-heading">Articles &amp; insights</h2>
+            <p class="lead">Ideas, research and stories about gambling, habits and regaining control.</p>
+          </div>
+          <a class="text-link" href="/articles/">All articles <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <div class="articles">
+          <div class="reveal">
+            <ArticleCard article={latest} variant="feature" />
+          </div>
+          <ul class="articles__rest" role="list">
+            {recent.slice(0, 3).map((article) => (
+              <li class="reveal"><ArticleCard article={article} /></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--surface" aria-labelledby="partner-heading">
+    <div class="container partner reveal">
+      <div class="stack">
+        <h2 id="partner-heading">Working with universities, charities and funders</h2>
+        <p>
+          Prevention and treatment work best together. If your organisation supports young
+          people, we'd like to hear from you.
+        </p>
+      </div>
+      <a class="button" href="/partner/">Partner with us <span class="arrow" aria-hidden="true">→</span></a>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    padding-block: var(--space-xl) var(--space-2xl);
+    overflow: clip;
+  }
+
+  .hero__grid {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .hero__grid {
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: var(--space-2xl);
+    }
+
+    .hero {
+      padding-block: var(--space-2xl) var(--space-3xl);
+    }
+  }
+
+  .hero__copy > * + * {
+    margin-top: var(--space-md);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 1.4rem + 3.8vw, 4.5rem);
+    line-height: 1;
+  }
+
+  /* One sentence per line: "Regain control." / "Redirect the urge." */
+  .hero__line {
+    display: block;
+  }
+
+  .hero .lead {
+    max-width: 46ch;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-white);
+    color: var(--color-green);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  /* Real status indicator: the app is in early access */
+  .status__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-emerald);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-emerald) 25%, transparent);
+  }
+
+  .hero__art {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 5;
+    max-height: 34rem;
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(120% 80% at 85% 0%, color-mix(in srgb, var(--color-emerald) 85%, var(--color-cream)) 0%, transparent 55%),
+      var(--color-green);
+    color: var(--color-cream);
+    overflow: hidden;
+  }
+
+  @media (max-width: 55.99rem) {
+    .hero__art {
+      aspect-ratio: 16 / 10;
+    }
+  }
+
+  .hero__art :global(.hero__mark) {
+    width: auto;
+    height: 72%;
+  }
+
+  /* Commitments band */
+  .commitments {
+    border-block: 1px solid var(--color-border);
+  }
+
+  .commitments__list {
+    display: grid;
+    padding-block: var(--space-md);
+    list-style: none;
+  }
+
+  .commitments__list li {
+    max-width: none;
+    padding-block: var(--space-sm);
+    color: var(--color-green);
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .commitments__list li + li {
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 48rem) {
+    .commitments__list {
+      grid-template-columns: repeat(3, 1fr);
+      padding-block: var(--space-lg);
+    }
+
+    .commitments__list li {
+      padding: 0 var(--space-md);
+    }
+
+    .commitments__list li:first-child {
+      padding-left: 0;
+    }
+
+    .commitments__list li + li {
+      border-top: 0;
+      border-left: 1px solid var(--color-border);
+    }
+  }
+
+  /* What is Lockstep */
+  .what {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .what__statement {
+    max-width: 22ch;
+    font-size: var(--text-3xl);
+    line-height: 1.1;
+  }
+
+  .what__body {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 48rem) {
+    .what__body {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+  }
+
+  /* Articles */
+  .articles {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .articles__rest {
+    display: grid;
+    gap: var(--space-sm);
+    padding: 0;
+    list-style: none;
+  }
+
+  .articles__rest li {
+    max-width: none;
+  }
+
+  @media (min-width: 64rem) {
+    .articles {
+      grid-template-columns: 1.1fr 1fr;
+    }
+  }
+
+  /* Partner call to action */
+  .partner {
+    display: grid;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  @media (min-width: 48rem) {
+    .partner {
+      grid-template-columns: 1fr auto;
+      gap: var(--space-xl);
+    }
+  }
+
+  /* The stair line cuts into the hero mark on load, climbing from bottom-left */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__art :global(.logo-mark__stairs) {
+      stroke-dasharray: 1;
+      animation: draw-stairs 1.6s 0.5s var(--ease-out) both;
+    }
+  }
+
+  @keyframes draw-stairs {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+</style>

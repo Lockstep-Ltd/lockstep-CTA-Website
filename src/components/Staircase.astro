@@ -1,0 +1,157 @@
+---
+// The four steps laid out as a rising staircase, echoing the logo.
+// Desktop: columns that climb left to right. Mobile: a stepped list.
+interface Props {
+  steps: { title: string; text: string }[];
+  /** Heading level for each step title. */
+  headingLevel?: 'h3' | 'h4';
+}
+
+const { steps, headingLevel: Heading = 'h3' } = Astro.props;
+---
+
+<ol class="stairs">
+  {steps.map((step, i) => (
+    <li class="stair" style={`--n: ${i + 1}`}>
+      <div class="stair__text">
+        <Heading class="stair__title">{step.title}</Heading>
+        <p>{step.text}</p>
+      </div>
+      <div class="stair__riser" aria-hidden="true">
+        <span>{String(i + 1).padStart(2, '0')}</span>
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .stairs {
+    display: grid;
+    gap: var(--space-sm);
+    padding: 0;
+    list-style: none;
+    counter-reset: stair;
+  }
+
+  .stair {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    max-width: none;
+    /* Mobile: each step sits a little further in, like a flight of stairs */
+    margin-left: calc((var(--n) - 1) * 0.9rem);
+  }
+
+  .stair__riser {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-cream);
+    font-family: var(--font-heading);
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stair__title {
+    font-size: var(--text-lg);
+  }
+
+  .stair__text p {
+    margin-top: var(--space-3xs);
+  }
+
+  @media (min-width: 56rem) {
+    .stairs {
+      grid-template-columns: repeat(4, 1fr);
+      align-items: end;
+      gap: 0;
+    }
+
+    .stair {
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: stretch;
+      gap: var(--space-md);
+      margin-left: 0;
+      height: 100%;
+    }
+
+    .stair__text {
+      padding-inline: var(--space-sm) var(--space-md);
+    }
+
+    /* Each riser is taller than the last, so the tops form a staircase */
+    .stair__riser {
+      width: auto;
+      height: calc(4rem + var(--n) * 3.5rem);
+      place-items: start;
+      padding: var(--space-sm);
+      border-radius: 0;
+      font-size: var(--text-xl);
+      transform-origin: bottom;
+    }
+
+    .stair:first-child .stair__riser {
+      border-top-left-radius: var(--radius-lg);
+      border-bottom-left-radius: var(--radius-lg);
+    }
+
+    .stair:last-child .stair__riser {
+      border-top-right-radius: var(--radius-lg);
+      border-bottom-right-radius: var(--radius-lg);
+    }
+
+    /* Alternate the two brand greens so each step reads separately */
+    .stair:nth-child(even) .stair__riser {
+      background: var(--color-emerald);
+    }
+  }
+
+  /* Risers grow up from the floor one after another as the staircase
+     scrolls into view (CSS scroll-driven animation, no JavaScript) */
+  @media (prefers-reduced-motion: no-preference) and (min-width: 56rem) {
+    @supports (animation-timeline: view()) {
+      .stairs {
+        view-timeline: --stairs block;
+      }
+
+      .stair__riser {
+        animation: grow-up linear both;
+        animation-timeline: --stairs;
+        animation-range: entry calc(5% + var(--n) * 12%) cover calc(30% + var(--n) * 8%);
+      }
+
+      .stair__text {
+        animation: fade-up linear both;
+        animation-timeline: --stairs;
+        animation-range: entry calc(15% + var(--n) * 12%) cover calc(36% + var(--n) * 8%);
+      }
+    }
+  }
+
+  @keyframes grow-up {
+    from {
+      transform: scaleY(0.15);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

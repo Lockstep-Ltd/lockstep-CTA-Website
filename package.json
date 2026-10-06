@@ -10,12 +10,30 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "check:launch": "node scripts/check-launch.mjs"
+    "check:launch": "node scripts/check-launch.mjs",
+    "test:a11y": "playwright test"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
     "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/instrument-sans": "^5.3.0",
     "astro": "^7.3.6",
     "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@astrojs/react": "^7.0.1",
+    "@axe-core/playwright": "^4.13.0",
+    "@fontsource/bricolage-grotesque": "^5.3.0",
+    "@fontsource/instrument-sans": "^5.3.0",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
+    "@playwright/cli": "^0.1.22",
+    "@playwright/test": "^1.63.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "astro-og-canvas": "^0.13.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   }
 }

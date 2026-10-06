@@ -1,5 +1,15 @@
-<!-- PLACEHOLDER favicon: replace with the real Lockstep logo mark -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#1E3D36"/>
-  <path d="M10 9v14h12" fill="none" stroke="#FBF6E8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="120 35 662 920">
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="120" y="35" width="662" height="920">
+      <rect x="120" y="35" width="662" height="920" fill="#fff"/>
+      <circle cx="512" cy="397" r="40" fill="#000"/>
+      <path d="M492 430h40l13 85h-66z" fill="#000"/>
+      <path d="M332 990V810H480V683H622V560H760" fill="none" stroke="#000" stroke-width="50" stroke-linejoin="round"/>
+    </mask>
+  </defs>
+  <g fill="#1E3D36" mask="url(#cut)">
+    <path d="M358 272V194a154 154 0 0 1 308 0v78h-64v-62a90 90 0 0 0-180 0v62z"/>
+    <path d="M342 272h340a45 45 0 0 1 45 45v633H175v-64h122V317a45 45 0 0 1 45-45z"/>
+  </g>
+  <style>@media (prefers-color-scheme: dark) { g { fill: #FBF6E8 } }</style>
 </svg>

@@ -1,0 +1,161 @@
+---
+// Legal pages at /privacy_policy, /terms_of_use, /community_guidelines and
+// /affiliate_disclosure. The Lockstep app links to these exact paths.
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { legalLinks } from '../data/site';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('legal');
+  return pages.map((page) => ({ params: { legal: page.id }, props: { page } }));
+}
+
+interface Props {
+  page: CollectionEntry<'legal'>;
+}
+
+const { page } = Astro.props;
+const { title, description, updated } = page.data;
+const { Content, headings } = await render(page);
+const sections = headings.filter((h) => h.depth === 2);
+const current = `/${page.id}`;
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="legal-head">
+    <div class="container">
+      <h1 class="enter">{title}</h1>
+      <p class="legal-updated enter" style="--i: 1">Last updated: {updated}</p>
+    </div>
+  </header>
+
+  <div class="container legal-layout">
+    <aside class="legal-aside">
+      {sections.length > 2 && (
+        <nav class="legal-toc" aria-labelledby="toc-heading">
+          <h2 id="toc-heading" class="legal-aside__heading">On this page</h2>
+          <ul>
+            {sections.map((h) => (
+              <li><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ul>
+        </nav>
+      )}
+      <nav aria-labelledby="legal-nav-heading">
+        <h2 id="legal-nav-heading" class="legal-aside__heading">Legal pages</h2>
+        <ul>
+          {legalLinks.map((item) => (
+            <li>
+              <a href={item.href} aria-current={item.href === current ? 'page' : undefined}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="legal-body">
+      <Content />
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-head {
+    padding-block: var(--space-2xl) var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .legal-head h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .legal-updated {
+    margin-top: var(--space-2xs);
+    color: var(--color-emerald);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .legal-layout {
+    display: grid;
+    gap: var(--space-lg);
+    padding-block: var(--space-xl) var(--space-2xl);
+  }
+
+  @media (min-width: 60rem) {
+    .legal-layout {
+      grid-template-columns: 15rem 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .legal-aside {
+      position: sticky;
+      top: 6rem;
+      align-self: start;
+    }
+  }
+
+  .legal-aside {
+    display: grid;
+    gap: var(--space-md);
+    font-size: var(--text-sm);
+  }
+
+  .legal-aside ul {
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+
+  .legal-aside a {
+    display: inline-block;
+    padding-block: var(--space-3xs);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .legal-aside a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .legal-aside a[aria-current='page'] {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .legal-aside__heading {
+    margin-bottom: var(--space-3xs);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .legal-body {
+    max-width: 44rem;
+  }
+
+  .legal-body > :global(* + *) {
+    margin-top: 1em;
+  }
+
+  .legal-body :global(h2) {
+    margin-top: 2em;
+    font-size: var(--text-xl);
+    scroll-margin-top: 6rem;
+  }
+
+  .legal-body :global(h3) {
+    margin-top: 1.5em;
+    font-size: var(--text-lg);
+  }
+
+  .legal-body :global(ul) {
+    padding-left: 1.25em;
+  }
+
+  .legal-body :global(a) {
+    overflow-wrap: anywhere;
+  }
+</style>

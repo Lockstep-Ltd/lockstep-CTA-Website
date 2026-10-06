@@ -26,3 +26,9 @@ npm-debug.log*
 Thumbs.db
 .idea/
 *.swp
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
+
+# Playwright test output
+test-results/
+playwright-report/

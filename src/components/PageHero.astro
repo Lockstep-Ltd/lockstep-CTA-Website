@@ -8,10 +8,10 @@ const { title, eyebrow } = Astro.props;
 ---
 
 <section class="hero">
-  <div class="container stack-lg">
-    {eyebrow && <p class="hero__eyebrow">{eyebrow}</p>}
-    <h1>{title}</h1>
-    <div class="hero__body stack">
+  <div class="container hero__inner">
+    {eyebrow && <p class="kicker enter">{eyebrow}</p>}
+    <h1 class="enter" style="--i: 1">{title}</h1>
+    <div class="hero__body stack enter" style="--i: 2">
       <slot />
     </div>
   </div>
@@ -22,16 +22,24 @@ const { title, eyebrow } = Astro.props;
     padding-block: var(--space-2xl) var(--space-xl);
   }
 
-  .hero__eyebrow {
-    color: var(--color-emerald);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+  @media (min-width: 64rem) {
+    .hero {
+      padding-block: var(--space-3xl) var(--space-2xl);
+    }
   }
 
-  .hero__eyebrow + h1 {
+  .hero__inner > * + * {
+    margin-top: var(--space-md);
+  }
+
+  .kicker + h1 {
     margin-top: var(--space-2xs);
+  }
+
+  h1 {
+    max-width: 18ch;
+    font-size: var(--text-4xl);
+    line-height: 1.02;
   }
 
   .hero__body {

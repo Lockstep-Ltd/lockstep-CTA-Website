@@ -26,9 +26,25 @@ This README is the source of truth for the project. Keep it updated as things ch
 
 All text/background pairings used on the site pass WCAG AAA contrast (7:1 or higher). For example, green on cream is 10.95:1. Tokens live in [src/styles/tokens.css](src/styles/tokens.css).
 
+### Logo
+
+The mark is a padlock with a staircase cut through it. It's an inline SVG in [src/components/LogoMark.astro](src/components/LogoMark.astro) (it takes the text colour, so it works on cream and on green), with standalone copies in `public/logo-mark.svg` and `public/favicon.svg`. The wordmark "Lockstep" is set in the body typeface.
+
 ### Typography
 
-System fonts for now: fast, and no third-party font requests. If Lockstep adopts a brand typeface, self-host it and update `--font-body` / `--font-heading`.
+- **Headings:** Bricolage Grotesque. **Body:** Instrument Sans. Both are open-licensed (OFL).
+- Self-hosted through `@fontsource-variable` packages, so they're bundled at build time with no third-party font requests.
+- Change them via `--font-heading` / `--font-body` in `tokens.css`.
+
+### Motion
+
+- **CSS only.** No JavaScript is involved.
+- **Page fades:** the browser's cross-document View Transitions.
+- **Scroll effects:** CSS scroll-driven animations for content revealing as you scroll, the staircase growing, the header edge and the article reading-progress bar.
+- **Hero:** the stair line draws into the hero logo when the page loads.
+- **Reduced motion:** everything is switched off when the visitor asks for reduced motion.
+- **Unsupported browsers:** they just show the content.
+- **Classes:** use `.enter` (with `--i` for stagger) for load-in and `.reveal` for on-scroll.
 
 ### Tone of voice
 
@@ -42,7 +58,7 @@ System fonts for now: fast, and no third-party font requests. If Lockstep adopts
 
 - **Mobile-first and responsive.** Layouts are designed for phones first.
 - **Accessible to WCAG 2.2 AA:** semantic HTML, sufficient contrast, keyboard navigable, visible focus states, a skip link, alt text on all images.
-- **Fast:** no client-side JavaScript at present; optimise all images.
+- **Fast:** no client-side JavaScript at present (animations are pure CSS); optimise all images.
 - **Privacy:** no analytics, cookies or third-party trackers. If any are added later, they need a UK GDPR-compliant consent banner first.
 - **Secrets:** never commit secrets, API keys or personal data. Use environment variables; `.env` files are ignored by Git (see `.env.example`).
 - **Support signposting:** every page footer includes "Need support now?" with UK support services. These details must be checked against official sources before launch.
@@ -67,8 +83,8 @@ The site is purely informational: no logins, accounts, database or stored form s
 .
 ├── .github/workflows/deploy.yml   # Build check on PRs; deploy to Vercel on push to main
 ├── public/                        # Files served as-is
-│   ├── favicon.svg                # PLACEHOLDER: replace with real logo mark
-│   ├── og-default.png             # PLACEHOLDER: social sharing image (1200×630)
+│   ├── favicon.svg                # Logo mark (switches to cream in dark mode)
+│   ├── logo-mark.svg              # Standalone logo mark
 │   └── robots.txt
 ├── scripts/
 │   └── check-launch.mjs           # Lists remaining placeholders/TODOs (npm run check:launch)
@@ -76,10 +92,20 @@ The site is purely informational: no logins, accounts, database or stored form s
 │   ├── components/
 │   │   ├── Header.astro           # Logo + main navigation
 │   │   ├── Footer.astro           # Support section, footer links, legal line
+│   │   ├── LogoMark.astro         # Lock-and-stairs logo mark (inline SVG)
+│   │   ├── Staircase.astro        # The four steps, laid out as rising stairs
+│   │   ├── ArticleCard.astro      # Article preview (feature or row style)
+│   │   ├── Figure.astro           # Image slot: placeholder until a photo is supplied
 │   │   ├── SupportSignpost.astro  # "Need support now?" section
 │   │   └── PageHero.astro         # Page title + intro block
+│   ├── assets/                    # Images processed at build (og-mark.png, images/)
+│   ├── content/articles/          # One Markdown file per article
+│   ├── content/legal/             # Privacy policy, terms, community guidelines, affiliate disclosure
+│   ├── content.config.ts          # Article fields (title, date, author, ...)
+│   ├── lib/articles.ts            # Article sorting, date formatting, URLs
 │   ├── data/
 │   │   ├── site.ts                # Site name, contact email, navigation, SEO defaults
+│   │   ├── product.ts             # App copy: tagline, steps, principles, ethics, status
 │   │   └── support.ts             # UK support services (VERIFY BEFORE LAUNCH)
 │   ├── layouts/
 │   │   └── BaseLayout.astro       # Shared page shell: <head>, SEO tags, header, footer
@@ -87,12 +113,19 @@ The site is purely informational: no logins, accounts, database or stored form s
 │   │   ├── index.astro            # /
 │   │   ├── about.astro            # /about/
 │   │   ├── how-it-works.astro     # /how-it-works/
+│   │   ├── articles/index.astro   # /articles/
+│   │   ├── articles/[slug].astro  # /articles/<file-name>/
+│   │   ├── [legal].astro          # /privacy_policy, /terms_of_use, /community_guidelines, /affiliate_disclosure
+│   │   ├── og/[...route].ts       # Social sharing images, generated at build (astro-og-canvas)
 │   │   ├── partner.astro          # /partner/
 │   │   ├── contact.astro          # /contact/
 │   │   └── 404.astro              # "Page not found"
 │   └── styles/
 │       ├── tokens.css             # Design tokens: colours, type scale, spacing
 │       └── global.css             # Base styles, layout helpers, buttons
+├── tests/a11y.spec.ts             # Automated accessibility checks (axe + Playwright)
+├── keystatic.config.ts            # Article editor fields (dev only, /keystatic)
+├── playwright.config.ts
 ├── astro.config.mjs
 ├── package.json
 └── tsconfig.json
@@ -108,11 +141,38 @@ npm run dev          # live preview at http://localhost:4321, updates as you edi
 npm run build        # checks the code and builds the final site into dist/
 npm run preview      # previews the built site
 npm run check:launch # lists every placeholder and unverified item still left
+npm run test:a11y    # WCAG 2.2 AA checks on every page (run after a build)
 ```
+
+### Editing articles in the browser (Keystatic)
+
+Run `npm run dev` and open http://localhost:4321/keystatic. You can write, edit and preview articles there. Changes are saved straight to the Markdown files in `src/content/articles/`, ready to commit.
+
+The editor only runs locally, so the live site stays fully static. Putting the editor online (GitHub mode) needs a server adapter and a GitHub app, so it's left for later.
+
+Keystatic rewrites a file's frontmatter when you save it. Any `# TODO` comments in that file will be removed, so note them elsewhere first.
+
+### Legal pages (fixed URLs)
+
+- **Source:** the privacy policy, terms of use, community guidelines and affiliate disclosure are Markdown files in `src/content/legal/`, migrated word for word from the old site.
+- **Fixed URLs:** the Lockstep app links to these exact paths, with underscores: `/privacy_policy`, `/terms_of_use`, `/community_guidelines` and `/affiliate_disclosure`. It also links to `/articles`.
+- **Before renaming or removing one:** update the app's links in the same release, or add a redirect.
+
+### Images
+
+Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src={...} alt="...">`. It shows a placeholder until an image is supplied, then serves optimised AVIF/WebP at the right size. See `src/assets/images/README.md`.
+
+### Accessibility tests
+
+- `tests/a11y.spec.ts` runs axe against every page in the sitemap, plus the 404 page, at phone and desktop widths.
+- It serves the built `dist/` files directly to the browser, so no web server is needed, and it blocks any third-party request.
+- It uses your installed Google Chrome.
+- It runs on every pull request; a failure lists the rule and the element.
 
 ### Common edits
 
-- **Page text:** edit the files in `src/pages/`.
+- **Page text:** edit the files in `src/pages/`. App copy shared across pages (steps, principles and so on) lives in `src/data/product.ts`.
+- **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL, and the newest article is featured automatically. Set `draft: true` to hide one.
 - **Navigation or contact email:** `src/data/site.ts`.
 - **Support services:** `src/data/support.ts`. Set `verified: true` once each entry is checked.
 - **Colours, fonts, spacing:** `src/styles/tokens.css`.

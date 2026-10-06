@@ -1,27 +1,28 @@
 ---
+import LogoMark from './LogoMark.astro';
 import { navigation, site } from '../data/site';
 
-// Mark the current page in the navigation for screen readers and styling.
+// Mark the current page (and its section, e.g. an article under Articles).
 const current = Astro.url.pathname.replace(/\/?$/, '/');
 const isCurrent = (href: string) => current === href;
+const isSection = (href: string) => href !== '/' && current.startsWith(href);
 ---
 
 <header class="site-header">
   <div class="container site-header__inner">
     <a href="/" class="logo" aria-label={`${site.name}, home`}>
-      <!-- PLACEHOLDER logo: replace with the real Lockstep logo (SVG preferred) in public/ -->
-      <svg class="logo__mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
-        <rect width="32" height="32" rx="8" fill="currentColor"></rect>
-        <path d="M10 9v14h12" fill="none" stroke="#FBF6E8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
-      <span class="logo__text">{site.name}</span>
+      <LogoMark id="header" class="logo__mark" />
+      <span class="logo__text" translate="no">{site.name}</span>
     </a>
 
     <nav aria-label="Main">
       <ul class="nav-list">
         {navigation.map((item) => (
           <li>
-            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            <a
+              href={item.href}
+              aria-current={isCurrent(item.href) ? 'page' : isSection(item.href) ? 'true' : undefined}
+            >
               {item.label}
             </a>
           </li>
@@ -33,8 +34,42 @@ const isCurrent = (href: string) => current === href;
 
 <style>
   .site-header {
+    position: relative;
+    z-index: 10;
     background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid transparent;
+  }
+
+  /* Sticky on larger screens only, so it never eats a phone's screen */
+  @media (min-width: 48rem) {
+    .site-header {
+      position: sticky;
+      top: 0;
+      background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom-color: var(--color-border);
+    }
+
+    /* Edge fades in once the page scrolls (CSS scroll-driven, no JS) */
+    @supports (animation-timeline: scroll()) {
+      .site-header {
+        animation: header-edge linear both;
+        animation-timeline: scroll();
+        animation-range: 0 120px;
+      }
+    }
+  }
+
+  @keyframes header-edge {
+    from {
+      border-bottom-color: transparent;
+      box-shadow: none;
+    }
+    to {
+      border-bottom-color: var(--color-border);
+      box-shadow: 0 8px 24px -16px rgb(30 61 54 / 0.35);
+    }
   }
 
   .site-header__inner {
@@ -49,11 +84,25 @@ const isCurrent = (href: string) => current === href;
   .logo {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2xs);
+    gap: 0.55rem;
     color: var(--color-primary);
-    font-size: var(--text-lg);
-    font-weight: 700;
     text-decoration: none;
+  }
+
+  .logo:hover {
+    color: var(--color-primary);
+  }
+
+  .logo :global(.logo__mark) {
+    width: auto;
+    height: 2.4rem;
+  }
+
+  .logo__text {
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   /* On small screens the links wrap onto their own row below the logo:
@@ -61,7 +110,7 @@ const isCurrent = (href: string) => current === href;
   .nav-list {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3xs) var(--space-2xs);
+    gap: var(--space-3xs);
     padding: 0;
     list-style: none;
   }
@@ -77,12 +126,20 @@ const isCurrent = (href: string) => current === href;
   }
 
   .nav-list a:hover {
+    background: var(--color-sage);
     color: var(--color-primary);
-    text-decoration: underline;
   }
 
-  .nav-list a[aria-current='page'] {
+  .nav-list a[aria-current] {
     background: var(--color-primary);
     color: var(--color-on-primary);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-list a {
+      transition:
+        background-color var(--duration-fast) ease,
+        color var(--duration-fast) ease;
+    }
   }
 </style>

@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
+import Figure from '../components/Figure.astro';
+import { principles } from '../data/product';
 // PLACEHOLDER copy: replace with final wording before launch.
 ---
 
@@ -15,17 +17,29 @@ import PageHero from '../components/PageHero.astro';
     </p>
   </PageHero>
 
-  <section class="section section--surface" aria-labelledby="mission-heading">
-    <div class="container stack">
-      <h2 id="mission-heading">Our mission</h2>
-      <p class="placeholder">
-        [PLACEHOLDER: Lockstep's mission statement in two or three sentences.]
-      </p>
+  <section class="section section--surface" aria-labelledby="principles-heading">
+    <div class="container">
+      <div class="stack reveal principles-head">
+        <h2 id="principles-heading">Philosophy &amp; principles</h2>
+        <p class="lead">
+          A small set of principles guides every design decision. They keep us focused on what
+          matters most: real support, real progress and real choice.
+        </p>
+      </div>
+      <ol class="principles">
+        {principles.map((item, i) => (
+          <li class="principle reveal">
+            <span class="principle__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
   <section class="section" aria-labelledby="prevention-heading">
-    <div class="container stack">
+    <div class="container stack reveal">
       <h2 id="prevention-heading">Why preventative tools matter</h2>
       <p>
         Gambling is easier to access than ever, and for many young adults it's part of
@@ -45,10 +59,14 @@ import PageHero from '../components/PageHero.astro';
   </section>
 
   <section class="section section--surface" aria-labelledby="founder-heading">
-    <div class="container founder">
-      <div class="placeholder-media founder__photo" role="img" aria-label="Placeholder for a photo of Andrew Brink">
-        PLACEHOLDER: founder photo
-      </div>
+    <div class="container founder reveal">
+      <Figure
+        class="founder__photo"
+        alt="Andrew Brink, founder of Lockstep"
+        placeholder="PLACEHOLDER: founder photo"
+        ratio="1"
+        sizes="18rem"
+      />
       <div class="stack">
         <h2 id="founder-heading">Meet the founder</h2>
         <p><strong>Andrew Brink</strong>, Founder</p>
@@ -62,14 +80,51 @@ import PageHero from '../components/PageHero.astro';
 </BaseLayout>
 
 <style>
+  .principles-head {
+    margin-bottom: var(--space-lg);
+  }
+
+  .principles {
+    display: grid;
+    gap: var(--space-md);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .principles {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg) var(--space-xl);
+    }
+  }
+
+  .principle {
+    max-width: none;
+    padding-top: var(--space-sm);
+    border-top: 2px solid var(--color-green);
+  }
+
+  .principle__num {
+    display: block;
+    margin-bottom: var(--space-2xs);
+    color: var(--color-emerald);
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .principle p {
+    margin-top: var(--space-2xs);
+  }
+
   .founder {
     display: grid;
     gap: var(--space-lg);
     align-items: center;
   }
 
-  .founder__photo {
-    aspect-ratio: 1;
+  .founder :global(.founder__photo) {
     max-width: 18rem;
   }
 

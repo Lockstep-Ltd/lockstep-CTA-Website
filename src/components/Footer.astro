@@ -1,6 +1,7 @@
 ---
+import LogoMark from './LogoMark.astro';
 import SupportSignpost from './SupportSignpost.astro';
-import { navigation, site } from '../data/site';
+import { legalLinks, navigation, site } from '../data/site';
 
 const year = new Date().getFullYear();
 ---
@@ -9,34 +10,69 @@ const year = new Date().getFullYear();
   <SupportSignpost />
 
   <div class="site-footer__bottom">
-    <div class="container site-footer__inner">
+    <div class="container site-footer__grid">
+      <div class="site-footer__brand stack">
+        <a href="/" class="footer-logo" aria-label={`${site.name}, home`}>
+          <LogoMark id="footer" class="footer-logo__mark" />
+          <span translate="no">{site.name}</span>
+        </a>
+        <p>Regain control. Redirect the urge.</p>
+      </div>
+
       <nav aria-label="Footer">
+        <h2 class="footer-heading">Explore</h2>
         <ul class="footer-links">
+          <li><a href="/">Home</a></li>
           {navigation.map((item) => (
             <li><a href={item.href}>{item.label}</a></li>
           ))}
         </ul>
       </nav>
-      <p>
-        <a href={`mailto:${site.email}`}>{site.email}</a>
-      </p>
-      <!-- TODO: confirm legal name, company number and registered address -->
-      <p class="placeholder">© {year} Lockstep Ltd. [Company number and registered address: PLACEHOLDER]</p>
+
+      <div>
+        <h2 class="footer-heading">Get in touch</h2>
+        <ul class="footer-links">
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        </ul>
+        <p class="site-footer__note">Questions and feedback are always welcome. We read every message.</p>
+      </div>
+
+      <nav aria-label="Legal">
+        <h2 class="footer-heading">Legal</h2>
+        <ul class="footer-links">
+          {legalLinks.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="site-footer__legal">
+        <!-- TODO: confirm legal name, company number and registered address -->
+        <p class="placeholder">© {year} Lockstep Ltd. [Company number and registered address: PLACEHOLDER]</p>
+      </div>
     </div>
   </div>
 </footer>
 
 <style>
   .site-footer__bottom {
-    padding-block: var(--space-lg);
+    padding-block: var(--space-xl) var(--space-lg);
     background: var(--color-green);
-    color: var(--color-cream);
+    color: var(--color-on-dark-muted);
     font-size: var(--text-sm);
   }
 
-  .site-footer__inner {
+  .site-footer__grid {
     display: grid;
-    gap: var(--space-sm);
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 48rem) {
+    .site-footer__grid {
+      grid-template-columns: 1.6fr 1fr 1.3fr 1fr;
+    }
   }
 
   .site-footer__bottom a {
@@ -47,12 +83,51 @@ const year = new Date().getFullYear();
     outline-color: var(--color-cream);
   }
 
+  .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--color-cream);
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .footer-logo :global(.footer-logo__mark) {
+    width: auto;
+    height: 3rem;
+  }
+
+  .footer-heading {
+    margin-bottom: var(--space-2xs);
+    color: var(--color-cream);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
   .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2xs) var(--space-md);
+    display: grid;
     padding: 0;
     list-style: none;
+  }
+
+  /* Taller tap targets on touch screens (WCAG 2.2 target size) */
+  .footer-links a {
+    display: inline-block;
+    padding-block: var(--space-3xs);
+  }
+
+  .site-footer__note {
+    margin-top: var(--space-2xs);
+  }
+
+  .site-footer__legal {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid color-mix(in srgb, var(--color-cream) 18%, transparent);
   }
 
   .site-footer__bottom .placeholder {

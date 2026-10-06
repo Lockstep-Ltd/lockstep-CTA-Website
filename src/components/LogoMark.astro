@@ -1,0 +1,42 @@
+---
+// The Lockstep lock-and-stairs mark, traced from the brand artwork.
+// Uses currentColor, so set `color` on a parent to recolour it.
+// The keyhole and stair line are cut out with a mask, so the mark sits
+// cleanly on any background. Each instance needs a unique mask id.
+interface Props {
+  id: string;
+  class?: string;
+  /** Adds a class to the stair cut so it can be animated. */
+  animated?: boolean;
+}
+
+const { id, class: className, animated = false } = Astro.props;
+const maskId = `lockstep-cut-${id}`;
+---
+
+<svg
+  class:list={['logo-mark', className]}
+  viewBox="170 35 562 920"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <mask id={maskId} maskUnits="userSpaceOnUse" x="170" y="35" width="562" height="920">
+      <rect x="170" y="35" width="562" height="920" fill="#fff"></rect>
+      <circle cx="512" cy="397" r="40" fill="#000"></circle>
+      <path d="M492 430h40l13 85h-66z" fill="#000"></path>
+      <path
+        class:list={[{ 'logo-mark__stairs': animated }]}
+        d="M332 990V810H480V683H622V560H760"
+        fill="none"
+        stroke="#000"
+        stroke-width="50"
+        stroke-linejoin="round"
+        pathLength="1"></path>
+    </mask>
+  </defs>
+  <g fill="currentColor" mask={`url(#${maskId})`}>
+    <path d="M358 272V194a154 154 0 0 1 308 0v78h-64v-62a90 90 0 0 0-180 0v62z"></path>
+    <path d="M342 272h340a45 45 0 0 1 45 45v633H175v-64h122V317a45 45 0 0 1 45-45z"></path>
+  </g>
+</svg>

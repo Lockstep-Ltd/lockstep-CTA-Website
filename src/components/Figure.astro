@@ -1,0 +1,63 @@
+---
+// An image slot. Until a real image is supplied it shows a clearly marked
+// placeholder; once `src` is set it renders an optimised, responsive image
+// (WebP/AVIF, correct sizes, no layout shift) via Astro's built-in <Picture>.
+//
+// Usage: put the file in src/assets/images/, import it, and pass it in:
+//   import founder from '../assets/images/founder.jpg';
+//   <Figure src={founder} alt="Andrew Brink, founder of Lockstep" />
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src?: ImageMetadata;
+  /** Describe the image. Use "" only if it's purely decorative. */
+  alt: string;
+  /** Shown in the placeholder box while there's no image yet. */
+  placeholder?: string;
+  /** CSS aspect ratio, e.g. "16 / 9" or "1". */
+  ratio?: string;
+  /** Load straight away (for images near the top of the page). */
+  priority?: boolean;
+  /** Rendered widths, for the `sizes` attribute. */
+  sizes?: string;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  placeholder = 'PLACEHOLDER: image',
+  ratio = '16 / 9',
+  priority = false,
+  sizes = '(min-width: 72rem) 36rem, 100vw',
+  class: className,
+} = Astro.props;
+---
+
+{src ? (
+  <Picture
+    src={src}
+    alt={alt}
+    formats={['avif', 'webp']}
+    widths={[400, 800, 1200, src.width].filter((w) => w <= src.width)}
+    sizes={sizes}
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'auto'}
+    class:list={['figure', className]}
+    style={`aspect-ratio: ${ratio}`}
+  />
+) : (
+  <div class:list={['placeholder-media', className]} style={`aspect-ratio: ${ratio}`} role="img" aria-label={`Placeholder: ${alt}`}>
+    {placeholder}
+  </div>
+)}
+
+<style>
+  .figure {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+  }
+</style>
