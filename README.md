@@ -32,7 +32,7 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 
 ### Typography
 
-- **Headings:** Bricolage Grotesque. **Body:** Instrument Sans. Both are open-licensed (OFL).
+- **Headings:** Newsreader (serif). **Body and interface text:** Inter. These are Lockstep's brand fonts, carried over from the original site. Both are open-licensed (OFL).
 - Self-hosted through `@fontsource-variable` packages, so they're bundled at build time with no third-party font requests.
 - Change them via `--font-heading` / `--font-body` in `tokens.css`.
 

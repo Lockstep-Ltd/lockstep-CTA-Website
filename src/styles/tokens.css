@@ -31,12 +31,13 @@
   --color-sage: color-mix(in srgb, var(--color-green) 7%, var(--color-cream));
   --color-on-dark-muted: color-mix(in srgb, var(--color-cream) 78%, var(--color-green));
 
-  /* Typography: self-hosted via @fontsource (bundled at build time, so no
-     third-party font requests). Instrument Sans for reading, Bricolage
-     Grotesque for headings. System fonts are the fallback. */
+  /* Typography: Lockstep's brand fonts, as used on the original site.
+     Newsreader (serif) for headings, Inter for reading and interface text.
+     Self-hosted via @fontsource (bundled at build time, so no third-party
+     font requests). System fonts are the fallback. */
   --font-system: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-body: 'Instrument Sans Variable', var(--font-system);
-  --font-heading: 'Bricolage Grotesque Variable', var(--font-system);
+  --font-body: 'Inter Variable', var(--font-system);
+  --font-heading: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
 
   /* Type scale: grows smoothly from mobile to desktop */
   --text-sm: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);

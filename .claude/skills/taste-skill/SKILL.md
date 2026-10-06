@@ -8,6 +8,8 @@ description: Anti-slop frontend skill for landing pages, portfolios, and redesig
 > - **Stack:** Astro + plain CSS with tokens in `src/styles/tokens.css`. No React, Tailwind, Motion, GSAP, or icon packages unless the user approves. Read the Tailwind/React examples below as intent, then write them in plain CSS.
 > - **No client-side JS** by default. Motion means CSS transitions or scroll-driven animations, always gated by `prefers-reduced-motion`.
 > - **Brand palette is fixed:** cream `#FBF6E8` background with forest/emerald greens is the brand, so the "premium-consumer palette ban" does not apply. Don't change brand colours.
+> - **Brand fonts are fixed:** Newsreader (serif) for headings and Inter for body/interface text, carried over from the original site. The "Inter discouraged" and "serif discouraged" defaults below do not apply. Apply this skill to layout, spacing, hierarchy and motion, not to font choice.
+> - **Logo and icon are fixed:** use the original artwork in `src/assets/brand/` only. Never redraw, trace, recolour or retype them; resizing is the only allowed change. On dark backgrounds, place the logo on a cream tile.
 > - **Dark mode:** not required unless the user asks for it.
 > - **Images:** no picsum or stock placeholders on live pages. Use labelled TODO slots. Never use gambling imagery.
 > - **Dials:** trust-first and accessibility-critical audience, so start around VARIANCE 4 / MOTION 2 / DENSITY 4.

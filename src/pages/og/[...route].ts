@@ -30,12 +30,12 @@ export const { getStaticPaths, GET } = await OGImageRoute({
     border: { color: cream, width: 12, side: 'inline-start' },
     padding: 80,
     font: {
-      title: { families: ['Bricolage Grotesque'], weight: 'SemiBold', size: 76, lineHeight: 1.05, color: cream },
-      description: { families: ['Instrument Sans'], weight: 'Normal', size: 34, lineHeight: 1.4, color: [214, 218, 205] },
+      title: { families: ['Newsreader'], weight: 'SemiBold', size: 76, lineHeight: 1.05, color: cream },
+      description: { families: ['Inter'], weight: 'Normal', size: 34, lineHeight: 1.4, color: [214, 218, 205] },
     },
     fonts: [
-      './node_modules/@fontsource/bricolage-grotesque/files/bricolage-grotesque-latin-600-normal.woff',
-      './node_modules/@fontsource/instrument-sans/files/instrument-sans-latin-400-normal.woff',
+      './node_modules/@fontsource/newsreader/files/newsreader-latin-600-normal.woff',
+      './node_modules/@fontsource/inter/files/inter-latin-400-normal.woff',
     ],
   }),
 });
