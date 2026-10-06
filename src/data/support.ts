@@ -16,20 +16,20 @@ export type SupportService = {
 export const supportServices: SupportService[] = [
   {
     name: '[National gambling support helpline: VERIFY BEFORE LAUNCH]',
-    description: 'Free, confidential advice by phone or online chat.',
+    description: '[Short description: VERIFY BEFORE LAUNCH]',
     phone: '[Phone number: VERIFY BEFORE LAUNCH]',
     url: '#VERIFY-BEFORE-LAUNCH',
     verified: false,
   },
   {
     name: '[NHS gambling support service: VERIFY BEFORE LAUNCH]',
-    description: 'Specialist NHS treatment and support.',
+    description: '[Short description: VERIFY BEFORE LAUNCH]',
     url: '#VERIFY-BEFORE-LAUNCH',
     verified: false,
   },
   {
     name: '[Self-exclusion and blocking tools: VERIFY BEFORE LAUNCH]',
-    description: 'Tools to block gambling websites, apps and payments.',
+    description: '[Short description: VERIFY BEFORE LAUNCH]',
     url: '#VERIFY-BEFORE-LAUNCH',
     verified: false,
   },
