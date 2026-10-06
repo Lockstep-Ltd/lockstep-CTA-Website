@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+// PLACEHOLDER copy: replace with final wording and the real tools before launch.
+
+const steps = [
+  {
+    title: 'Notice your habits',
+    text: 'See your patterns clearly, without judgement, so you can decide what feels right for you.',
+  },
+  {
+    title: 'Set limits that suit you',
+    text: 'Choose the boundaries that work for your life, and change them whenever you like.',
+  },
+  {
+    title: 'Get support early',
+    text: "Find useful information, and know where to turn if you'd like to talk to someone.",
+  },
+];
+---
+
+<BaseLayout
+  title="How it works"
+  description="How Lockstep's tools help young adults notice their habits, set limits and stay in control of gambling."
+>
+  <PageHero eyebrow="Our tools" title="How Lockstep works">
+    <p>
+      Lockstep's tools are designed for young adults and fit into everyday life,
+      with no judgement.
+    </p>
+    <p class="placeholder">
+      [PLACEHOLDER: confirm cost, privacy and how young adults were involved in the design.]
+    </p>
+  </PageHero>
+
+  <section class="section section--surface" aria-labelledby="steps-heading">
+    <div class="container stack-lg">
+      <h2 id="steps-heading">Three steps to staying in control</h2>
+      <ol class="grid grid--3 steps">
+        {steps.map((step, i) => (
+          <li class="card stack">
+            <span class="steps__number" aria-hidden="true">{i + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="tools-heading">
+    <div class="container stack-lg">
+      <h2 id="tools-heading">Our tools</h2>
+      <div class="grid grid--2">
+        <article class="card stack">
+          <div class="placeholder-media" role="img" aria-label="Placeholder for a screenshot of the first tool">
+            PLACEHOLDER: tool screenshot
+          </div>
+          <h3 class="placeholder">[PLACEHOLDER: Tool name]</h3>
+          <p class="placeholder">[PLACEHOLDER: what it does and who it's for, in one or two sentences.]</p>
+        </article>
+        <article class="card stack">
+          <div class="placeholder-media" role="img" aria-label="Placeholder for a screenshot of the second tool">
+            PLACEHOLDER: tool screenshot
+          </div>
+          <h3 class="placeholder">[PLACEHOLDER: Tool name]</h3>
+          <p class="placeholder">[PLACEHOLDER: what it does and who it's for, in one or two sentences.]</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="privacy-heading">
+    <div class="container stack">
+      <h2 id="privacy-heading">Your privacy</h2>
+      <p class="placeholder">
+        [PLACEHOLDER: a plain-English summary of what data the tools use and how it's kept
+        safe. Link to the privacy policy once it exists.]
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .steps {
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps__number {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: 700;
+  }
+</style>
