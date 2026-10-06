@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+// No contact form yet: we'll add one once we've agreed how submissions are stored and handled.
+---
+
+<BaseLayout title="Contact" description="Get in touch with the Lockstep team by email.">
+  <PageHero eyebrow="Contact" title="Get in touch">
+    <p>
+      Questions and feedback are always welcome. We read every message, whether you use
+      Lockstep, want to partner with us or are interested in supporting our work.
+    </p>
+    <p>
+      Email us at <a href={`mailto:${site.email}`}>{site.email}</a>
+    </p>
+  </PageHero>
+
+  <section class="section section--surface" aria-labelledby="contact-support-heading">
+    <div class="container stack reveal">
+      <h2 id="contact-support-heading">Looking for support?</h2>
+      <p>
+        We're a small team and can't offer one-to-one support by email. If you'd like to talk to
+        someone about gambling, the services listed at the bottom of
+        this page can help.
+      </p>
+      <p><a href="#support-heading">Go to support services</a></p>
+    </div>
+  </section>
+</BaseLayout>

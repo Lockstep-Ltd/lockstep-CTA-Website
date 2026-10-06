@@ -1,0 +1,132 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/lockstep-logo.png';
+import { navigation, site } from '../data/site';
+
+// Mark the current page (and its section, e.g. an article under Articles).
+const current = Astro.url.pathname.replace(/\/?$/, '/');
+const isCurrent = (href: string) => current === href;
+const isSection = (href: string) => href !== '/' && current.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="logo">
+      <!-- Original Lockstep logo artwork: do not redraw or recolour (see src/assets/brand/README.md) -->
+      <Image src={logo} alt={`${site.name} home`} height={40} densities={[1, 2]} class="logo__img" loading="eager" />
+    </a>
+
+    <nav aria-label="Main">
+      <ul class="nav-list">
+        {navigation.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isCurrent(item.href) ? 'page' : isSection(item.href) ? 'true' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 10;
+    background: var(--color-bg);
+    border-bottom: 1px solid transparent;
+  }
+
+  /* Sticky on larger screens only, so it never eats a phone's screen */
+  @media (min-width: 48rem) {
+    .site-header {
+      position: sticky;
+      top: 0;
+      background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom-color: var(--color-border);
+    }
+
+    /* Edge fades in once the page scrolls (CSS scroll-driven, no JS) */
+    @supports (animation-timeline: scroll()) {
+      .site-header {
+        animation: header-edge linear both;
+        animation-timeline: scroll();
+        animation-range: 0 120px;
+      }
+    }
+  }
+
+  @keyframes header-edge {
+    from {
+      border-bottom-color: transparent;
+      box-shadow: none;
+    }
+    to {
+      border-bottom-color: var(--color-border);
+      box-shadow: 0 8px 24px -16px rgb(30 61 54 / 0.35);
+    }
+  }
+
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xs) var(--space-md);
+    padding-block: var(--space-sm);
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .logo :global(.logo__img) {
+    width: auto;
+    height: 2.5rem;
+  }
+
+  /* On small screens the links wrap onto their own row below the logo:
+     no menu button needed, so no JavaScript and nothing hidden. */
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs);
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-list a {
+    display: inline-block;
+    padding: var(--space-2xs) var(--space-xs);
+    border-radius: var(--radius-pill);
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .nav-list a:hover {
+    background: var(--color-sage);
+    color: var(--color-primary);
+  }
+
+  .nav-list a[aria-current] {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-list a {
+      transition:
+        background-color var(--duration-fast) ease,
+        color var(--duration-fast) ease;
+    }
+  }
+</style>

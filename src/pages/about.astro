@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Figure from '../components/Figure.astro';
+import { about, principles } from '../data/product';
+// Copy from the original lockstep.uk site; founder section is still a placeholder.
+---
+
+<BaseLayout
+  title="About"
+  description="Lockstep is designed for people who want to stay in control of gambling without being told what that control must look like."
+>
+  <PageHero eyebrow="About Lockstep" title="What is Lockstep">
+    {about.paragraphs.map((text) => <p>{text}</p>)}
+  </PageHero>
+
+  <section class="section section--surface" aria-labelledby="principles-heading">
+    <div class="container">
+      <div class="stack reveal principles-head">
+        <h2 id="principles-heading">Philosophy &amp; principles</h2>
+        <p class="lead">
+          Lockstep is built around a small set of principles that guide every design decision.
+          They keep us focused on what matters most: real support, real progress, and real choice.
+        </p>
+      </div>
+      <ol class="principles">
+        {principles.map((item, i) => (
+          <li class="principle reveal">
+            <span class="principle__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{item.title}</h3>
+            <p class="principle__text">{item.text}</p>
+            <p>{item.detail}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="founder-heading">
+    <div class="container founder reveal">
+      <Figure
+        class="founder__photo"
+        alt="Andrew Brink, founder of Lockstep"
+        placeholder="PLACEHOLDER: founder photo"
+        ratio="1"
+        sizes="18rem"
+      />
+      <div class="stack">
+        <h2 id="founder-heading">Meet the founder</h2>
+        <p><strong>Andrew Brink</strong>, Founder</p>
+        <p class="placeholder">
+          [PLACEHOLDER: Andrew's story and why Andrew started Lockstep, in two or three short
+          paragraphs.]
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .principles-head {
+    margin-bottom: var(--space-lg);
+  }
+
+  .principles {
+    display: grid;
+    gap: var(--space-md);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .principles {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg) var(--space-xl);
+    }
+  }
+
+  .principle {
+    max-width: none;
+    padding-top: var(--space-sm);
+    border-top: 2px solid var(--color-green);
+  }
+
+  .principle__num {
+    display: block;
+    margin-bottom: var(--space-2xs);
+    color: var(--color-emerald);
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .principle p {
+    margin-top: var(--space-2xs);
+  }
+
+  .principle__text {
+    color: var(--color-green);
+    font-weight: 600;
+  }
+
+  .founder {
+    display: grid;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .founder :global(.founder__photo) {
+    max-width: 18rem;
+  }
+
+  @media (min-width: 48rem) {
+    .founder {
+      grid-template-columns: 18rem 1fr;
+    }
+  }
+</style>

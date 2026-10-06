@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+// PLACEHOLDER copy: replace with final wording before launch.
+---
+
+<BaseLayout
+  title="Partner with us"
+  description="Universities, charities, support services and funders: work with Lockstep to help people reduce gambling and stay in control."
+>
+  <PageHero eyebrow="Partner with us" title="Let's help more people regain control, together">
+    <p>
+      We work with organisations that share our goal: helping people reduce gambling by
+      redirecting urges towards healthier, real-world alternatives.
+    </p>
+    <div class="button-row">
+      <a class="button" href={`mailto:${site.email}?subject=Partnering%20with%20Lockstep`}>
+        Email us about partnering
+      </a>
+    </div>
+  </PageHero>
+
+  <section class="section section--surface" aria-labelledby="universities-heading">
+    <div class="container stack reveal">
+      <h2 id="universities-heading">Universities and colleges</h2>
+      <p>
+        Offer students a practical, judgement-free tool that sits alongside your existing
+        wellbeing and student support services.
+      </p>
+      <p class="placeholder">
+        [PLACEHOLDER: what a university partnership involves, e.g. pilots, student wellbeing
+        integration, data sharing (if any).]
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="charities-heading">
+    <div class="container stack reveal">
+      <h2 id="charities-heading">Charities and support services</h2>
+      <p>
+        Prevention and treatment work best together. We want to help people find the right
+        support at the right time, and to learn from organisations already doing this work.
+      </p>
+      <p class="placeholder">
+        [PLACEHOLDER: how Lockstep works with charities and support services, e.g. referral
+        pathways, co-design, research.]
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--surface" id="funders" aria-labelledby="funders-heading">
+    <div class="container stack reveal">
+      <h2 id="funders-heading">Funders and supporters</h2>
+      <p>
+        Your support helps us build and test Lockstep with the people who use it, and measure
+        what really makes a difference.
+      </p>
+      <p class="placeholder">
+        [PLACEHOLDER: funding needs, impact goals, and current supporters (with permission to
+        name them).]
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="partner-cta-heading">
+    <div class="container stack reveal">
+      <h2 id="partner-cta-heading">Start a conversation</h2>
+      <p>
+        Tell us a little about your organisation and what you have in mind. We'll get back to
+        you. You can also write to us directly at <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+      <p>
+        <a class="button" href={`mailto:${site.email}?subject=Partnering%20with%20Lockstep`}>
+          Email us about partnering
+        </a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

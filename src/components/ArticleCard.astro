@@ -1,0 +1,141 @@
+---
+import { articleUrl, formatDate, titleTransition, type Article } from '../lib/articles';
+
+interface Props {
+  article: Article;
+  /** "feature" is the large dark card used for the newest article. */
+  variant?: 'feature' | 'row';
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { article, variant = 'row', headingLevel: Heading = 'h3' } = Astro.props;
+const { title, description, date, author, readingTime } = article.data;
+---
+
+<article class:list={['article-card', `article-card--${variant}`, 'lift']}>
+  <div class="article-card__body">
+    <p class="article-card__meta">
+      <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>
+      <span aria-hidden="true">/</span>
+      <span>{readingTime}</span>
+    </p>
+    <Heading class="article-card__title" style={`view-transition-name: ${titleTransition(article)}`}>
+      <a href={articleUrl(article)}>{title}</a>
+    </Heading>
+    {variant === 'feature' && <p class="article-card__desc">{description}</p>}
+    <p class="article-card__author">{author}</p>
+  </div>
+  <span class="article-card__go arrow" aria-hidden="true">→</span>
+</article>
+
+<style>
+  .article-card {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md);
+    border-radius: var(--radius-lg);
+  }
+
+  /* The whole card is clickable via the title link's stretched hit area */
+  .article-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .article-card__title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .article-card__title a:focus-visible {
+    outline: none;
+  }
+
+  .article-card:has(a:focus-visible) {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
+  }
+
+  .article-card__body > * + * {
+    margin-top: var(--space-2xs);
+  }
+
+  .article-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .article-card__author {
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .article-card__go {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    font-size: 1.25rem;
+  }
+
+  /* Row: light card on the page background */
+  .article-card--row {
+    padding: var(--space-md);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+  }
+
+  .article-card--row .article-card__meta {
+    color: var(--color-emerald);
+  }
+
+  .article-card--row .article-card__title {
+    font-size: var(--text-xl);
+  }
+
+  .article-card--row .article-card__go {
+    background: var(--color-sage);
+    color: var(--color-primary);
+  }
+
+  /* Feature: dark green, larger type */
+  .article-card--feature {
+    min-height: max(100%, 22rem);
+    padding: var(--space-lg);
+    background: var(--color-green);
+    color: var(--color-on-dark-muted);
+  }
+
+  .article-card--feature .article-card__title {
+    color: var(--color-cream);
+    font-size: var(--text-2xl);
+  }
+
+  .article-card--feature .article-card__desc {
+    max-width: 48ch;
+  }
+
+  .article-card--feature .article-card__go {
+    background: var(--color-cream);
+    color: var(--color-green);
+  }
+
+  .article-card--feature:has(a:focus-visible) {
+    outline-color: var(--color-green);
+  }
+
+  @media (min-width: 48rem) {
+    .article-card--feature {
+      padding: var(--space-xl);
+    }
+  }
+</style>

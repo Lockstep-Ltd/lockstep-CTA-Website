@@ -1,0 +1,48 @@
+---
+interface Props {
+  title: string;
+  eyebrow?: string;
+}
+
+const { title, eyebrow } = Astro.props;
+---
+
+<section class="hero">
+  <div class="container hero__inner">
+    {eyebrow && <p class="kicker enter">{eyebrow}</p>}
+    <h1 class="enter" style="--i: 1">{title}</h1>
+    <div class="hero__body stack enter" style="--i: 2">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+
+  @media (min-width: 64rem) {
+    .hero {
+      padding-block: var(--space-3xl) var(--space-2xl);
+    }
+  }
+
+  .hero__inner > * + * {
+    margin-top: var(--space-md);
+  }
+
+  .kicker + h1 {
+    margin-top: var(--space-2xs);
+  }
+
+  h1 {
+    max-width: 18ch;
+    font-size: var(--text-4xl);
+    line-height: 1.02;
+  }
+
+  .hero__body {
+    font-size: var(--text-lg);
+  }
+</style>

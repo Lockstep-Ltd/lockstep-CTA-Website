@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<BaseLayout title="Page not found" description="Sorry, we couldn't find that page." noindex>
+  <PageHero title="Sorry, we couldn't find that page">
+    <p>It may have moved, or the link might be out of date.</p>
+    <div class="button-row">
+      <a class="button" href="/">Go to the home page</a>
+    </div>
+  </PageHero>
+</BaseLayout>
