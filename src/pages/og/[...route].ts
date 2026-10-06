@@ -25,7 +25,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
   getImageOptions: (_path, page: OGPage) => ({
     title: page.title,
     description: page.description,
-    logo: { path: './src/assets/og-mark.png', size: [62] },
+    logo: { path: './src/assets/brand/lockstep-icon.png', size: [96] },
     bgGradient: [green, emerald],
     border: { color: cream, width: 12, side: 'inline-start' },
     padding: 80,

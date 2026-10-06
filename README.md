@@ -28,7 +28,7 @@ All text/background pairings used on the site pass WCAG AAA contrast (7:1 or hig
 
 ### Logo
 
-The mark is a padlock with a staircase cut through it. It's an inline SVG in [src/components/LogoMark.astro](src/components/LogoMark.astro) (it takes the text colour, so it works on cream and on green), with standalone copies in `public/logo-mark.svg` and `public/favicon.svg`. The wordmark "Lockstep" is set in the body typeface.
+The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon are Lockstep's original artwork, kept in [src/assets/brand/](src/assets/brand/README.md). **Never redraw, recolour or retype them.** Only resizing is allowed. On dark green areas the logo sits on a cream tile instead of being recoloured. The favicon, Apple touch icon and social sharing images are all resized from the original icon.
 
 ### Typography
 
@@ -83,8 +83,8 @@ The site is purely informational: no logins, accounts, database or stored form s
 .
 ├── .github/workflows/deploy.yml   # Build check on PRs; deploy to Vercel on push to main
 ├── public/                        # Files served as-is
-│   ├── favicon.svg                # Logo mark (switches to cream in dark mode)
-│   ├── logo-mark.svg              # Standalone logo mark
+│   ├── favicon-32.png             # Resized from the original app icon
+│   ├── apple-touch-icon.png       # Resized from the original app icon
 │   └── robots.txt
 ├── scripts/
 │   └── check-launch.mjs           # Lists remaining placeholders/TODOs (npm run check:launch)
@@ -92,13 +92,13 @@ The site is purely informational: no logins, accounts, database or stored form s
 │   ├── components/
 │   │   ├── Header.astro           # Logo + main navigation
 │   │   ├── Footer.astro           # Support section, footer links, legal line
-│   │   ├── LogoMark.astro         # Lock-and-stairs logo mark (inline SVG)
 │   │   ├── Staircase.astro        # The four steps, laid out as rising stairs
 │   │   ├── ArticleCard.astro      # Article preview (feature or row style)
 │   │   ├── Figure.astro           # Image slot: placeholder until a photo is supplied
 │   │   ├── SupportSignpost.astro  # "Need support now?" section
 │   │   └── PageHero.astro         # Page title + intro block
-│   ├── assets/                    # Images processed at build (og-mark.png, images/)
+│   ├── assets/brand/              # Original logo, icon and lock artwork (do not modify)
+│   ├── assets/images/             # Photos and screenshots, optimised at build
 │   ├── content/articles/          # One Markdown file per article
 │   ├── content/legal/             # Privacy policy, terms, community guidelines, affiliate disclosure
 │   ├── content.config.ts          # Article fields (title, date, author, ...)

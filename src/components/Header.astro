@@ -1,5 +1,6 @@
 ---
-import LogoMark from './LogoMark.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/lockstep-logo.png';
 import { navigation, site } from '../data/site';
 
 // Mark the current page (and its section, e.g. an article under Articles).
@@ -10,9 +11,9 @@ const isSection = (href: string) => href !== '/' && current.startsWith(href);
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a href="/" class="logo" aria-label={`${site.name}, home`}>
-      <LogoMark id="header" class="logo__mark" />
-      <span class="logo__text" translate="no">{site.name}</span>
+    <a href="/" class="logo">
+      <!-- Original Lockstep logo artwork: do not redraw or recolour (see src/assets/brand/README.md) -->
+      <Image src={logo} alt={`${site.name} home`} height={40} densities={[1, 2]} class="logo__img" loading="eager" />
     </a>
 
     <nav aria-label="Main">
@@ -84,25 +85,11 @@ const isSection = (href: string) => href !== '/' && current.startsWith(href);
   .logo {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
-    color: var(--color-primary);
-    text-decoration: none;
   }
 
-  .logo:hover {
-    color: var(--color-primary);
-  }
-
-  .logo :global(.logo__mark) {
+  .logo :global(.logo__img) {
     width: auto;
-    height: 2.4rem;
-  }
-
-  .logo__text {
-    font-family: var(--font-body);
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    height: 2.5rem;
   }
 
   /* On small screens the links wrap onto their own row below the logo:

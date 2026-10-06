@@ -1,5 +1,6 @@
 ---
-import LogoMark from './LogoMark.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/lockstep-logo.png';
 import SupportSignpost from './SupportSignpost.astro';
 import { legalLinks, navigation, site } from '../data/site';
 
@@ -12,9 +13,9 @@ const year = new Date().getFullYear();
   <div class="site-footer__bottom">
     <div class="container site-footer__grid">
       <div class="site-footer__brand stack">
-        <a href="/" class="footer-logo" aria-label={`${site.name}, home`}>
-          <LogoMark id="footer" class="footer-logo__mark" />
-          <span translate="no">{site.name}</span>
+        <!-- Original logo on a cream tile, so it stays unaltered on the dark footer -->
+        <a href="/" class="footer-logo">
+          <Image src={logo} alt={`${site.name} home`} height={40} densities={[1, 2]} class="footer-logo__img" />
         </a>
         <p>Regain control. Redirect the urge.</p>
       </div>
@@ -85,18 +86,14 @@ const year = new Date().getFullYear();
 
   .footer-logo {
     display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    color: var(--color-cream);
-    font-size: 1.75rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    text-decoration: none;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-md);
+    background: var(--color-cream);
   }
 
-  .footer-logo :global(.footer-logo__mark) {
+  .footer-logo :global(.footer-logo__img) {
     width: auto;
-    height: 3rem;
+    height: 2.5rem;
   }
 
   .footer-heading {

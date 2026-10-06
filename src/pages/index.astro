@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import LogoMark from '../components/LogoMark.astro';
+import { Image } from 'astro:assets';
+import lockSteps from '../assets/brand/lock-steps.webp';
 import Staircase from '../components/Staircase.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getArticles } from '../lib/articles';
@@ -27,8 +28,9 @@ const [latest, ...recent] = await getArticles();
         </div>
       </div>
 
-      <div class="hero__art enter" style="--i: 2" aria-hidden="true">
-        <LogoMark id="hero" class="hero__mark" animated />
+      <div class="hero__art enter" style="--i: 2">
+        <!-- Lockstep's own lock-and-steps artwork from the original site: do not alter -->
+        <Image src={lockSteps} alt="" widths={[320, 480, 640]} sizes="(min-width: 56rem) 28rem, 80vw" class="hero__img" loading="eager" />
       </div>
     </div>
   </section>
@@ -177,29 +179,25 @@ const [latest, ...recent] = await getArticles();
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-emerald) 25%, transparent);
   }
 
+  /* Panel colour matches the artwork's own background, so the image sits flush */
   .hero__art {
-    position: relative;
     display: grid;
     place-items: center;
-    aspect-ratio: 4 / 5;
-    max-height: 34rem;
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
-    background:
-      radial-gradient(120% 80% at 85% 0%, color-mix(in srgb, var(--color-emerald) 85%, var(--color-cream)) 0%, transparent 55%),
-      var(--color-green);
-    color: var(--color-cream);
-    overflow: hidden;
+    background: rgb(253 250 240);
+  }
+
+  .hero__art :global(.hero__img) {
+    width: auto;
+    max-height: 28rem;
   }
 
   @media (max-width: 55.99rem) {
-    .hero__art {
-      aspect-ratio: 16 / 10;
+    .hero__art :global(.hero__img) {
+      max-height: 18rem;
     }
-  }
-
-  .hero__art :global(.hero__mark) {
-    width: auto;
-    height: 72%;
   }
 
   /* Commitments band */
@@ -305,23 +303,6 @@ const [latest, ...recent] = await getArticles();
     .partner {
       grid-template-columns: 1fr auto;
       gap: var(--space-xl);
-    }
-  }
-
-  /* The stair line cuts into the hero mark on load, climbing from bottom-left */
-  @media (prefers-reduced-motion: no-preference) {
-    .hero__art :global(.logo-mark__stairs) {
-      stroke-dasharray: 1;
-      animation: draw-stairs 1.6s 0.5s var(--ease-out) both;
-    }
-  }
-
-  @keyframes draw-stairs {
-    from {
-      stroke-dashoffset: 1;
-    }
-    to {
-      stroke-dashoffset: 0;
     }
   }
 </style>

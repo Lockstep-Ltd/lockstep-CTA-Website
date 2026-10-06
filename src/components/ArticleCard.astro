@@ -1,5 +1,4 @@
 ---
-import LogoMark from './LogoMark.astro';
 import { articleUrl, formatDate, titleTransition, type Article } from '../lib/articles';
 
 interface Props {
@@ -14,7 +13,6 @@ const { title, description, date, author, readingTime } = article.data;
 ---
 
 <article class:list={['article-card', `article-card--${variant}`, 'lift']}>
-  {variant === 'feature' && <LogoMark id={`card-${article.id}`} class="article-card__mark" />}
   <div class="article-card__body">
     <p class="article-card__meta">
       <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>
@@ -115,26 +113,6 @@ const { title, description, date, author, readingTime } = article.data;
     padding: var(--space-lg);
     background: var(--color-green);
     color: var(--color-on-dark-muted);
-  }
-
-  /* Large, faint brand mark fills the top of the feature card */
-  .article-card--feature {
-    overflow: hidden;
-  }
-
-  .article-card--feature :global(.article-card__mark) {
-    position: absolute;
-    top: -12%;
-    right: -6%;
-    width: auto;
-    height: 95%;
-    color: var(--color-emerald);
-    opacity: 0.55;
-    pointer-events: none;
-  }
-
-  .article-card--feature > :not(:global(.article-card__mark)) {
-    position: relative;
   }
 
   .article-card--feature .article-card__title {
