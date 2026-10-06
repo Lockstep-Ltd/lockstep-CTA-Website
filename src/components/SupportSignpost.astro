@@ -1,0 +1,96 @@
+---
+import { supportServices, urgentHelp } from '../data/support';
+---
+
+<section class="support" aria-labelledby="support-heading">
+  <div class="container">
+    <h2 id="support-heading">Need support now?</h2>
+    <p>
+      Talking to someone can help. You don't need to be in crisis to contact these UK
+      services.
+    </p>
+    <p class:list={['support__urgent', { placeholder: !urgentHelp.verified }]}>{urgentHelp.text}</p>
+
+    <ul class="support__list">
+      {supportServices.map((service) => (
+        <li class:list={['support__item', { placeholder: !service.verified }]}>
+          <h3>
+            <a href={service.url}>{service.name}</a>
+          </h3>
+          <p>{service.description}</p>
+          {service.phone && <p class="support__phone">{service.phone}</p>}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .support {
+    padding-block: var(--space-xl);
+    background: var(--color-emerald);
+    color: var(--color-white);
+  }
+
+  .support h2,
+  .support h3 {
+    color: var(--color-white);
+  }
+
+  .support h2 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-2xs);
+  }
+
+  .support h3 {
+    font-size: var(--text-base);
+  }
+
+  .support a {
+    color: var(--color-white);
+  }
+
+  .support :focus-visible {
+    outline-color: var(--color-white);
+  }
+
+  .support__urgent {
+    margin-top: var(--space-sm);
+    font-weight: 600;
+  }
+
+  .support__list {
+    display: grid;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .support__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .support__item {
+    padding: var(--space-sm);
+    border: 1px solid color-mix(in srgb, var(--color-white) 35%, transparent);
+    border-radius: var(--radius-md);
+  }
+
+  .support__phone {
+    font-weight: 600;
+  }
+
+  /* Keep placeholders legible on the green background */
+  .support .placeholder {
+    background: #fff7e6;
+    color: var(--color-charcoal);
+  }
+
+  .support .placeholder h3,
+  .support .placeholder a {
+    color: var(--color-green);
+  }
+</style>
