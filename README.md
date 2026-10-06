@@ -217,6 +217,6 @@ The custom domain (`lockstep.uk`) is **not** configured yet. Do that only when t
 - [ ] Replace all placeholder copy, images, logo, favicon and sharing image (`npm run check:launch` shows 0 items)
 - [ ] Verify every support service name, number and link against official sources
 - [ ] Confirm contact email, company number and registered address
-- [ ] Add a privacy notice
+- [ ] Update the privacy policy once the site is off Bubble: it still says the website runs on Bubble and mentions analytics (Andrew to update at the domain switch)
 - [ ] Review the site with real users and a screen reader
 - [ ] Point `lockstep.uk` at Vercel and retire the Bubble site
