@@ -1,14 +1,18 @@
 # Lockstep website
 
-The public website for [Lockstep](https://lockstep.uk), a UK social venture building preventative digital tools to reduce gambling-related harm among young adults (roughly 18–25).
+The public website for [Lockstep](https://lockstep.uk), a UK-based mobile app that helps people reduce gambling by redirecting urges towards healthier, real-world alternatives. The app is in early access on the [App Store](https://apps.apple.com/app/id6772143111).
 
 This is a full rebuild of the current Bubble site. The Bubble site stays live until this one is ready; then the `lockstep.uk` domain switches over.
 
 This README is the source of truth for the project. Keep it updated as things change.
 
+## Positioning
+
+The site keeps the live lockstep.uk messaging: an app for anyone who wants to reduce gambling ("Regain control. Redirect the urge."). Decided by Andrew on 2026-10-06, replacing the earlier brief's "preventative tools for 18–25s" framing. Site copy comes from the original site word for word, with three approved tone edits recorded in [src/data/product.ts](src/data/product.ts).
+
 ## Audiences
 
-1. **Young adults** who may want to use Lockstep's tools
+1. **People who want to reduce gambling** and may use the Lockstep app
 2. **Partners**: universities, charities and support services
 3. **Funders and supporters**, e.g. social enterprise funders such as UnLtd
 
@@ -73,9 +77,14 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 | SEO | `@astrojs/sitemap`, Open Graph tags, `robots.txt` | Search engines and link previews |
 | Hosting | [Vercel](https://vercel.com) | Chosen by the founder. Note: Vercel's free Hobby plan is for non-commercial use, so a Pro plan may be needed for Lockstep Ltd |
 | Deployment | GitHub Actions → Vercel | Pushes to `main` deploy automatically; pull requests are build-checked |
+| Fonts | Newsreader + Inter via `@fontsource` | Brand fonts, self-hosted (no requests to Google) |
+| Content | Astro content collections (Markdown) | Articles and legal pages are plain text files |
+| Article editor | [Keystatic](https://keystatic.com) (local only, uses React) | Edit articles in the browser at `/keystatic` during `npm run dev`; never shipped to visitors |
+| Social images | `astro-og-canvas` | Sharing images generated at build time |
+| Testing | Playwright + axe | WCAG 2.2 AA checks on every page, run on every pull request |
 | Node.js | 22 or newer (see `.nvmrc`) | Required by Astro 7 |
 
-The site is purely informational: no logins, accounts, database or stored form submissions.
+The site is purely informational: no logins, accounts, database or stored form submissions. The old site's "Suggest an article" form is replaced by an email link for now.
 
 ## Project structure
 
