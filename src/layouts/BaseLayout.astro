@@ -12,6 +12,8 @@ interface Props {
   /** Path to a 1200×630 sharing image in public/. */
   ogImage?: string;
   ogImageAlt?: string;
+  /** Keep this page out of search results (e.g. the 404 page). */
+  noindex?: boolean;
 }
 
 const {
@@ -19,6 +21,7 @@ const {
   description = site.defaultDescription,
   ogImage = site.ogImage,
   ogImageAlt = site.ogImageAlt,
+  noindex = false,
 } = Astro.props;
 
 const fullTitle = Astro.url.pathname === '/' ? `${site.name}: ${title}` : `${title} | ${site.name}`;
@@ -33,7 +36,7 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
 
     <!-- PLACEHOLDER favicon: replace public/favicon.svg with the real logo mark -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
