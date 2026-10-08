@@ -4,7 +4,8 @@ import { extname, join } from 'node:path';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-const DIST = 'dist';
+// The Vercel adapter puts the static pages in dist/client (server code goes elsewhere)
+const DIST = 'dist/client';
 const ORIGIN = 'http://lockstep.test';
 
 const TYPES: Record<string, string> = {
@@ -21,10 +22,10 @@ const TYPES: Record<string, string> = {
   '.txt': 'text/plain',
 };
 
-// Every page listed in the sitemap, plus the 404 page
+// Every page listed in the sitemap, plus pages kept out of it on purpose
 const sitemap = readFileSync(join(DIST, 'sitemap-0.xml'), 'utf8');
 const paths = [...sitemap.matchAll(/<loc>https:\/\/lockstep\.uk([^<]*)<\/loc>/g)].map((m) => m[1]);
-paths.push('/404.html');
+paths.push('/404.html', '/articles/suggest/thanks/', '/articles/suggest/error/');
 
 test.beforeEach(async ({ page }) => {
   // Serve the built files for any request to the fake origin

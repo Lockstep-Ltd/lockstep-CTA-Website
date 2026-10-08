@@ -2,7 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { getArticles } from '../../lib/articles';
-import { site } from '../../data/site';
 
 const [latest, ...rest] = await getArticles();
 ---
@@ -22,7 +21,7 @@ const [latest, ...rest] = await getArticles();
       <aside class="suggest enter" style="--i: 2" aria-labelledby="suggest-heading">
         <h2 id="suggest-heading">Found an article worth sharing?</h2>
         <p>Suggest it and we may feature it here.</p>
-        <a class="text-link" href={`mailto:${site.email}?subject=Article%20suggestion`}>
+        <a class="text-link" href="/articles/suggest/">
           Suggest an article <span class="arrow" aria-hidden="true">→</span>
         </a>
       </aside>

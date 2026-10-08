@@ -1,5 +1,5 @@
 // Automated accessibility checks. Run after a build: `npm run build && npm run test:a11y`.
-// Pages are served straight from dist/ inside the browser (see tests/a11y.spec.ts),
+// Pages are served straight from dist/client/ inside the browser (see tests/a11y.spec.ts),
 // so no web server is needed. Uses the installed Google Chrome.
 import { defineConfig } from '@playwright/test';
 
