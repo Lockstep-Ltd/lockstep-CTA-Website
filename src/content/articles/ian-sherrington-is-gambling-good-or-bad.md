@@ -1,6 +1,5 @@
 ---
 # Migrated from lockstep.uk/articles on 2026-10-06. Wording unchanged.
-# TODO: link the sources cited in the text.
 # TODO: add a link to the original talk/video (watchUrl) once confirmed.
 title: "Ian Sherrington: Is Gambling Good or Bad?"
 description: "The creator of the world's first online sportsbook looks back on the industry he helped transform, and asks what it has meant for society."

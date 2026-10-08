@@ -1,6 +1,5 @@
 ---
 # Migrated from lockstep.uk/articles on 2026-10-06. Wording unchanged.
-# TODO: link the sources cited in the text.
 title: "Quitting Shouldn't Feel Like Punishment"
 description: "Smoking and alcohol show that change is easier when people are offered meaningful alternatives, not just told what to give up. Gambling support should do the same."
 date: 2026-08-26
@@ -13,7 +12,7 @@ When society gets serious about helping people give something up, an interesting
 
 Smoking is perhaps the clearest example. For decades, quitting meant removing cigarettes and enduring the cravings, withdrawal and loss of a familiar ritual. Then alternatives improved. Nicotine patches and gum helped, but vaping pushed even further by retaining many of the things smokers had become accustomed to. You hold something, inhaling and exhaling a cloud, all the while taking a break and receiving nicotine. 
 
-Whatever the wider debate around vaping, the evidence for its effectiveness as a smoking cessation tool is increasingly strong. A 2025 Cochrane review of 104 studies involving more than 30,000 adults found that nicotine e-cigarettes drastically improved quit rates compared with traditional nicotine replacement methods. Around 8–11 people in every 100 using nicotine e-cigarettes successfully quit smoking for at least six months, compared with roughly 6 in 100 using nicotine replacement therapy (Lindson et al., 2025).
+Whatever the wider debate around vaping, the evidence for its effectiveness as a smoking cessation tool is increasingly strong. A 2025 Cochrane review of 104 studies involving more than 30,000 adults found that nicotine e-cigarettes drastically improved quit rates compared with traditional nicotine replacement methods. Around 8–11 people in every 100 using nicotine e-cigarettes successfully quit smoking for at least six months, compared with roughly 6 in 100 using nicotine replacement therapy ([Lindson et al., 2025](https://doi.org/10.1002/14651858.CD010216.pub10)).
 
 Furthermore, alcohol appears to be moving in a similar direction. Not long ago, choosing not to drink in a pub often meant being seen to settle for water, a soft drink or a fairly unconvincing alcohol-free beer. Today, non-alcoholic alternatives provide a convincing replica in both taste and appearance whilst removing the effects of alcohol itself.
 
