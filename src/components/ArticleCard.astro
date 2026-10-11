@@ -115,6 +115,19 @@ const { title, description, date, author, readingTime } = article.data;
     color: var(--color-on-dark-muted);
   }
 
+  /* Date pinned to the top, title and summary at the bottom, so any spare
+     height reads as part of the design rather than an empty gap */
+  .article-card--feature .article-card__body {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+  }
+
+  .article-card--feature .article-card__meta {
+    margin-bottom: auto;
+    padding-bottom: var(--space-md);
+  }
+
   .article-card--feature .article-card__title {
     color: var(--color-cream);
     font-size: var(--text-2xl);

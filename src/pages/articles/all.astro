@@ -1,0 +1,56 @@
+---
+// Every published article, newest first. Linked from "See all articles" on /articles/.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getArticles } from '../../lib/articles';
+
+const articles = await getArticles();
+---
+
+<BaseLayout
+  title="All articles"
+  description="Every article from Lockstep, newest first: practical ideas, research and stories around gambling, habits and regaining control."
+>
+  <PageHero title="All articles">
+    <p class="lead">Practical ideas, research and stories around gambling, habits and regaining control.</p>
+    <p>
+      <a class="text-link" href="/articles/">
+        <span class="arrow" aria-hidden="true">←</span> Back to articles
+      </a>
+    </p>
+  </PageHero>
+
+  <section class="section all-articles" aria-label="All articles, newest first">
+    <div class="container">
+      <ul class="all-articles__list" role="list">
+        {articles.map((article) => (
+          <li class="reveal"><ArticleCard article={article} headingLevel="h2" /></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .all-articles {
+    padding-top: 0;
+  }
+
+  .all-articles__list {
+    display: grid;
+    gap: var(--space-sm);
+    padding: 0;
+    list-style: none;
+  }
+
+  .all-articles__list li {
+    max-width: none;
+  }
+
+  @media (min-width: 48rem) {
+    .all-articles__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
