@@ -18,7 +18,7 @@ interface Props {
 }
 
 const { article, more } = Astro.props;
-const { title, description, date, author, authorRole, readingTime, watchUrl } = article.data;
+const { title, description, date, author, authorRole, readingTime, watchUrl, references } = article.data;
 const { Content } = await render(article);
 const isoDate = date.toISOString().slice(0, 10);
 ---
@@ -51,7 +51,7 @@ const isoDate = date.toISOString().slice(0, 10);
         </p>
         {watchUrl && (
           <p class="enter" style="--i: 3">
-            <a class="button" href={watchUrl}>Watch the original</a>
+            <a class="button" href={watchUrl}>View the original</a>
           </p>
         )}
       </div>
@@ -66,6 +66,25 @@ const isoDate = date.toISOString().slice(0, 10);
         <p class="signoff__name">{author}</p>
         {authorRole && <p>{authorRole}</p>}
       </footer>
+
+      {references.length > 0 && (
+        <details class="references" id="references">
+          <summary>References <span class="references__count">({references.length})</span></summary>
+          <ol>
+            {references.map((ref) => (
+              <li>
+                {ref.citation}
+                {ref.url && (
+                  <>
+                    {' '}
+                    <a href={ref.url}>{new URL(ref.url).hostname.replace(/^www\./, '')}</a>
+                  </>
+                )}
+              </li>
+            ))}
+          </ol>
+        </details>
+      )}
     </div>
   </article>
 
@@ -188,6 +207,43 @@ const isoDate = date.toISOString().slice(0, 10);
     margin: 0 auto var(--space-2xl);
     padding-top: var(--space-md);
     border-top: 2px solid var(--color-green);
+  }
+
+  .signoff:has(+ .references) {
+    margin-bottom: var(--space-md);
+  }
+
+  /* Sources cited in the article: collapsed behind a "References" link */
+  .references {
+    max-width: 40rem;
+    margin: 0 auto var(--space-2xl);
+    font-size: var(--text-sm);
+  }
+
+  .references summary {
+    width: fit-content;
+    color: var(--color-green);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+
+  .references__count {
+    font-weight: 400;
+  }
+
+  .references ol {
+    margin-top: var(--space-sm);
+    padding-left: 1.5em;
+  }
+
+  .references li + li {
+    margin-top: var(--space-2xs);
+  }
+
+  .references a {
+    overflow-wrap: anywhere;
   }
 
   .signoff__name {

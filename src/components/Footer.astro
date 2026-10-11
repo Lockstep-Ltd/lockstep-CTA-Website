@@ -50,8 +50,11 @@ const year = new Date().getFullYear();
 
     <div class="container">
       <div class="site-footer__legal">
-        <!-- TODO: confirm legal name, company number and registered address -->
-        <p class="placeholder">© {year} Lockstep Ltd. [Company number and registered address: PLACEHOLDER]</p>
+        <!-- As registered at Companies House (company 17328022). -->
+        <p>
+          © {year} Lockstep Ltd. Registered in England and Wales, company number 17328022.
+          Registered office: Lingcroft, Pyrford Road, West Byfleet, KT14 6QS.
+        </p>
       </div>
     </div>
   </div>
@@ -125,9 +128,5 @@ const year = new Date().getFullYear();
     margin-top: var(--space-xl);
     padding-top: var(--space-md);
     border-top: 1px solid color-mix(in srgb, var(--color-cream) 18%, transparent);
-  }
-
-  .site-footer__bottom .placeholder {
-    color: var(--color-charcoal);
   }
 </style>

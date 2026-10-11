@@ -36,7 +36,22 @@ export default config({
           description: 'e.g. "4 min read"',
           validation: { isRequired: true },
         }),
-        watchUrl: fields.url({ label: 'Link to original (talks and videos only)' }),
+        watchUrl: fields.url({ label: 'Link to original (summaries of talks, videos or articles)' }),
+        references: fields.array(
+          fields.object({
+            citation: fields.text({
+              label: 'Citation',
+              description: 'e.g. "Gambling Commission (2025). Young People and Gambling 2025."',
+              validation: { isRequired: true },
+            }),
+            url: fields.url({ label: 'Link' }),
+          }),
+          {
+            label: 'References',
+            description: 'Sources cited in the text. Shown under "References" at the end of the article.',
+            itemLabel: (props) => props.fields.citation.value || 'Reference',
+          },
+        ),
         draft: fields.checkbox({ label: 'Draft', description: 'Hide this article from the site.' }),
         content: fields.markdoc({ label: 'Article', extension: 'md' }),
       },
