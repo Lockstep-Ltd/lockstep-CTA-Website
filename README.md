@@ -45,7 +45,7 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 - **CSS only.** No JavaScript is involved.
 - **Page fades:** the browser's cross-document View Transitions.
 - **Scroll effects:** CSS scroll-driven animations for content revealing as you scroll, the staircase growing, the header edge and the article reading-progress bar.
-- **Hero:** the stair line draws into the hero logo when the page loads.
+- **Hero:** the lock-and-steps illustration fades up with the hero text when the page loads.
 - **Reduced motion:** everything is switched off when the visitor asks for reduced motion.
 - **Unsupported browsers:** they just show the content.
 - **Classes:** use `.enter` (with `--i` for stagger) for load-in and `.reveal` for on-scroll.
