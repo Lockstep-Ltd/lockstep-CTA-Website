@@ -13,6 +13,14 @@ export const site = {
   locale: 'en_GB',
   // The "Download" link on the original site (Lockstep: Habit Management App, iOS).
   appStoreUrl: 'https://apps.apple.com/app/id6772143111',
+  // As registered at Companies House. Used in the footer and the search engine data (JSON-LD).
+  company: {
+    legalName: 'Lockstep Ltd',
+    number: '17328022',
+    streetAddress: 'Lingcroft, Pyrford Road',
+    locality: 'West Byfleet',
+    postcode: 'KT14 6QS',
+  },
 };
 
 export const navigation = [
@@ -23,10 +31,12 @@ export const navigation = [
   { label: 'Contact', href: '/contact/' },
 ];
 
-// Legal pages. These exact paths are linked from the Lockstep app: keep them stable.
+// Legal pages. The Lockstep app links to these paths (without the trailing slash,
+// which also works): keep them stable. The site links to the canonical form with
+// the slash, so search engines see one URL per page.
 export const legalLinks = [
-  { label: 'Privacy Policy', href: '/privacy_policy' },
-  { label: 'Terms of Use', href: '/terms_of_use' },
-  { label: 'Community Guidelines', href: '/community_guidelines' },
-  { label: 'Affiliate Disclosure', href: '/affiliate_disclosure' },
+  { label: 'Privacy Policy', href: '/privacy_policy/' },
+  { label: 'Terms of Use', href: '/terms_of_use/' },
+  { label: 'Community Guidelines', href: '/community_guidelines/' },
+  { label: 'Affiliate Disclosure', href: '/affiliate_disclosure/' },
 ];

@@ -18,7 +18,7 @@ const { page } = Astro.props;
 const { title, description, updated } = page.data;
 const { Content, headings } = await render(page);
 const sections = headings.filter((h) => h.depth === 2);
-const current = `/${page.id}`;
+const current = `/${page.id}/`;
 ---
 
 <BaseLayout title={title} description={description}>

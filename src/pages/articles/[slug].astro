@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { formatDate, getArticles, titleTransition, type Article } from '../../lib/articles';
+import { articleNodes } from '../../lib/structured-data';
 
 export async function getStaticPaths() {
   const articles = await getArticles();
@@ -29,8 +30,10 @@ const isoDate = date.toISOString().slice(0, 10);
   ogType="article"
   ogImage={`/og/articles/${article.id}.png`}
   ogImageAlt={`${title}, by ${author}`}
+  structuredData={articleNodes(article)}
 >
   <meta slot="head" property="article:published_time" content={isoDate} />
+  <meta slot="head" name="author" content={author} />
 
   <div class="progress" aria-hidden="true"></div>
 

@@ -9,6 +9,8 @@
     { "source": "/", "has": [{ "type": "query", "key": "section", "value": "how-it-works" }], "destination": "/how-it-works/", "permanent": true },
     { "source": "/", "has": [{ "type": "query", "key": "section", "value": "status" }], "destination": "/how-it-works/#status", "permanent": true },
     { "source": "/", "has": [{ "type": "query", "key": "section", "value": "contact" }], "destination": "/contact/", "permanent": true },
-    { "source": "/", "has": [{ "type": "query", "key": "section", "value": "articles" }], "destination": "/articles/", "permanent": true }
+    { "source": "/", "has": [{ "type": "query", "key": "section", "value": "articles" }], "destination": "/articles/", "permanent": true },
+
+    { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true }
   ]
 }

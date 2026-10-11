@@ -74,7 +74,7 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 | Framework | [Astro](https://astro.build) 7 | Builds plain, fast HTML pages; no JavaScript is sent to visitors unless we add it |
 | Styling | Plain CSS with custom properties (design tokens) | No heavy UI framework; brand values defined in one place |
 | Language | TypeScript (for small data files) | Catches mistakes when the site is built |
-| SEO | `@astrojs/sitemap`, Open Graph tags, `robots.txt` | Search engines and link previews |
+| SEO | `@astrojs/sitemap`, Open Graph tags, JSON-LD structured data, `robots.txt` | Search engines and link previews (see "Search engines" below) |
 | Hosting | [Vercel](https://vercel.com) | Chosen by the founder. Note: Vercel's free Hobby plan is for non-commercial use, so a Pro plan may be needed for Lockstep Ltd |
 | Deployment | GitHub Actions → Vercel | Pushes to `main` deploy automatically; pull requests are build-checked |
 | Fonts | Newsreader + Inter via `@fontsource` | Brand fonts, self-hosted (no requests to Google) |
@@ -114,6 +114,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   ├── content/legal/             # Privacy policy, terms, community guidelines, affiliate disclosure
 │   ├── content.config.ts          # Article fields (title, date, author, ...)
 │   ├── lib/articles.ts            # Article sorting, date formatting, URLs
+│   ├── lib/structured-data.ts     # JSON-LD for search engines (organisation, articles)
 │   ├── data/
 │   │   ├── site.ts                # Site name, contact email, navigation, SEO defaults
 │   │   ├── product.ts             # App copy: tagline, steps, principles, ethics, status
@@ -196,6 +197,15 @@ These rules only run on Vercel, not with `npm run dev`.
 
 Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src={...} alt="...">`. It shows a placeholder until an image is supplied, then serves optimised AVIF/WebP at the right size. See `src/assets/images/README.md`.
 
+### Search engines
+
+- **Page titles and descriptions:** every page passes a `title` and `description` to `BaseLayout`. Aim for titles under 60 characters and descriptions of 70–160 characters. Article descriptions come from the frontmatter.
+- **Headings:** one `<h1>` per page, then `<h2>` and `<h3>` in order, without skipping levels.
+- **Canonical URLs** end with a slash (`/about/`). Link to that form inside the site. The app's legal links without the slash still work.
+- **Sitemap:** built automatically at `/sitemap-index.xml`, with each article's date as `<lastmod>`. `/sitemap.xml` redirects there (in `vercel.json`) and `robots.txt` points to it. Pages marked `noindex` (the 404 page) are left out.
+- **Structured data:** `src/lib/structured-data.ts` describes Lockstep Ltd and the website on every page, and adds article and breadcrumb data to articles. It uses only facts already on the site. Check changes with Google's [Rich Results Test](https://search.google.com/test/rich-results).
+- **Sharing images:** generated at build time by `src/pages/og/[...route].ts`.
+
 ### Accessibility tests
 
 - `tests/a11y.spec.ts` runs axe against every page in the sitemap, plus the 404 page, at phone and desktop widths.
@@ -256,3 +266,4 @@ The custom domain (`lockstep.uk`) is **not** configured yet. Do that only when t
 - [ ] Set up Resend and `RESEND_API_KEY` (see "Deployment"), then send a test suggestion
 - [ ] Review the site with real users and a screen reader
 - [ ] Point `lockstep.uk` at Vercel and retire the Bubble site
+- [ ] Verify `lockstep.uk` in Google Search Console and Bing Webmaster Tools (DNS record, so nothing is added to the site) and submit `https://lockstep.uk/sitemap-index.xml`
