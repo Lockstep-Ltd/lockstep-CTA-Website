@@ -4,11 +4,12 @@ import PageHero from '../components/PageHero.astro';
 import Staircase from '../components/Staircase.astro';
 import { ethics, status, steps } from '../data/product';
 import { site } from '../data/site';
+// Search description: "reduce gambling" added for search engines (approved by Andrew, 2026-10-11).
 ---
 
 <BaseLayout
   title="How it works"
-  description="How Lockstep helps you interrupt urges, grow daily, connect with others and keep your progress going."
+  description="How Lockstep helps you reduce gambling: interrupt urges, grow daily, connect with others and keep your progress going."
 >
   <PageHero title="How Lockstep works">
     <p>
@@ -68,7 +69,7 @@ import { site } from '../data/site';
         ))}
       </dl>
       <p class="reveal">
-        <a class="text-link" href="/privacy_policy">Read the full privacy policy <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="text-link" href="/privacy_policy/">Read the full privacy policy <span class="arrow" aria-hidden="true">→</span></a>
       </p>
     </div>
   </section>
@@ -78,6 +79,7 @@ import { site } from '../data/site';
       <h2 id="status-heading">{status.label}</h2>
       <p class="lead">{status.text}</p>
       <p>{status.note}</p>
+      <p>{status.android}</p>
       <div class="button-row">
         <a class="button" href={site.appStoreUrl}>Download on the App Store <span class="arrow" aria-hidden="true">→</span></a>
         <a class="button button--secondary" href="/contact/">Get in touch</a>

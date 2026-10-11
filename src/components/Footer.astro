@@ -50,10 +50,10 @@ const year = new Date().getFullYear();
 
     <div class="container">
       <div class="site-footer__legal">
-        <!-- As registered at Companies House (company 17328022). -->
+        <!-- As registered at Companies House (details in src/data/site.ts). -->
         <p>
-          © {year} Lockstep Ltd. Registered in England and Wales, company number 17328022.
-          Registered office: Lingcroft, Pyrford Road, West Byfleet, KT14 6QS.
+          © {year} {site.company.legalName}. Registered in England and Wales, company number {site.company.number}.
+          Registered office: {site.company.streetAddress}, {site.company.locality}, {site.company.postcode}.
         </p>
       </div>
     </div>

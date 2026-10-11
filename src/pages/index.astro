@@ -28,6 +28,7 @@ const [latest, ...recent] = await getArticles();
           <a class="button" href={site.appStoreUrl}>Download on the App Store <span class="arrow" aria-hidden="true">→</span></a>
           <a class="button button--secondary" href="/how-it-works/">See how it works</a>
         </div>
+        <p class="hero__android enter" style="--i: 3">{status.android}</p>
       </div>
 
       <div class="hero__art enter" style="--i: 2">
@@ -151,6 +152,10 @@ const [latest, ...recent] = await getArticles();
 
   .hero .lead {
     max-width: 46ch;
+  }
+
+  .hero__android {
+    font-size: var(--text-sm);
   }
 
   .hero__note {

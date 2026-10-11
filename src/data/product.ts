@@ -101,4 +101,7 @@ export const status = {
   label: 'Early access',
   text: 'Lockstep is now accepting a limited number of early members. Join now to help shape the platform, access new features first, and become part of the founding community as we continue to improve the experience.',
   note: 'The initial release is UK-focused. Broader availability may follow as the product matures and regulatory considerations are addressed.',
+  // Added 2026-10-11 at Andrew's request: the Android app is being tested with a small group first.
+  android:
+    "Android app coming soon. For now it's early access only, while we test it with a small group of users to make sure it works well.",
 };
