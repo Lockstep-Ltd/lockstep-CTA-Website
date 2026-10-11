@@ -42,9 +42,12 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 
 ### Motion
 
-- **CSS only.** No JavaScript is involved.
+- **Mostly CSS.** The one exception is a tiny inline script in `BaseLayout.astro` (allowed by Andrew on 2026-10-11). It only notes when a `.reveal` element or the staircase scrolls into view and adds `.is-visible`; CSS does all the animating. It works the same in every browser, including Safari on iPhone, and sends nothing anywhere.
 - **Page fades:** the browser's cross-document View Transitions.
-- **Scroll effects:** CSS scroll-driven animations for content revealing as you scroll, the staircase growing, the header edge and the article reading-progress bar.
+- **Scroll reveals:** sections fade up as they come into view, and items arriving together are slightly staggered.
+- **Staircase:** each step grows up from the floor in turn (a `clip-path` reveal, so the numbers aren't squashed), then its number and text settle in.
+- **Scroll-driven CSS:** the header edge and the article reading-progress bar.
+- **Fallbacks:** with reduced motion turned on, without JavaScript, or when printing, everything shows straight away with no animation.
 - **Hero:** the lock-and-steps illustration fades up with the hero text when the page loads.
 - **Reduced motion:** everything is switched off when the visitor asks for reduced motion.
 - **Unsupported browsers:** they just show the content.
@@ -62,7 +65,7 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 
 - **Mobile-first and responsive.** Layouts are designed for phones first.
 - **Accessible to WCAG 2.2 AA:** semantic HTML, sufficient contrast, keyboard navigable, visible focus states, a skip link, alt text on all images.
-- **Fast:** no client-side JavaScript at present (animations are pure CSS); optimise all images.
+- **Fast:** almost no client-side JavaScript (one tiny inline script for scroll reveals); optimise all images.
 - **Privacy:** no analytics, cookies or third-party trackers. If any are added later, they need a UK GDPR-compliant consent banner first.
 - **Secrets:** never commit secrets, API keys or personal data. Use environment variables; `.env` files are ignored by Git (see `.env.example`).
 - **Support signposting:** every page footer includes "Need support now?" with UK support services. These details must be checked against official sources before launch.
@@ -216,7 +219,7 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 ### Common edits
 
 - **Page text:** edit the files in `src/pages/`. App copy shared across pages (steps, principles and so on) lives in `src/data/product.ts`.
-- **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL, and the newest article is featured automatically. Set `draft: true` to hide one.
+- **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL (don't name one `all`: `/articles/all/` lists every article). Articles are ordered by date: the newest is featured on `/articles/` with the next three beside it, and "See all articles" leads to the full list. Set `draft: true` to hide one.
 - **Article sources:** keep citations in the text short, e.g. "(Gambling Commission, 2025)", and list the full source under `references` in the frontmatter (or the References field in Keystatic). They appear behind a "References" link at the end of the article.
 - **Navigation or contact email:** `src/data/site.ts`.
 - **Support services:** `src/data/support.ts`. Set `verified: true` once each entry is checked.

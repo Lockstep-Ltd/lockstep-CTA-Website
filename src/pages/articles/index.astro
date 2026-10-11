@@ -3,7 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { getArticles } from '../../lib/articles';
 
-const [latest, ...rest] = await getArticles();
+// Newest first. The newest is featured; the next three sit beside it, and
+// the full list is on /articles/all/.
+const articles = await getArticles();
+const [latest, ...older] = articles;
+const rest = older.slice(0, 3);
+const hasMore = articles.length > rest.length + 1;
 ---
 
 <BaseLayout
@@ -43,6 +48,13 @@ const [latest, ...rest] = await getArticles();
         ))}
       </ul>
     </div>
+    {hasMore && (
+      <div class="container all-link">
+        <a class="button button--secondary" href="/articles/all/">
+          See all articles <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    )}
   </section>
 </BaseLayout>
 
@@ -96,6 +108,10 @@ const [latest, ...rest] = await getArticles();
     gap: var(--space-sm);
     padding: 0;
     list-style: none;
+  }
+
+  .all-link {
+    margin-top: var(--space-lg);
   }
 
   .articles-grid__rest li {
