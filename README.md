@@ -167,6 +167,16 @@ Keystatic rewrites a file's frontmatter when you save it. Any `# TODO` comments 
 - **Fixed URLs:** the Lockstep app links to these exact paths, with underscores: `/privacy_policy`, `/terms_of_use`, `/community_guidelines` and `/affiliate_disclosure`. It also links to `/articles`.
 - **Before renaming or removing one:** update the app's links in the same release, or add a redirect.
 
+### Old Bubble links
+
+[vercel.json](vercel.json) redirects the old site's addresses so saved and shared links keep working:
+
+- **Home page sections:** `/?section=…` links go to the matching page. `philosophy` goes to `/about/#philosophy` and `status` goes to `/how-it-works/#status`.
+- **Old pages:** `/index` and `/mobile_index` go to the home page.
+- **Legal pages:** these keep their exact old URLs, so they need no redirects.
+
+These rules only run on Vercel, not with `npm run dev`.
+
 ### Images
 
 Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src={...} alt="...">`. It shows a placeholder until an image is supplied, then serves optimised AVIF/WebP at the right size. See `src/assets/images/README.md`.
