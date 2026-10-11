@@ -1,12 +1,14 @@
 ---
 # Migrated from lockstep.uk/articles on 2026-10-06. Wording unchanged.
-# TODO: link the sources cited in the text.
 title: "Quitting Shouldn't Feel Like Punishment"
 description: "Smoking and alcohol show that change is easier when people are offered meaningful alternatives, not just told what to give up. Gambling support should do the same."
 date: 2026-08-26
 author: "Andrew Brink"
 authorRole: "Founder, Lockstep"
 readingTime: "4 min read"
+references:
+  - citation: "Lindson N, Livingstone-Banks J, Butler AR, et al. (2025). Electronic cigarettes for smoking cessation. Cochrane Database of Systematic Reviews, Issue 11."
+    url: "https://doi.org/10.1002/14651858.CD010216.pub10"
 ---
 
 When society gets serious about helping people give something up, an interesting pattern tends to emerge. We don't get better at telling people to stop, we get better at giving them something else.

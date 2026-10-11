@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Staircase from '../components/Staircase.astro';
-import Figure from '../components/Figure.astro';
 import { ethics, status, steps } from '../data/product';
 import { site } from '../data/site';
 ---
@@ -28,16 +27,24 @@ import { site } from '../data/site';
   <section class="section" aria-labelledby="tools-heading">
     <div class="container stack-lg">
       <h2 id="tools-heading" class="reveal">Inside the app</h2>
+      <!-- Screenshots left out for now. To add them later, put the images in
+           src/assets/images/ and add a <Figure src={...} alt="..."> above each <h3>. -->
       <div class="grid grid--2">
         <article class="card stack reveal">
-          <Figure alt="Screenshot of the Lockstep app" placeholder="PLACEHOLDER: app screenshot" />
-          <h3 class="placeholder">[PLACEHOLDER: Feature name]</h3>
-          <p class="placeholder">[PLACEHOLDER: what it does and who it's for, in one or two sentences.]</p>
+          <h3>Swap the Night</h3>
+          <p>
+            Tell us what you were planning to spend and the kind of night you're after, then
+            swipe through real events and things to do from Skiddle and Ticketmaster that you
+            could spend it on instead.
+          </p>
         </article>
         <article class="card stack reveal">
-          <Figure alt="Screenshot of the Lockstep app" placeholder="PLACEHOLDER: app screenshot" />
-          <h3 class="placeholder">[PLACEHOLDER: Feature name]</h3>
-          <p class="placeholder">[PLACEHOLDER: what it does and who it's for, in one or two sentences.]</p>
+          <h3>Relevant Meetings</h3>
+          <p>
+            Find support meetings with people in a similar situation to you. Lockstep matches
+            meetings to you and your circumstances, and shows how relevant each one is as a
+            percentage.
+          </p>
         </article>
       </div>
     </div>
@@ -66,7 +73,7 @@ import { site } from '../data/site';
     </div>
   </section>
 
-  <section class="section" aria-labelledby="status-heading">
+  <section class="section" id="status" aria-labelledby="status-heading">
     <div class="container status-block reveal">
       <h2 id="status-heading">{status.label}</h2>
       <p class="lead">{status.text}</p>

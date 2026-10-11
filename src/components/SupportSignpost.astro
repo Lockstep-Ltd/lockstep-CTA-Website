@@ -18,7 +18,11 @@ import { supportServices, urgentHelp } from '../data/support';
             <a href={service.url}>{service.name}</a>
           </h3>
           <p>{service.description}</p>
-          {service.phone && <p class="support__phone">{service.phone}</p>}
+          {service.phone && (
+            <p class="support__phone">
+              <a href={`tel:${service.phone.replace(/\s/g, '')}`}>{service.phone}</a>
+            </p>
+          )}
         </li>
       ))}
     </ul>
