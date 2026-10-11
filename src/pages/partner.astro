@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import { site } from '../data/site';
-// PLACEHOLDER copy: replace with final wording before launch.
 ---
 
 <BaseLayout
@@ -28,10 +27,17 @@ import { site } from '../data/site';
         Offer students a practical, judgement-free tool that sits alongside your existing
         wellbeing and student support services.
       </p>
-      <p class="placeholder">
-        [PLACEHOLDER: what a university partnership involves, e.g. pilots, student wellbeing
-        integration, data sharing (if any).]
+      <p>
+        For many people, gambling starts at university, alongside sport, nights out and group
+        chats. Lockstep gives students somewhere to turn early, long before things reach a
+        crisis. Working together could include:
       </p>
+      <ul class="points">
+        <li>Introducing Lockstep to students through your wellbeing team, students' union and welcome events</li>
+        <li>Running a pilot with a group of students and learning from their feedback</li>
+        <li>Connecting Lockstep with your existing support, so students who need more help know where to go</li>
+      </ul>
+      <p>We never share information about individual students.</p>
     </div>
   </section>
 
@@ -42,10 +48,21 @@ import { site } from '../data/site';
         Prevention and treatment work best together. We want to help people find the right
         support at the right time, and to learn from organisations already doing this work.
       </p>
-      <p class="placeholder">
-        [PLACEHOLDER: how Lockstep works with charities and support services, e.g. referral
-        pathways, co-design, research.]
-      </p>
+      <p>We'd like to work with you on:</p>
+      <ul class="points">
+        <li>
+          <strong>Meetings:</strong> listing your support groups in Lockstep, so people can find
+          meetings that fit their situation
+        </li>
+        <li>
+          <strong>Referrals:</strong> pointing people who need more help towards your services,
+          and offering a lighter-touch option to people who aren't ready for formal treatment
+        </li>
+        <li>
+          <strong>Co-design and research:</strong> shaping new features with the people you
+          support, and sharing what we learn
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -56,14 +73,33 @@ import { site } from '../data/site';
         Your support helps us build and test Lockstep with the people who use it, and measure
         what really makes a difference.
       </p>
-      <p class="placeholder">
-        [PLACEHOLDER: funding needs, impact goals, and current supporters (with permission to
-        name them).]
+      <p>Lockstep is at an early stage. Funding would help us:</p>
+      <ul class="points">
+        <li>Develop and test new features with the people who use them</li>
+        <li>Reach more people earlier, before gambling becomes a crisis</li>
+        <li>Measure our impact properly, and share what we find</li>
+      </ul>
+      <p>
+        If you'd like to hear more about our plans, we'd be glad to talk.
       </p>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="partner-cta-heading">
+  <section class="section" aria-labelledby="international-heading">
+    <div class="container stack reveal">
+      <h2 id="international-heading">Organisations outside the UK</h2>
+      <p>
+        Gambling harm isn't only a UK problem. We're looking to bring Lockstep to new countries
+        by working with NGOs and public agencies that already know their communities.
+      </p>
+      <p>
+        We provide the app and adapt it for each country, from language to local support
+        services and meetings. Our partners lead how it reaches people locally.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="partner-cta-heading">
     <div class="container stack reveal">
       <h2 id="partner-cta-heading">Start a conversation</h2>
       <p>
@@ -78,3 +114,13 @@ import { site } from '../data/site';
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .points {
+    padding-left: 1.25em;
+  }
+
+  .points li + li {
+    margin-top: var(--space-2xs);
+  }
+</style>

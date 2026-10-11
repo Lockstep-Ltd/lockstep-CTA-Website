@@ -1,12 +1,28 @@
 ---
 # Migrated from lockstep.uk/articles on 2026-10-06. Wording unchanged.
-# TODO: link the sources cited in the text.
 title: "Gambling & British Politics"
 description: "Gambling creates harm, but it also creates revenue. How Britain's relationship with the industry is changing, and why."
 date: 2026-08-18
 author: "Andrew Brink"
 authorRole: "Founder, Lockstep"
 readingTime: "4 min read"
+references:
+  - citation: "Gambling Commission (2024). Industry Statistics: November 2024."
+    url: "https://www.gamblingcommission.gov.uk/statistics-and-research/publication/industry-statistics-november-2024-official-statistics"
+  - citation: "HM Treasury and HM Revenue & Customs (2025). The Tax Treatment of Remote Gambling: consultation."
+    url: "https://www.gov.uk/government/consultations/tax-treatment-of-remote-gambling/the-tax-treatment-of-remote-gambling-consultation-accessible"
+  - citation: "HM Revenue & Customs. UK Betting and Gaming Statistics."
+    url: "https://www.gov.uk/government/statistics/uk-betting-and-gaming-statistics"
+  - citation: "HM Revenue & Customs (2025). Gambling duty changes."
+    url: "https://www.gov.uk/government/publications/changes-to-gambling-duties/gambling-duty-changes"
+  - citation: "Office for Health Improvement and Disparities (2023). The economic and social cost of harms associated with gambling in England: evidence update 2023."
+    url: "https://assets.publishing.service.gov.uk/media/63bc25b4d3bf7f262c5ad31f/The-economic-cost-of-gambling-related-harm-in-England_evidence-update-2023.pdf"
+  - citation: "Gambling Commission. Guidance to licensing authorities, Part 21: Adult gaming centres."
+    url: "https://www.gamblingcommission.gov.uk/guidance/guidance-to-licensing-authorities/part-21-introduction"
+  - citation: "Prime Minister’s Office (2026). PM vows to save “hollowed out high streets” with crackdown on vape and betting shops."
+    url: "https://www.gov.uk/government/news/pm-vows-to-save-hollowed-out-high-streets-with-crackdown-on-vape-and-betting-shops"
+  - citation: "Allyn B (2026). Kalshi and Polymarket bets on clinical trials criticized as ‘ghastly’. NPR."
+    url: "https://www.npr.org/2026/08/07/nx-s1-5922530/patients-betting-kalshi-polymarket-clinical-trials"
 ---
 
 For decades, Britain’s relationship with gambling has rested on an uncomfortable contradiction. Gambling creates harm, but it also creates revenue.

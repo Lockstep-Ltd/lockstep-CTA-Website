@@ -17,6 +17,10 @@ const articles = defineCollection({
     readingTime: z.string(),
     /** For summaries of talks or videos: link to the original. */
     watchUrl: z.url().optional(),
+    /** Sources cited in the text, listed under "References" at the end of the article. */
+    references: z
+      .array(z.object({ citation: z.string(), url: z.url().optional() }))
+      .default([]),
     draft: z.boolean().default(false),
   }),
 });

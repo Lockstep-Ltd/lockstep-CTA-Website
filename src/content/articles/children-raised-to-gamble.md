@@ -1,6 +1,5 @@
 ---
 # Migrated from lockstep.uk/articles on 2026-10-06. Wording unchanged.
-# TODO: link the sources cited in the text.
 title: "Children Raised to Gamble"
 description: "Long before anyone can legally place a bet, loot boxes, card packs and sponsorship are teaching them the patterns gambling relies on."
 date: 2026-08-08

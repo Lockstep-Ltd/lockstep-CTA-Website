@@ -45,7 +45,7 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 - **CSS only.** No JavaScript is involved.
 - **Page fades:** the browser's cross-document View Transitions.
 - **Scroll effects:** CSS scroll-driven animations for content revealing as you scroll, the staircase growing, the header edge and the article reading-progress bar.
-- **Hero:** the stair line draws into the hero logo when the page loads.
+- **Hero:** the lock-and-steps illustration fades up with the hero text when the page loads.
 - **Reduced motion:** everything is switched off when the visitor asks for reduced motion.
 - **Unsupported browsers:** they just show the content.
 - **Classes:** use `.enter` (with `--i` for stagger) for load-in and `.reveal` for on-scroll.
@@ -182,6 +182,7 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 
 - **Page text:** edit the files in `src/pages/`. App copy shared across pages (steps, principles and so on) lives in `src/data/product.ts`.
 - **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL, and the newest article is featured automatically. Set `draft: true` to hide one.
+- **Article sources:** keep citations in the text short, e.g. "(Gambling Commission, 2025)", and list the full source under `references` in the frontmatter (or the References field in Keystatic). They appear behind a "References" link at the end of the article.
 - **Navigation or contact email:** `src/data/site.ts`.
 - **Support services:** `src/data/support.ts`. Set `verified: true` once each entry is checked.
 - **Colours, fonts, spacing:** `src/styles/tokens.css`.
@@ -216,7 +217,7 @@ The custom domain (`lockstep.uk`) is **not** configured yet. Do that only when t
 
 - [ ] Replace all placeholder copy, images, logo, favicon and sharing image (`npm run check:launch` shows 0 items)
 - [ ] Verify every support service name, number and link against official sources
-- [ ] Confirm contact email, company number and registered address
+- [x] Confirm contact email, company number and registered address
 - [ ] Update the privacy policy once the site is off Bubble: it still says the website runs on Bubble and mentions analytics (Andrew to update at the domain switch)
 - [ ] Review the site with real users and a screen reader
 - [ ] Point `lockstep.uk` at Vercel and retire the Bubble site

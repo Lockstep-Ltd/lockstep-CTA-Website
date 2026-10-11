@@ -1,12 +1,16 @@
 ---
 # Migrated from lockstep.uk/articles on 2026-10-06. Wording unchanged.
-# TODO: link the sources cited in the text.
 title: "The Gap in Gambling Support"
 description: "Pathways into gambling are now instant and frictionless. Support still waits for a crisis. What are we offering young people in the years before that?"
 date: 2026-09-08
 author: "Andrew Brink"
 authorRole: "Founder, Lockstep"
 readingTime: "6 min read"
+references:
+  - citation: "Gambling Commission (2025). Young People and Gambling 2025: Official statistics."
+    url: "https://www.gamblingcommission.gov.uk/statistics-and-research/publication/young-people-and-gambling-2025-official-statistics"
+  - citation: "GambleAware (2025). Annual statistics from the National Gambling Treatment Service (Great Britain), 1 April 2024 to 31 March 2025."
+    url: "https://www.gambleaware.org/our-research/publication-library/articles/annual-statistics-from-the-national-gambling-treatment-service-great-britain-1st-april-2024-to-31st-march-2025/"
 ---
 
 For a growing number of young people, gambling does not begin with a trip to a betting shop. It begins on a phone.
