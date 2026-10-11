@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+// Fallback address if the form can't send (also used if the email service is down).
+const to = 'articles@lockstep.uk';
+---
+
+<BaseLayout title="We couldn't send your suggestion" description="Something went wrong sending your article suggestion." noindex>
+  <section class="section">
+    <div class="container stack">
+      <h1>Sorry, we couldn't send your suggestion</h1>
+      <p class="lead">
+        Please check that the article link starts with https:// and that your email address is
+        correct, then try again.
+      </p>
+      <p>
+        If it still doesn't work, email the article to us at
+        <a href={`mailto:${to}?subject=Article%20suggestion`}>{to}</a>.
+      </p>
+      <div class="button-row">
+        <a class="button" href="/articles/suggest/">Try again</a>
+        <a class="button button--secondary" href="/articles/">Back to articles</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

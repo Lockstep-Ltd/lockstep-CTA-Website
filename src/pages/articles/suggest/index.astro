@@ -1,0 +1,187 @@
+---
+// "Suggest an article" form. Posts to /api/suggest-article, which emails the suggestion
+// to articles@lockstep.uk. No JavaScript needed; the browser checks required fields first.
+// Wording follows the original lockstep.uk suggestion box.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Suggest an article"
+  description="Seen something worth sharing about gambling, habits or regaining control? Suggest it for a chance to be featured on Lockstep."
+>
+  <section class="suggest-page">
+    <div class="container suggest-page__inner">
+      <p class="suggest-page__back enter">
+        <a class="text-link" href="/articles/"><span class="arrow" aria-hidden="true">←</span> All articles</a>
+      </p>
+      <h1 class="enter" style="--i: 1">Suggest an article</h1>
+      <p class="lead enter" style="--i: 1">
+        Seen something worth sharing? Submit it here for a chance to be featured!
+      </p>
+
+      <form class="suggest-form enter" style="--i: 2" method="post" action="/api/suggest-article">
+        <div class="field">
+          <label for="title">Article title <span class="required">(required)</span></label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            required
+            maxlength="300"
+            placeholder="e.g. The rise in youth gambling explained"
+          />
+        </div>
+
+        <div class="field">
+          <label for="url">Article link <span class="required">(required)</span></label>
+          <input id="url" name="url" type="url" required maxlength="2000" placeholder="https://…" inputmode="url" />
+        </div>
+
+        <div class="field">
+          <label for="email">Your email <span class="required">(required)</span></label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            maxlength="320"
+            autocomplete="email"
+            placeholder="e.g. name@email.com"
+            aria-describedby="email-hint"
+          />
+          <p class="field__hint" id="email-hint">We'll use this to let you know our decision.</p>
+        </div>
+
+        <div class="field">
+          <label for="note">Note <span class="optional">(optional)</span></label>
+          <textarea
+            id="note"
+            name="note"
+            rows="4"
+            maxlength="2000"
+            placeholder="Any context you'd like to share…"
+            aria-describedby="note-hint"></textarea>
+          <p class="field__hint" id="note-hint">Add any context, key points, or why it stood out.</p>
+        </div>
+
+        <!-- Spam trap: hidden from people and screen readers; bots tend to fill it in. -->
+        <div class="trap" aria-hidden="true">
+          <label for="website">Leave this field empty</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="suggest-form__actions">
+          <button class="button" type="submit">Send suggestion <span class="arrow" aria-hidden="true">→</span></button>
+        </div>
+
+        <p class="suggest-form__privacy">
+          Your details will only be used to review your suggestion. See our{' '}
+          <a href="/privacy_policy">privacy policy</a>.
+        </p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .suggest-page {
+    padding-block: var(--space-xl) var(--space-2xl);
+  }
+
+  .suggest-page__inner {
+    max-width: 44rem;
+  }
+
+  .suggest-page__inner > * + * {
+    margin-top: var(--space-md);
+  }
+
+  .suggest-page h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .suggest-form {
+    display: grid;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+  }
+
+  .field {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .field label {
+    color: var(--color-green);
+    font-weight: 600;
+  }
+
+  .required,
+  .optional {
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 400;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid color-mix(in srgb, var(--color-green) 45%, transparent);
+    border-radius: var(--radius-md);
+    background: var(--color-cream);
+    color: var(--color-text);
+    font: inherit;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 1px;
+    border-color: var(--color-green);
+  }
+
+  /* Only flag a field once the visitor has typed something invalid, not on page load */
+  input:user-invalid {
+    border-color: #b42318;
+  }
+
+  .field__hint,
+  .suggest-form__privacy {
+    font-size: var(--text-sm);
+  }
+
+  .suggest-form__privacy {
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* Buttons don't inherit the page font by default */
+  .button {
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* Off-screen rather than display:none, which some bots skip */
+  .trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+</style>

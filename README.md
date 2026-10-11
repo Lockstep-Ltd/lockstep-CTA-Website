@@ -81,10 +81,12 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 | Content | Astro content collections (Markdown) | Articles and legal pages are plain text files |
 | Article editor | [Keystatic](https://keystatic.com) (local only, uses React) | Edit articles in the browser at `/keystatic` during `npm run dev`; never shipped to visitors |
 | Social images | `astro-og-canvas` | Sharing images generated at build time |
+| Hosting adapter | `@astrojs/vercel` | Pages stay static; only `/api/suggest-article` runs as a serverless function |
+| Email | [Resend](https://resend.com) (HTTP API, no SDK) | Sends article suggestions to articles@lockstep.uk |
 | Testing | Playwright + axe | WCAG 2.2 AA checks on every page, run on every pull request |
 | Node.js | 22 or newer (see `.nvmrc`) | Required by Astro 7 |
 
-The site is purely informational: no logins, accounts, database or stored form submissions. The old site's "Suggest an article" form is replaced by an email link for now.
+The site has no logins, accounts or database. Every page is static except one small server function, which emails article suggestions to articles@lockstep.uk (see "Article suggestions" below). Nothing visitors submit is stored by the website.
 
 ## Project structure
 
@@ -124,6 +126,8 @@ The site is purely informational: no logins, accounts, database or stored form s
 │   │   ├── how-it-works.astro     # /how-it-works/
 │   │   ├── articles/index.astro   # /articles/
 │   │   ├── articles/[slug].astro  # /articles/<file-name>/
+│   │   ├── articles/suggest/      # Suggest-an-article form, thanks and error pages
+│   │   ├── api/suggest-article.ts # Form handler: emails suggestions via Resend (serverless)
 │   │   ├── [legal].astro          # /privacy_policy, /terms_of_use, /community_guidelines, /affiliate_disclosure
 │   │   ├── og/[...route].ts       # Social sharing images, generated at build (astro-og-canvas)
 │   │   ├── partner.astro          # /partner/
@@ -147,7 +151,7 @@ You need [Node.js](https://nodejs.org) 22 or newer.
 ```sh
 npm install          # first time only: downloads the tools the site needs
 npm run dev          # live preview at http://localhost:4321, updates as you edit
-npm run build        # checks the code and builds the final site into dist/
+npm run build        # checks the code and builds the final site (static pages in dist/client/)
 npm run preview      # previews the built site
 npm run check:launch # lists every placeholder and unverified item still left
 npm run test:a11y    # WCAG 2.2 AA checks on every page (run after a build)
@@ -167,6 +171,17 @@ Keystatic rewrites a file's frontmatter when you save it. Any `# TODO` comments 
 - **Fixed URLs:** the Lockstep app links to these exact paths, with underscores: `/privacy_policy`, `/terms_of_use`, `/community_guidelines` and `/affiliate_disclosure`. It also links to `/articles`.
 - **Before renaming or removing one:** update the app's links in the same release, or add a redirect.
 
+### Article suggestions
+
+- **The page:** `/articles/suggest/` is a plain HTML form that works without JavaScript. It posts to [src/pages/api/suggest-article.ts](src/pages/api/suggest-article.ts).
+- **The email:** the form handler checks the fields and emails the suggestion to `SUGGEST_TO_EMAIL` (default articles@lockstep.uk) through Resend. Reply-to is set to the visitor, so replying reaches them. The visitor then sees `/articles/suggest/thanks/` or `/articles/suggest/error/`.
+- **Spam protection:**
+  - a hidden "website" field: bots fill it in and are silently ignored
+  - length limits, and only http(s) links are accepted
+  - posts from other websites are blocked (Astro's origin check)
+- **Stored data:** none. The suggestion exists only as an email in the inbox.
+- **Testing locally:** with no `RESEND_API_KEY` in `.env`, `npm run dev` prints the email to the dev log (`npx astro dev logs`) instead of sending it.
+
 ### Old Bubble links
 
 [vercel.json](vercel.json) redirects the old site's addresses so saved and shared links keep working:
@@ -184,7 +199,7 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 ### Accessibility tests
 
 - `tests/a11y.spec.ts` runs axe against every page in the sitemap, plus the 404 page, at phone and desktop widths.
-- It serves the built `dist/` files directly to the browser, so no web server is needed, and it blocks any third-party request.
+- It serves the built `dist/client/` files directly to the browser, so no web server is needed, and it blocks any third-party request.
 - It uses your installed Google Chrome.
 - It runs on every pull request; a failure lists the rule and the element.
 
@@ -221,6 +236,15 @@ Deploys run from [.github/workflows/deploy.yml](.github/workflows/deploy.yml). O
    - `VERCEL_ORG_ID`
    - `VERCEL_PROJECT_ID`
 
+**Article suggestion emails (one-time):**
+
+1. Create a [Resend](https://resend.com) account. The free plan covers 3,000 emails a month.
+2. In Resend → Domains, add `lockstep.uk` and add the DNS records it shows (SPF/DKIM) wherever lockstep.uk's DNS is managed. The site's sender is `website@lockstep.uk`.
+3. Create an API key with "Sending access" only, and add it in Vercel → Project → Settings → Environment Variables as `RESEND_API_KEY` (Production).
+4. Make sure the `articles@lockstep.uk` mailbox or alias exists.
+
+Without the key, the live form shows its error page, which links to articles@lockstep.uk.
+
 The custom domain (`lockstep.uk`) is **not** configured yet. Do that only when the site is ready to replace the Bubble site.
 
 ## Launch checklist
@@ -228,6 +252,7 @@ The custom domain (`lockstep.uk`) is **not** configured yet. Do that only when t
 - [ ] Replace all placeholder copy, images, logo, favicon and sharing image (`npm run check:launch` shows 0 items)
 - [ ] Verify every support service name, number and link against official sources
 - [x] Confirm contact email, company number and registered address
-- [ ] Update the privacy policy once the site is off Bubble: it still says the website runs on Bubble and mentions analytics (Andrew to update at the domain switch)
+- [ ] Update the privacy policy once the site is off Bubble: it still says the website runs on Bubble and mentions analytics. Also mention that article suggestions are emailed via Resend (Andrew to update at the domain switch)
+- [ ] Set up Resend and `RESEND_API_KEY` (see "Deployment"), then send a test suggestion
 - [ ] Review the site with real users and a screen reader
 - [ ] Point `lockstep.uk` at Vercel and retire the Bubble site
