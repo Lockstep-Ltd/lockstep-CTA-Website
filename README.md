@@ -68,7 +68,7 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 - **Fast:** almost no client-side JavaScript (one tiny inline script for scroll reveals); optimise all images.
 - **Privacy:** no analytics, cookies or third-party trackers. If any are added later, they need a UK GDPR-compliant consent banner first.
 - **Secrets:** never commit secrets, API keys or personal data. Use environment variables; `.env` files are ignored by Git (see `.env.example`).
-- **Support signposting:** every page footer includes "Need support now?" with UK support services. These details must be checked against official sources before launch.
+- **Support signposting:** every page footer has a one-line "Need support now?" strip; the full list of UK support services is on the Contact page. These details must be checked against official sources before launch.
 
 ## Tech stack
 
@@ -109,7 +109,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   │   ├── Staircase.astro        # The four steps, laid out as rising stairs
 │   │   ├── ArticleCard.astro      # Article preview (feature or row style)
 │   │   ├── Figure.astro           # Image slot: placeholder until a photo is supplied
-│   │   ├── SupportSignpost.astro  # "Need support now?" section
+│   │   ├── SupportSignpost.astro  # Full UK support services list (Contact page)
 │   │   └── PageHero.astro         # Page title + intro block
 │   ├── assets/brand/              # Original logo, icon and lock artwork (do not modify)
 │   ├── assets/images/             # Photos and screenshots, optimised at build
@@ -190,7 +190,7 @@ Keystatic rewrites a file's frontmatter when you save it. Any `# TODO` comments 
 
 [vercel.json](vercel.json) redirects the old site's addresses so saved and shared links keep working:
 
-- **Home page sections:** `/?section=…` links go to the matching page. `philosophy` goes to `/about/#philosophy` and `status` goes to `/how-it-works/#status`.
+- **Home page sections:** `/?section=…` links go to the matching page. `philosophy` goes to `/about/#philosophy` and `status` goes to `/#status`.
 - **Old pages:** `/index` and `/mobile_index` go to the home page.
 - **Legal pages:** these keep their exact old URLs, so they need no redirects.
 

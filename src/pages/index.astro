@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
-import lockSteps from '../assets/brand/lock-steps.webp';
+import LockMark from '../components/LockMark.astro';
 import Staircase from '../components/Staircase.astro';
+import SwapDeck from '../components/SwapDeck.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getArticles } from '../lib/articles';
 import { about, commitments, heroNote, status, steps, tagline } from '../data/product';
@@ -15,35 +15,71 @@ const [latest, ...recent] = await getArticles();
   <section class="hero">
     <div class="container hero__grid">
       <div class="hero__copy">
-        <p class="status enter">
-          <span class="status__dot" aria-hidden="true"></span>
-          {status.label}, UK
-        </p>
         <h1 class="enter" style="--i: 1">
           {tagline.headline.split(/(?<=\.) /).map((line) => <span class="hero__line">{line}</span>)}
         </h1>
         <p class="lead enter" style="--i: 2">{tagline.summary}</p>
         <p class="hero__note enter" style="--i: 2">{heroNote}</p>
         <div class="button-row enter" style="--i: 3">
-          <a class="button" href={site.appStoreUrl}>Download on the App Store <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="app-store-badge" href={site.appStoreUrl}><img src="/app-store-badge.svg" alt="Download on the App Store" width="150" height="50" /></a>
           <a class="button button--secondary" href="/how-it-works/">See how it works</a>
         </div>
         <p class="hero__android enter" style="--i: 3">{status.android}</p>
       </div>
 
       <div class="hero__art enter" style="--i: 2">
-        <!-- Lockstep's own lock-and-steps artwork from the original site: do not alter -->
-        <Image src={lockSteps} alt="" widths={[320, 480, 640]} sizes="(min-width: 56rem) 28rem, 80vw" class="hero__img" loading="eager" />
+        <LockMark />
       </div>
     </div>
   </section>
 
   <section class="commitments" aria-label="What we stand for">
     <ul class="container commitments__list" role="list">
-      {commitments.map((item) => (
-        <li class="reveal">{item}</li>
+      {commitments.map((item, i) => (
+        <li class="reveal commitment">
+          <svg class="commitment__icon" viewBox="0 0 48 48" aria-hidden="true">
+            {i === 0 && (
+              <>
+                <path class="draw" pathLength="1" d="M4 32 L8 25 L12 33 L16 24 L20 31 C26 26 32 22 42 22" />
+                <path class="draw draw--late commitment__arrow" pathLength="1" d="M35 15 L42 22 L35 29" />
+              </>
+            )}
+            {i === 1 && (
+              <g class="commitment__eye">
+                <path class="draw" pathLength="1" d="M4 24 C12 12 36 12 44 24 C36 36 12 36 4 24 Z" />
+                <circle class="draw draw--late commitment__pupil" pathLength="1" cx="24" cy="24" r="6" />
+              </g>
+            )}
+            {i === 2 && (
+              <>
+                <clipPath id="commitment-shield">
+                  <path d="M24 4 L40 10 V22 C40 33 33 40 24 44 C15 40 8 33 8 22 V10 Z" />
+                </clipPath>
+                <g clip-path="url(#commitment-shield)"><rect class="commitment__sheen" x="-30" y="0" width="14" height="48" /></g>
+                <path class="draw" pathLength="1" d="M24 4 L40 10 V22 C40 33 33 40 24 44 C15 40 8 33 8 22 V10 Z" />
+                <path class="draw draw--late" pathLength="1" d="M17 24 L22 29 L31 19" />
+              </>
+            )}
+          </svg>
+          <span>{item}</span>
+        </li>
       ))}
     </ul>
+  </section>
+
+  <section class="section section--dark night" aria-labelledby="swap-heading">
+    <div class="container night__grid">
+      <div class="stack-lg reveal">
+        <h2 id="swap-heading" class="night__title">Same money. Better night.</h2>
+        <p>Had money set aside for a bet tonight? Swap the Night shows you real things happening near you, within that budget. Swipe past what doesn't appeal, keep what does.</p>
+        <ul class="what__highlights night__points" role="list">
+          <li>Events near you, tonight</li>
+          <li>Matched to the money you'd have staked</li>
+          <li>Or a night in that feels like a treat</li>
+        </ul>
+      </div>
+      <SwapDeck />
+    </div>
   </section>
 
   <section class="section section--surface" aria-labelledby="how-heading">
@@ -98,7 +134,24 @@ const [latest, ...recent] = await getArticles();
     </section>
   )}
 
-  <section class="section section--surface" aria-labelledby="partner-heading">
+  <section class="section section--surface" id="status" aria-labelledby="status-heading">
+    <div class="container product-status reveal">
+      <div class="stack">
+        <h2 id="status-heading">Product status</h2>
+        <p class="product-status__badge">{status.label}</p>
+      </div>
+      <div class="stack">
+        <p class="lead">{status.text}</p>
+        <p>{status.note}</p>
+        <p>{status.android}</p>
+        <div class="button-row">
+          <a class="app-store-badge" href={site.appStoreUrl}><img src="/app-store-badge.svg" alt="Download on the App Store" width="150" height="50" /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="partner-heading">
     <div class="container partner reveal">
       <div class="stack">
         <h2 id="partner-heading">Working with universities, charities and funders</h2>
@@ -163,46 +216,16 @@ const [latest, ...recent] = await getArticles();
     font-weight: 600;
   }
 
-  .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 0.85rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    background: var(--color-white);
-    color: var(--color-green);
-    font-size: var(--text-sm);
-    font-weight: 600;
-  }
-
-  /* Real status indicator: the app is in early access */
-  .status__dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background: var(--color-emerald);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-emerald) 25%, transparent);
-  }
-
-  /* Panel colour matches the artwork's own background, so the image sits flush */
   .hero__art {
     display: grid;
     place-items: center;
-    padding: var(--space-lg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-xl);
-    background: rgb(253 250 240);
-  }
-
-  .hero__art :global(.hero__img) {
-    width: auto;
-    max-height: 28rem;
+    height: 30rem;
+    padding: var(--space-xl) var(--space-lg);
   }
 
   @media (max-width: 55.99rem) {
-    .hero__art :global(.hero__img) {
-      max-height: 18rem;
+    .hero__art {
+      height: 20rem;
     }
   }
 
@@ -231,6 +254,112 @@ const [latest, ...recent] = await getArticles();
     border-top: 1px solid var(--color-border);
   }
 
+  .commitment {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .commitment__icon {
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    fill: none;
+    stroke: var(--color-emerald);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    overflow: visible;
+  }
+
+  @media (min-width: 48rem) {
+    .commitment {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .commitment__icon {
+      width: 3.25rem;
+      height: 3.25rem;
+    }
+  }
+
+  .commitment__sheen {
+    fill: color-mix(in srgb, var(--color-emerald) 25%, transparent);
+    stroke: none;
+    transform: skewX(-20deg);
+    opacity: 0;
+  }
+
+  :is(.commitment__eye, .commitment__pupil, .commitment__arrow) {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  @media screen and (prefers-reduced-motion: no-preference) {
+    :global(.js-motion) .commitment .draw {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+
+    :global(.js-motion) .commitment.is-visible .draw {
+      animation: commitment-draw 900ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 250ms) forwards;
+    }
+
+    :global(.js-motion) .commitment.is-visible .draw--late {
+      animation-delay: calc(var(--reveal-delay, 0ms) + 850ms);
+    }
+
+    :global(.js-motion) .commitment.is-visible .commitment__arrow {
+      animation:
+        commitment-draw 600ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 850ms) forwards,
+        commitment-nudge 5s ease-in-out 3s infinite;
+    }
+
+    :global(.js-motion) .commitment.is-visible .commitment__eye {
+      animation: commitment-blink 6s ease-in-out 3.5s infinite;
+    }
+
+    :global(.js-motion) .commitment.is-visible .commitment__pupil {
+      animation:
+        commitment-draw 600ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 850ms) forwards,
+        commitment-look 6s ease-in-out 3.5s infinite;
+    }
+
+    :global(.js-motion) .commitment.is-visible .commitment__sheen {
+      animation: commitment-sheen 7s ease-in-out 4s infinite;
+    }
+  }
+
+  @keyframes commitment-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes commitment-nudge {
+    0%, 70%, 100% { transform: none; }
+    78% { transform: translateX(4px); }
+    86% { transform: translateX(-1px); }
+  }
+
+  @keyframes commitment-blink {
+    0%, 44%, 50%, 100% { transform: none; }
+    47% { transform: scaleY(0.1); }
+  }
+
+  @keyframes commitment-look {
+    0%, 15%, 100% { translate: 0 0; }
+    22%, 34% { translate: -4px 0; }
+    42%, 56% { translate: 4px 0; }
+    64% { translate: 0 0; }
+  }
+
+  @keyframes commitment-sheen {
+    0%, 70% { opacity: 0; transform: translateX(0) skewX(-20deg); }
+    72% { opacity: 1; }
+    90% { opacity: 1; transform: translateX(78px) skewX(-20deg); }
+    92%, 100% { opacity: 0; transform: translateX(78px) skewX(-20deg); }
+  }
+
   @media (min-width: 48rem) {
     .commitments__list {
       grid-template-columns: repeat(3, 1fr);
@@ -248,6 +377,67 @@ const [latest, ...recent] = await getArticles();
     .commitments__list li + li {
       border-top: 0;
       border-left: 1px solid var(--color-border);
+    }
+  }
+
+  /* Swap the Night */
+  .night {
+    position: relative;
+    overflow: clip;
+    background:
+      radial-gradient(ellipse at 85% 0%, color-mix(in srgb, var(--color-emerald) 70%, transparent), transparent 60%),
+      var(--color-green);
+  }
+
+  .night::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 18%, var(--color-cream), transparent),
+      radial-gradient(1px 1px at 28% 72%, var(--color-cream), transparent),
+      radial-gradient(1.5px 1.5px at 47% 12%, var(--color-cream), transparent),
+      radial-gradient(1px 1px at 63% 88%, var(--color-cream), transparent),
+      radial-gradient(1.5px 1.5px at 92% 40%, var(--color-cream), transparent),
+      radial-gradient(1px 1px at 6% 90%, var(--color-cream), transparent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .night::before {
+      animation: twinkle 6s ease-in-out infinite alternate;
+    }
+  }
+
+  @keyframes twinkle {
+    to {
+      opacity: 0.2;
+    }
+  }
+
+  .night__grid {
+    position: relative;
+    display: grid;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .night__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+
+  .night__title {
+    font-size: var(--text-3xl);
+    line-height: 1.1;
+  }
+
+  @media (min-width: 48rem) {
+    .what__highlights.night__points {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
     }
   }
 
@@ -339,6 +529,31 @@ const [latest, ...recent] = await getArticles();
     .articles {
       grid-template-columns: 1.1fr 1fr;
     }
+  }
+
+  /* Product status */
+  .product-status {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 48rem) {
+    .product-status {
+      grid-template-columns: 0.6fr 1.4fr;
+      gap: var(--space-xl);
+    }
+  }
+
+  .product-status__badge {
+    justify-self: start;
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-green);
+    color: var(--color-cream);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   /* Partner call to action */

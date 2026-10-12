@@ -18,6 +18,9 @@ const { steps, headingLevel: Heading = 'h3' } = Astro.props;
         <p>{step.text}</p>
       </div>
       <div class="stair__riser" aria-hidden="true">
+        <i class="stair__glow"></i>
+        <i class="stair__rim stair__rim--top"><i></i></i>
+        {i > 0 && <i class="stair__rim stair__rim--side"><i></i></i>}
         <span>{String(i + 1).padStart(2, '0')}</span>
       </div>
     </li>
@@ -26,6 +29,11 @@ const { steps, headingLevel: Heading = 'h3' } = Astro.props;
 
 <style>
   .stairs {
+    --lit: #9fe3c4;
+    --loop: 8s;
+    /* After the risers finish building */
+    --start: 1.8s;
+    position: relative;
     display: grid;
     gap: var(--space-sm);
     padding: 0;
@@ -34,6 +42,7 @@ const { steps, headingLevel: Heading = 'h3' } = Astro.props;
   }
 
   .stair {
+    --riser: var(--color-primary);
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
@@ -44,22 +53,91 @@ const { steps, headingLevel: Heading = 'h3' } = Astro.props;
     margin-left: calc((var(--n) - 1) * 0.9rem);
   }
 
+  .stair:nth-child(even) {
+    --riser: var(--color-emerald);
+  }
+
   .stair__riser {
+    position: relative;
     flex: none;
     display: grid;
     place-items: center;
     width: 3.25rem;
     height: 3.25rem;
     border-radius: var(--radius-md);
-    background: var(--color-primary);
+    background:
+      linear-gradient(to left, rgb(0 0 0 / 0.14), transparent 1rem),
+      linear-gradient(to bottom, color-mix(in srgb, var(--riser) 82%, white) 0, color-mix(in srgb, var(--riser) 90%, white) 0.4rem, transparent 0.4rem),
+      linear-gradient(to bottom, color-mix(in srgb, var(--riser) 94%, white), var(--riser) 60%);
     color: var(--color-cream);
     font-family: var(--font-heading);
     font-weight: 600;
     font-variant-numeric: tabular-nums;
   }
 
+  /* Only transform and opacity animate in the light loop, so it never repaints */
+  .stair__glow,
+  .stair__rim {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .stair__glow {
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(to bottom, color-mix(in srgb, var(--lit) 55%, transparent), transparent 3rem);
+    opacity: 0;
+  }
+
+  .stair__riser span {
+    position: relative;
+  }
+
+  .stair__rim {
+    overflow: hidden;
+    background: linear-gradient(color-mix(in srgb, var(--lit) 40%, transparent), color-mix(in srgb, var(--lit) 40%, transparent)) no-repeat center / var(--line);
+  }
+
+  .stair__rim > i {
+    position: absolute;
+    border-radius: 2px;
+    background: var(--lit);
+    box-shadow: 0 0 6px 1px var(--lit);
+  }
+
+  .stair__rim--top {
+    --line: 100% 3px;
+    top: -5px;
+    left: var(--radius-md);
+    right: var(--radius-md);
+    height: 13px;
+  }
+
+  .stair__rim--top > i {
+    top: 5px;
+    left: 0;
+    width: 35%;
+    height: 3px;
+    transform: translateX(-110%);
+  }
+
+  .stair__rim--side {
+    display: none;
+  }
+
   .stair__title {
+    width: fit-content;
     font-size: var(--text-lg);
+  }
+
+  .stair__title::after {
+    content: '';
+    display: block;
+    height: 2px;
+    margin-top: 2px;
+    background: var(--lit);
+    transform: scaleX(0);
+    transform-origin: left;
   }
 
   .stair__text p {
@@ -94,6 +172,29 @@ const { steps, headingLevel: Heading = 'h3' } = Astro.props;
       padding: var(--space-sm);
       border-radius: 0;
       font-size: var(--text-xl);
+      box-shadow: 0 28px 40px -30px color-mix(in srgb, var(--color-green) 70%, transparent);
+    }
+
+    .stair__rim--top {
+      left: 0;
+      right: 0;
+    }
+
+    .stair__rim--side {
+      --line: 3px 100%;
+      display: block;
+      top: 0;
+      left: -5px;
+      width: 13px;
+      height: 3.5rem;
+    }
+
+    .stair__rim--side > i {
+      left: 5px;
+      bottom: 0;
+      width: 3px;
+      height: 60%;
+      transform: translateY(110%);
     }
 
     .stair:first-child .stair__riser {
@@ -101,14 +202,17 @@ const { steps, headingLevel: Heading = 'h3' } = Astro.props;
       border-bottom-left-radius: var(--radius-lg);
     }
 
+    .stair:first-child .stair__rim--top {
+      left: var(--radius-lg);
+    }
+
     .stair:last-child .stair__riser {
       border-top-right-radius: var(--radius-lg);
       border-bottom-right-radius: var(--radius-lg);
     }
 
-    /* Alternate the two brand greens so each step reads separately */
-    .stair:nth-child(even) .stair__riser {
-      background: var(--color-emerald);
+    .stair:last-child .stair__rim--top {
+      right: var(--radius-lg);
     }
   }
 
@@ -121,9 +225,25 @@ const { steps, headingLevel: Heading = 'h3' } = Astro.props;
       opacity: 0;
     }
 
-    :global(.js-motion) .stairs.is-visible .stair__riser {
+    :global(.js-motion) .stairs.is-visible .stair {
       --delay: calc((var(--n) - 1) * 160ms);
+      --at: calc(var(--start) + (var(--n) - 1) * 1.6s);
+    }
+
+    :global(.js-motion) .stairs.is-visible .stair__riser {
       animation: grow-up 1100ms var(--ease-out) var(--delay) backwards;
+    }
+
+    :global(.js-motion) .stairs.is-visible .stair__glow {
+      animation: step-glow var(--loop) ease-in-out var(--at) infinite;
+    }
+
+    :global(.js-motion) .stairs.is-visible .stair__rim--top > i {
+      animation: sweep-along var(--loop) linear var(--at) infinite;
+    }
+
+    :global(.js-motion) .stairs.is-visible .stair__rim--side > i {
+      animation: sweep-up var(--loop) linear var(--at) infinite;
     }
 
     :global(.js-motion) .stairs.is-visible .stair__riser span {
@@ -133,6 +253,33 @@ const { steps, headingLevel: Heading = 'h3' } = Astro.props;
     :global(.js-motion) .stairs.is-visible .stair__text {
       animation: settle 800ms var(--ease-out) calc((var(--n) - 1) * 160ms + 260ms) backwards;
     }
+
+    :global(.js-motion) .stairs.is-visible .stair__title::after {
+      animation: underline var(--loop) ease-in-out var(--at) infinite;
+    }
+  }
+
+  /* Each step's share of the loop is its first 20% (1.6s of 8s) */
+  @keyframes sweep-up {
+    0% { transform: translateY(110%); }
+    4%, 100% { transform: translateY(-180%); }
+  }
+
+  @keyframes sweep-along {
+    0%, 3% { transform: translateX(-110%); }
+    19%, 100% { transform: translateX(300%); }
+  }
+
+  @keyframes step-glow {
+    0%, 34%, 100% { opacity: 0; }
+    8%, 20% { opacity: 1; }
+  }
+
+  @keyframes underline {
+    0%, 4% { transform: scaleX(0); transform-origin: left; }
+    13%, 24% { transform: scaleX(1); transform-origin: left; }
+    24.1% { transform: scaleX(1); transform-origin: right; }
+    34%, 100% { transform: scaleX(0); transform-origin: right; }
   }
 
   @keyframes grow-up {

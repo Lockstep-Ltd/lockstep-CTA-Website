@@ -2,8 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Staircase from '../components/Staircase.astro';
-import { ethics, status, steps } from '../data/product';
-import { site } from '../data/site';
+import { ethics, steps } from '../data/product';
 // Search description: "reduce gambling" added for search engines (approved by Andrew, 2026-10-11).
 ---
 
@@ -73,19 +72,6 @@ import { site } from '../data/site';
       </p>
     </div>
   </section>
-
-  <section class="section" id="status" aria-labelledby="status-heading">
-    <div class="container status-block reveal">
-      <h2 id="status-heading">{status.label}</h2>
-      <p class="lead">{status.text}</p>
-      <p>{status.note}</p>
-      <p>{status.android}</p>
-      <div class="button-row">
-        <a class="button" href={site.appStoreUrl}>Download on the App Store <span class="arrow" aria-hidden="true">→</span></a>
-        <a class="button button--secondary" href="/contact/">Get in touch</a>
-      </div>
-    </div>
-  </section>
 </BaseLayout>
 
 <style>
@@ -115,9 +101,5 @@ import { site } from '../data/site';
 
   .ethics dd {
     margin-top: var(--space-2xs);
-  }
-
-  .status-block > * + * {
-    margin-top: var(--space-sm);
   }
 </style>
