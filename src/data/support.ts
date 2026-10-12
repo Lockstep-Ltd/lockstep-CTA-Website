@@ -1,4 +1,4 @@
-// UK support services shown in the footer of every page.
+// UK support services: listed in full on the Contact page, with a one-line version in every footer.
 //
 // Checked against official sources on 2026-10-08:
 // - National Gambling Helpline: nhs.uk gambling addiction page and gamcare.org.uk
@@ -45,5 +45,7 @@ export const supportServices: SupportService[] = [
 // Shown above the list for anyone at immediate risk.
 export const urgentHelp = {
   text: "If you're in immediate danger, call 999. If you're struggling to cope, you can call Samaritans free, day or night, on 116 123.",
+  // The one-line version in every page footer.
+  brief: 'In immediate danger, call 999. Samaritans: 116 123, free, day or night.',
   verified: true,
 };

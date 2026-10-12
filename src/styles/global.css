@@ -225,7 +225,20 @@ a:hover {
 .button-row {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-sm);
+}
+
+/* Apple's official badge, unaltered; Apple asks for at least 40px tall */
+.app-store-badge {
+  display: inline-block;
+  border-radius: 0.6rem;
+}
+
+.app-store-badge img {
+  display: block;
+  width: auto;
+  height: 3rem;
 }
 
 /* Standalone links (not inside a sentence): taller hit area for touch,

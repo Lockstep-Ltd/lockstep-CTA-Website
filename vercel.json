@@ -7,7 +7,7 @@
     { "source": "/", "has": [{ "type": "query", "key": "section", "value": "what-is-lockstep" }], "destination": "/about/", "permanent": true },
     { "source": "/", "has": [{ "type": "query", "key": "section", "value": "philosophy" }], "destination": "/about/#philosophy", "permanent": true },
     { "source": "/", "has": [{ "type": "query", "key": "section", "value": "how-it-works" }], "destination": "/how-it-works/", "permanent": true },
-    { "source": "/", "has": [{ "type": "query", "key": "section", "value": "status" }], "destination": "/how-it-works/#status", "permanent": true },
+    { "source": "/", "has": [{ "type": "query", "key": "section", "value": "status" }], "destination": "/#status", "permanent": true },
     { "source": "/", "has": [{ "type": "query", "key": "section", "value": "contact" }], "destination": "/contact/", "permanent": true },
     { "source": "/", "has": [{ "type": "query", "key": "section", "value": "articles" }], "destination": "/articles/", "permanent": true },
 

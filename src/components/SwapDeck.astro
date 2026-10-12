@@ -1,0 +1,274 @@
+---
+// CSS only: the reveal script in BaseLayout is the site's only JavaScript.
+import { Image } from 'astro:assets';
+import liveMusic from '../assets/images/event-live-music.jpg';
+import comedy from '../assets/images/event-comedy.jpg';
+import theatre from '../assets/images/event-theatre.jpg';
+import sport from '../assets/images/event-sport.jpg';
+
+const cards = [
+  { kind: 'Live music', title: 'Live Music', text: 'Gigs happening near you tonight.', when: 'Tonight · 9:00pm', price: 18, dir: -1, img: liveMusic },
+  { kind: 'Comedy', title: 'Comedy Night', text: 'Stand-up and open mic nights.', when: 'Tonight · 8:00pm', price: 12, dir: 1, img: comedy },
+  { kind: 'Theatre', title: 'Theatre', text: 'Shows on tonight and tomorrow.', when: 'Tonight · 7:30pm', price: 35, dir: -1, img: theatre },
+  { kind: 'Sport', title: 'Sports Night', text: 'Watch it live instead of betting on it.', when: 'Tonight · 7:45pm', price: 25, dir: 1, img: sport },
+];
+---
+<div class="deck-wrap reveal" aria-hidden="true">
+  <div class="deck">
+    {cards.map((c, i) => (
+      <article class="swipe" style={`--k: ${i}; --dir: ${c.dir}`}>
+        <div class="swipe__poster">
+          <Image src={c.img} alt="" widths={[400, 800]} sizes="21rem" />
+          <span>{c.kind}</span>
+        </div>
+        <div class="swipe__body">
+          <h3>{c.title}</h3>
+          <p>{c.text}</p>
+          <p class="swipe__meta"><span>{c.when}</span><strong>£{c.price}</strong></p>
+        </div>
+        <span class:list={['swipe__stamp', c.dir > 0 ? 'swipe__stamp--yes' : 'swipe__stamp--no']}>{c.dir > 0 ? 'Do this' : 'Pass'}</span>
+      </article>
+    ))}
+  </div>
+  <div class="deck-actions">
+    <span class="deck-btn deck-btn--no">✕ Pass</span>
+    <span class="deck-btn deck-btn--yes">♥ Do this</span>
+  </div>
+</div>
+
+<style>
+  /* Clips at the column edge so a thrown card never crosses the copy */
+  .deck-wrap {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-md);
+    position: relative;
+    width: 100%;
+    overflow-x: clip;
+  }
+
+  .deck {
+    position: relative;
+    width: min(21rem, 100% - 2rem);
+    aspect-ratio: 3 / 4;
+    margin-bottom: 1.6rem;
+  }
+
+  .swipe {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--color-cream);
+    box-shadow: 0 24px 48px -20px rgb(0 0 0 / 0.55);
+    color: var(--color-text);
+    /* Static stack for reduced motion */
+    z-index: calc(4 - var(--k));
+    transform: translateY(calc(var(--k) * 0.8rem)) scale(calc(1 - var(--k) * 0.05));
+    transform-origin: 50% 100%;
+  }
+
+  .swipe:nth-child(4) {
+    opacity: 0;
+  }
+
+  .swipe__poster {
+    position: relative;
+    flex: 1;
+    display: grid;
+    align-items: end;
+    overflow: hidden;
+    padding: var(--space-md);
+  }
+
+  .swipe__poster :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .swipe__poster::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.45), transparent 55%);
+  }
+
+  .swipe__poster span {
+    position: relative;
+    z-index: 1;
+    justify-self: start;
+    padding: 0.2rem 0.7rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-cream);
+    color: var(--color-green);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .swipe__body {
+    display: grid;
+    gap: var(--space-3xs);
+    padding: var(--space-md);
+  }
+
+  .swipe__body h3 {
+    color: var(--color-green);
+  }
+
+  .swipe__meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-xs);
+    font-size: var(--text-sm);
+  }
+
+  .swipe__meta strong {
+    color: var(--color-emerald);
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+  }
+
+  .swipe__stamp {
+    position: absolute;
+    z-index: 2;
+    top: var(--space-md);
+    padding: 0.2rem 0.75rem;
+    border: 3px solid;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--color-cream) 90%, transparent);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0;
+  }
+
+  .swipe__stamp--yes {
+    left: var(--space-md);
+    color: var(--color-emerald);
+    --tilt: rotate(-12deg);
+    transform: var(--tilt);
+  }
+
+  .swipe__stamp--no {
+    right: var(--space-md);
+    color: #9a3b3b;
+    --tilt: rotate(12deg);
+    transform: var(--tilt);
+  }
+
+  .deck-actions {
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .deck-btn {
+    position: relative;
+    isolation: isolate;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid color-mix(in srgb, var(--color-cream) 35%, transparent);
+    border-radius: var(--radius-pill);
+    color: var(--color-cream);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  /* A fading fill, not a scale: scaling made the border shimmer */
+  .deck-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+  }
+
+  .deck-btn--no::before {
+    background: #9a3b3b;
+  }
+
+  .deck-btn--yes::before {
+    background: color-mix(in srgb, var(--color-cream) 70%, var(--color-emerald));
+  }
+
+  .deck-btn--yes {
+    border-color: var(--color-cream);
+    background: var(--color-cream);
+    color: var(--color-green);
+  }
+
+  /* Each card runs a quarter-cycle behind the last on one shared 14s clock */
+  @media screen and (prefers-reduced-motion: no-preference) {
+    :global(.js-motion) .deck-wrap.is-visible :is(.swipe, .swipe__stamp) {
+      animation: 14s calc(var(--k) * 3.5s - 14s) infinite both;
+    }
+
+    :global(.js-motion) .deck-wrap.is-visible .swipe { animation-name: swipe; }
+    :global(.js-motion) .deck-wrap.is-visible .swipe__stamp { animation-name: stamp; }
+
+    :global(.js-motion) .deck-wrap.is-visible .swipe__poster :global(img) {
+      animation: drift 16s ease-in-out infinite alternate;
+    }
+
+    :global(.js-motion) .deck-wrap.is-visible .deck-btn--no::before { animation: press-no 14s ease-in-out infinite; }
+    :global(.js-motion) .deck-wrap.is-visible .deck-btn--yes::before { animation: press-yes 14s ease-in-out infinite; }
+  }
+
+  .deck-wrap {
+    --spring: linear(0, 0.009, 0.035 2.1%, 0.141, 0.281 6.7%, 0.723 12.9%, 0.938 16.7%, 1.017, 1.077, 1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%, 1.129 32.8%, 1.051 39.6%, 1.017 43.1%, 0.991, 0.977 51%, 0.974 53.8%, 0.975 57.1%, 0.997 69.8%, 1.003 76.9%, 1);
+    --drag: cubic-bezier(0.3, 0.7, 0.4, 1);
+    --throw: cubic-bezier(0.55, 0, 0.9, 0.45);
+  }
+
+  /* z-index steps by 2 and changes after each move, so two cards never tie */
+  @keyframes swipe {
+    0% { z-index: 8; opacity: 1; transform: none; animation-timing-function: ease-in-out; }
+    4% { transform: translateY(-0.4rem); animation-timing-function: ease-in-out; }
+    8% { transform: none; animation-timing-function: var(--drag); }
+    14% { transform: translateX(calc(var(--dir) * 16%)) rotate(calc(var(--dir) * 7deg)); animation-timing-function: linear; }
+    15% { transform: translateX(calc(var(--dir) * 17%)) rotate(calc(var(--dir) * 7.5deg)); animation-timing-function: var(--throw); }
+    16.5% { opacity: 1; }
+    19% { z-index: 8; opacity: 0; transform: translateX(calc(var(--dir) * 140%)) translateY(-8%) rotate(calc(var(--dir) * 28deg)); animation-timing-function: step-end; }
+    19.1% { z-index: 2; opacity: 0; transform: translateY(2.4rem) scale(0.85); }
+    40% { z-index: 2; opacity: 0; transform: translateY(2.4rem) scale(0.85); animation-timing-function: var(--spring); }
+    44% { opacity: 1; transform: translateY(1.6rem) scale(0.9); }
+    44.4% { z-index: 2; }
+    44.6% { z-index: 4; }
+    65% { transform: translateY(1.6rem) scale(0.9); animation-timing-function: var(--spring); }
+    69% { transform: translateY(0.8rem) scale(0.95); }
+    69.4% { z-index: 4; }
+    69.6% { z-index: 6; }
+    83% { transform: translateY(0.8rem) scale(0.95); animation-timing-function: var(--drag); }
+    89% { transform: translateY(0.55rem) scale(0.965); }
+    90% { transform: translateY(0.55rem) scale(0.965); animation-timing-function: var(--spring); }
+    94% { z-index: 6; transform: none; }
+    94.5%, 100% { z-index: 8; opacity: 1; transform: none; }
+  }
+
+  @keyframes stamp {
+    0%, 8% { opacity: 0; transform: var(--tilt) scale(1.3); }
+    14%, 18% { opacity: 1; transform: var(--tilt) scale(1); }
+    19% { opacity: 0; animation-timing-function: step-end; }
+    19.1%, 100% { opacity: 0; }
+  }
+
+  @keyframes drift {
+    from { transform: scale(1.02); }
+    to { transform: scale(1.1) translate(-2%, -1.5%); }
+  }
+
+  @keyframes press-no {
+    0%, 8%, 16%, 58%, 66%, 100% { opacity: 0; }
+    10%, 14%, 60%, 64% { opacity: 1; }
+  }
+
+  @keyframes press-yes {
+    0%, 33%, 41%, 83%, 91%, 100% { opacity: 0; }
+    35%, 39%, 85%, 89% { opacity: 1; }
+  }
+</style>

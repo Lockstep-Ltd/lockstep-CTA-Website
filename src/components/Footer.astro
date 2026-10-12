@@ -1,16 +1,26 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/brand/lockstep-logo.png';
-import SupportSignpost from './SupportSignpost.astro';
 import { legalLinks, navigation, site } from '../data/site';
+import { supportServices, urgentHelp } from '../data/support';
 
 const year = new Date().getFullYear();
+const helpline = supportServices.find((s) => s.phone)!;
 ---
 
 <footer class="site-footer">
-  <SupportSignpost />
-
   <div class="site-footer__bottom">
+    {!Astro.url.pathname.startsWith('/contact') && (
+      <div class="container footer-support">
+        <p>
+          <strong>Need support now?</strong>{' '}
+          {helpline.name}: <a href={`tel:${helpline.phone!.replace(/\s/g, '')}`}>{helpline.phone}</a>, free, 24/7.{' '}
+          {urgentHelp.brief}{' '}
+          <a href="/contact/#support-heading">More support services</a>
+        </p>
+      </div>
+    )}
+
     <div class="container site-footer__grid">
       <div class="site-footer__brand stack">
         <!-- Original logo on a cream tile, so it stays unaltered on the dark footer -->
@@ -66,6 +76,20 @@ const year = new Date().getFullYear();
     background: var(--color-green);
     color: var(--color-on-dark-muted);
     font-size: var(--text-sm);
+  }
+
+  .footer-support {
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-cream) 18%, transparent);
+  }
+
+  .footer-support p {
+    max-width: none;
+  }
+
+  .footer-support strong {
+    color: var(--color-cream);
   }
 
   .site-footer__grid {
