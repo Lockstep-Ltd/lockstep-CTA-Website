@@ -105,3 +105,10 @@ export const status = {
   android:
     "Android app coming soon. For now it's early access only, while we test it with a small group of users to make sure it works well.",
 };
+
+// New copy (2026-10-12) for the homepage spectrum, not yet approved by Andrew. Tools named as in the app.
+export const spectrum = [
+  { label: 'The odd flutter', title: 'Stay in control', tools: ['Daily check-ins', 'Swap the Night', 'Hold Your Reward'] },
+  { label: 'Starting to slip', title: 'Catch the urge', tools: ['Breathing and grounding', 'Personal reminders', 'Impact calculator'] },
+  { label: "It's taking over", title: 'More structure', tools: ['Support meetings', 'Community', 'Blocking tools'] },
+];

@@ -16,6 +16,9 @@ html {
   text-size-adjust: 100%;
   /* Keep in-page jumps (e.g. #support-heading) clear of the sticky header */
   scroll-padding-top: 6rem;
+  /* No elastic bounce dragging the sticky header, and no sideways scroll */
+  overscroll-behavior: none;
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: no-preference) {
