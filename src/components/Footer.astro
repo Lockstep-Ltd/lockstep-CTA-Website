@@ -30,7 +30,7 @@ const helpline = supportServices.find((s) => s.phone)!;
         <p>Regain control. Redirect the urge.</p>
       </div>
 
-      <nav aria-label="Footer">
+      <nav class="site-footer__explore" aria-label="Footer">
         <h2 class="footer-heading">Explore</h2>
         <ul class="footer-links">
           <li><a href="/">Home</a></li>
@@ -40,7 +40,7 @@ const helpline = supportServices.find((s) => s.phone)!;
         </ul>
       </nav>
 
-      <div>
+      <div class="site-footer__contact">
         <h2 class="footer-heading">Get in touch</h2>
         <ul class="footer-links">
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
@@ -48,7 +48,7 @@ const helpline = supportServices.find((s) => s.phone)!;
         <p class="site-footer__note">Questions and feedback are always welcome. We read every message.</p>
       </div>
 
-      <nav aria-label="Legal">
+      <nav class="site-footer__legal-nav" aria-label="Legal">
         <h2 class="footer-heading">Legal</h2>
         <ul class="footer-links">
           {legalLinks.map((item) => (
@@ -92,14 +92,37 @@ const helpline = supportServices.find((s) => s.phone)!;
     color: var(--color-cream);
   }
 
+  /* Phones: Explore and Legal sit side by side, so the footer is about half as tall */
   .site-footer__grid {
     display: grid;
-    gap: var(--space-lg);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'brand brand'
+      'explore legal'
+      'contact contact';
+    gap: var(--space-lg) var(--space-md);
+  }
+
+  .site-footer__brand {
+    grid-area: brand;
+  }
+
+  .site-footer__explore {
+    grid-area: explore;
+  }
+
+  .site-footer__legal-nav {
+    grid-area: legal;
+  }
+
+  .site-footer__contact {
+    grid-area: contact;
   }
 
   @media (min-width: 48rem) {
     .site-footer__grid {
       grid-template-columns: 1.6fr 1fr 1.3fr 1fr;
+      grid-template-areas: 'brand explore contact legal';
     }
   }
 

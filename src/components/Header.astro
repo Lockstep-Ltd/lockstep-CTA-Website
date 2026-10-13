@@ -43,31 +43,24 @@ const isSection = (href: string) => href !== '/' && current.startsWith(href);
 </header>
 
 <style>
+  /* Stays at the top while scrolling, so the menu is always one tap away.
+     Slimmer on phones so it takes up little of the screen. */
   .site-header {
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 10;
-    background: var(--color-bg);
-    border-bottom: 1px solid transparent;
+    background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
   }
 
-  /* Sticky on larger screens only, so it never eats a phone's screen */
-  @media (min-width: 48rem) {
+  /* Edge fades in once the page scrolls (CSS scroll-driven, no JS) */
+  @supports (animation-timeline: scroll()) {
     .site-header {
-      position: sticky;
-      top: 0;
-      background: color-mix(in srgb, var(--color-bg) 88%, transparent);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom-color: var(--color-border);
-    }
-
-    /* Edge fades in once the page scrolls (CSS scroll-driven, no JS) */
-    @supports (animation-timeline: scroll()) {
-      .site-header {
-        animation: header-edge linear both;
-        animation-timeline: scroll();
-        animation-range: 0 120px;
-      }
+      animation: header-edge linear both;
+      animation-timeline: scroll();
+      animation-range: 0 120px;
     }
   }
 
@@ -88,7 +81,13 @@ const isSection = (href: string) => href !== '/' && current.startsWith(href);
     align-items: center;
     justify-content: space-between;
     gap: var(--space-xs) var(--space-md);
-    padding-block: var(--space-sm);
+    padding-block: var(--space-2xs);
+  }
+
+  @media (min-width: 48rem) {
+    .site-header__inner {
+      padding-block: var(--space-sm);
+    }
   }
 
   .logo {
@@ -98,7 +97,13 @@ const isSection = (href: string) => href !== '/' && current.startsWith(href);
 
   .logo :global(.logo__img) {
     width: auto;
-    height: 2.5rem;
+    height: 2.25rem;
+  }
+
+  @media (min-width: 48rem) {
+    .logo :global(.logo__img) {
+      height: 2.5rem;
+    }
   }
 
   /* Phones: a Menu button opens the links as a panel below the header. It is a
@@ -145,7 +150,8 @@ const isSection = (href: string) => href !== '/' && current.startsWith(href);
 
   .site-nav[popover] {
     position: fixed;
-    inset: 4.5rem var(--space-sm) auto;
+    /* Just below the slim phone header */
+    inset: 4.25rem var(--space-sm) auto;
     width: auto;
     margin: 0;
     padding: var(--space-xs);
