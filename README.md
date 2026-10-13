@@ -48,7 +48,8 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 - **Staircase:** each step grows up from the floor in turn (a `clip-path` reveal, so the numbers aren't squashed), then its number and text settle in.
 - **Scroll-driven CSS:** the header edge and the article reading-progress bar.
 - **Fallbacks:** with reduced motion turned on, without JavaScript, or when printing, everything shows straight away with no animation.
-- **Hero:** the lock-and-steps illustration fades up with the hero text when the page loads.
+- **Hero:** the lock-and-steps illustration fades up with the hero text when the page loads. On phones and tablets it sits above the headline so the animation plays on screen.
+- **Phone menu:** below 48rem the header links are behind a Menu button. It uses the native HTML popover (no JavaScript), so tapping outside or pressing Escape closes it.
 - **Reduced motion:** everything is switched off when the visitor asks for reduced motion.
 - **Unsupported browsers:** they just show the content.
 - **Classes:** use `.enter` (with `--i` for stagger) for load-in and `.reveal` for on-scroll.
@@ -104,7 +105,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   └── check-launch.mjs           # Lists remaining placeholders/TODOs (npm run check:launch)
 ├── src/
 │   ├── components/
-│   │   ├── Header.astro           # Logo + main navigation
+│   │   ├── Header.astro           # Logo + main navigation (Menu button on phones)
 │   │   ├── Footer.astro           # Support section, footer links, legal line
 │   │   ├── Staircase.astro        # The four steps, laid out as rising stairs
 │   │   ├── ArticleCard.astro      # Article preview (feature or row style)
