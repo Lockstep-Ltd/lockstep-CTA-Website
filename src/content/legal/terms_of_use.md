@@ -1,11 +1,12 @@
 ---
 # Migrated verbatim from lockstep.uk/terms_of_use on 2026-10-06. Headings changed to sentence case only.
+# Updated 2026-10-13 at Andrew's request: Lockstep Ltd and its company details added.
 title: "Terms of Use"
 description: "The terms that govern access to and use of the Lockstep website, app and related services."
-updated: "27/01/2026"
+updated: "13/10/2026"
 ---
 
-These Terms of Use govern access to and use of the Lockstep website, mobile application, and any related services or platforms operated by Lockstep. By accessing or using the Service, you agree to these Terms. If you do not agree, you should not use the Service. Subject to your compliance with these Terms, Lockstep grants you a limited, non-exclusive, non-transferable, revocable licence to access and use the Service for personal, non-commercial purposes.
+These Terms of Use govern access to and use of the Lockstep website, mobile application, and any related services or platforms operated by Lockstep Ltd (“Lockstep”), a company registered in England and Wales (company number 17328022), whose registered office is at Lingcroft, Pyrford Road, West Byfleet, KT14 6QS. By accessing or using the Service, you agree to these Terms. If you do not agree, you should not use the Service. Subject to your compliance with these Terms, Lockstep grants you a limited, non-exclusive, non-transferable, revocable licence to access and use the Service for personal, non-commercial purposes.
 
 ## Using Lockstep
 

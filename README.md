@@ -1,6 +1,6 @@
 # Lockstep website
 
-The public website for [Lockstep](https://lockstep.uk), a UK-based mobile app that helps people reduce gambling by redirecting urges towards healthier, real-world alternatives. The app is in early access on the [App Store](https://apps.apple.com/app/id6772143111).
+The public website for [Lockstep](https://lockstep.uk), a UK-based mobile app that helps people reduce gambling by redirecting urges towards healthier, real-world alternatives. The app is live on the [App Store](https://apps.apple.com/app/id6772143111).
 
 This is a full rebuild of the current Bubble site. The Bubble site stays live until this one is ready; then the `lockstep.uk` domain switches over.
 
@@ -171,7 +171,7 @@ Keystatic rewrites a file's frontmatter when you save it. Any `# TODO` comments 
 
 ### Legal pages (fixed URLs)
 
-- **Source:** the privacy policy, terms of use, community guidelines and affiliate disclosure are Markdown files in `src/content/legal/`, migrated word for word from the old site.
+- **Source:** the privacy policy, terms of use, community guidelines and affiliate disclosure are Markdown files in `src/content/legal/`, migrated word for word from the old site. On 2026-10-13 Andrew had the privacy policy and terms updated for the move off Bubble: they now name Lockstep Ltd and the services used (Supabase, Vercel, Resend, Daily, Mapbox, postcodes.io, Skiddle, Ticketmaster). **If you add a service that handles personal data, add it to the privacy policy's provider list.**
 - **Fixed URLs:** the Lockstep app links to these exact paths, with underscores: `/privacy_policy`, `/terms_of_use`, `/community_guidelines` and `/affiliate_disclosure`. It also links to `/articles`.
 - **Before renaming or removing one:** update the app's links in the same release, or add a redirect.
 
