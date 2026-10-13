@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": ["lhr1"],
   "redirects": [
     { "source": "/mobile_index", "destination": "/", "permanent": true },
     { "source": "/index", "destination": "/", "permanent": true },

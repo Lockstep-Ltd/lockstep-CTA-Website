@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
 import vercel from '@astrojs/vercel';
-import { readdirSync, readFileSync } from 'node:fs';
+import { globSync, readdirSync, readFileSync } from 'node:fs';
 
 // The Keystatic editor (/keystatic) only runs in local development, so the
 // public site stays fully static with no JavaScript sent to visitors.
@@ -29,7 +29,18 @@ export default defineConfig({
   trailingSlash: 'ignore',
   // Pages stay static. Only routes that opt out with `export const prerender = false`
   // (the article suggestion form handler) run as a Vercel serverless function.
-  adapter: vercel(),
+  // The form handler never resizes images (every image is built ahead of time),
+  // so the 19 MB sharp image library is left out to keep the function small and
+  // quick to start. sharp is only loaded lazily by the unused /_image endpoint.
+  // excludeFiles needs exact paths, so list the files in both folders.
+  adapter: vercel({
+    excludeFiles: globSync(['node_modules/sharp/**', 'node_modules/@img/**']).map((file) => `./${file}`),
+  }),
+  // Put the site's small stylesheet (about 5 KB) straight into each page, so the
+  // browser doesn't wait for a separate CSS download before showing anything.
+  build: {
+    inlineStylesheets: 'always',
+  },
   env: {
     schema: {
       // Resend API key for sending article suggestions. Secret: read on the server at

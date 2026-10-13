@@ -14,9 +14,8 @@ const { title, description, date, author, readingTime } = article.data;
 
 <article class:list={['article-card', `article-card--${variant}`, 'lift']}>
   <div class="article-card__body">
-    <p class="article-card__meta">
+    <p class="article-card__meta meta-list">
       <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>
-      <span aria-hidden="true">/</span>
       <span>{readingTime}</span>
     </p>
     <Heading class="article-card__title" style={`view-transition-name: ${titleTransition(article)}`}>
@@ -65,9 +64,6 @@ const { title, description, date, author, readingTime } = article.data;
   }
 
   .article-card__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
     font-size: var(--text-sm);
     font-variant-numeric: tabular-nums;
   }
