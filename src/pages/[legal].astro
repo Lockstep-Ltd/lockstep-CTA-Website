@@ -57,6 +57,12 @@ const current = `/${page.id}/`;
       <Content />
     </article>
   </div>
+
+  {sections.length > 2 && (
+    <a class="legal-contents-link" href="#toc-heading">
+      <span aria-hidden="true">↑</span> Contents
+    </a>
+  )}
 </BaseLayout>
 
 <style>
@@ -157,5 +163,61 @@ const current = `/${page.id}/`;
 
   .legal-body :global(a) {
     overflow-wrap: anywhere;
+  }
+
+  /* Phones: a button in the corner jumps back to "On this page", since the
+     contents list is only at the top of these long pages (no JavaScript) */
+  .legal-contents-link {
+    position: fixed;
+    right: var(--space-sm);
+    bottom: var(--space-sm);
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    min-height: 2.75rem;
+    padding: var(--space-2xs) var(--space-sm);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .legal-contents-link:hover {
+    background: var(--color-emerald);
+    color: var(--color-white);
+  }
+
+  /* Appears once the contents list has scrolled away (CSS scroll-driven, no JS).
+     Elsewhere it simply stays visible. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .legal-contents-link {
+        animation: contents-link-in linear both;
+        animation-timeline: scroll();
+        animation-range: 400px 700px;
+      }
+    }
+  }
+
+  @keyframes contents-link-in {
+    from {
+      opacity: 0;
+      visibility: hidden;
+    }
+    to {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  /* Larger screens keep the contents list in view beside the text */
+  @media (min-width: 60rem) {
+    .legal-contents-link {
+      display: none;
+    }
   }
 </style>
