@@ -45,11 +45,9 @@ const isoDate = date.toISOString().slice(0, 10);
         </a>
         <h1 class="article__title" style={`view-transition-name: ${titleTransition(article)}`}>{title}</h1>
         <p class="article__dek enter" style="--i: 1">{description}</p>
-        <p class="article__meta enter" style="--i: 2">
+        <p class="article__meta meta-list enter" style="--i: 2">
           <span>{author}</span>
-          <span aria-hidden="true">/</span>
           <time datetime={isoDate}>{formatDate(date)}</time>
-          <span aria-hidden="true">/</span>
           <span>{readingTime}</span>
         </p>
         {watchUrl && (
@@ -160,9 +158,6 @@ const isoDate = date.toISOString().slice(0, 10);
   }
 
   .article__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
     padding-top: var(--space-sm);
     border-top: 1px solid var(--color-border);
     color: var(--color-emerald);
@@ -225,6 +220,7 @@ const isoDate = date.toISOString().slice(0, 10);
 
   .references summary {
     width: fit-content;
+    padding-block: var(--space-3xs);
     color: var(--color-green);
     font-weight: 600;
     text-decoration: underline;

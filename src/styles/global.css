@@ -251,6 +251,31 @@ a:hover {
   font-weight: 600;
 }
 
+/* Short facts separated by slashes, e.g. "8 September 2026 / 6 min read".
+   Each item draws its own slash in front of it, and a slash that would start
+   a new line is pushed outside the box and clipped, so a wrapped line never
+   begins or ends with a stray "/". Screen readers skip the slashes. */
+.meta-list {
+  --sep: 1.25em;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--sep);
+  row-gap: 0.15em;
+  overflow: hidden;
+}
+
+.meta-list > * {
+  margin-left: calc(var(--sep) * -1);
+  white-space: nowrap;
+}
+
+.meta-list > *::before {
+  content: '/' / '';
+  display: inline-block;
+  width: var(--sep);
+  text-align: center;
+}
+
 /* Arrow that nudges forward on hover */
 .arrow {
   display: inline-block;

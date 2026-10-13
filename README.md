@@ -236,6 +236,16 @@ Anything not yet supplied is marked `PLACEHOLDER`, `TODO` or `VERIFY BEFORE LAUN
 - Open a pull request into `main`. GitHub checks the site builds before merging.
 - Merging into `main` deploys to Vercel automatically.
 
+## Speed
+
+Measured with Lighthouse (simulated mid-range phone on slow 4G) on 2026-10-11: performance 98–99, accessibility, best practices and SEO 100 on every page tested.
+
+- **Pages are static HTML** with the stylesheet inlined (`build.inlineStylesheets: 'always'`), so nothing blocks the first paint.
+- **JavaScript:** one tiny inline script for scroll reveals. No libraries.
+- **Fonts:** self-hosted woff2, by far the largest download (about 177 KB). Newsreader includes optical sizing (132 KB); the weight-only file is 58 KB but makes large headlines look narrower and lighter.
+- **Form function:** `/api/suggest-article` runs in London (`regions` in `vercel.json`). The unused `sharp` image library is left out of it (`excludeFiles` in `astro.config.mjs`), shrinking it from 23 MB to 3.4 MB for quicker cold starts.
+- **Caching:** files in `/_astro/` have content hashes and are cached for a year (set by the Vercel adapter).
+
 ## Deployment
 
 Deploys run from [.github/workflows/deploy.yml](.github/workflows/deploy.yml). One-time setup:
