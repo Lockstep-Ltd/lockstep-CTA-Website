@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import LockMark from '../components/LockMark.astro';
 import Staircase from '../components/Staircase.astro';
 import SwapDeck from '../components/SwapDeck.astro';
+import Spectrum from '../components/Spectrum.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getArticles } from '../lib/articles';
 import { about, commitments, heroNote, status, steps, tagline } from '../data/product';
@@ -24,7 +25,7 @@ const [latest, ...recent] = await getArticles();
           <a class="app-store-badge" href={site.appStoreUrl}><img src="/app-store-badge.svg" alt="Download on the App Store" width="150" height="50" /></a>
           <a class="button button--secondary" href="/how-it-works/">See how it works</a>
         </div>
-        <p class="hero__android enter" style="--i: 3">{status.android}</p>
+        <p class="hero__android enter" style="--i: 3">{status.androidShort}</p>
       </div>
 
       <div class="hero__art enter" style="--i: 2">
@@ -36,7 +37,7 @@ const [latest, ...recent] = await getArticles();
   <section class="commitments" aria-label="What we stand for">
     <ul class="container commitments__list" role="list">
       {commitments.map((item, i) => (
-        <li class="reveal commitment">
+        <li class="enter commitment" style={`--i: ${4 + i}; --reveal-delay: ${700 + i * 150}ms`}>
           <svg class="commitment__icon" viewBox="0 0 48 48" aria-hidden="true">
             {i === 0 && (
               <>
@@ -101,6 +102,7 @@ const [latest, ...recent] = await getArticles();
       <div class="what__body reveal">
         {about.paragraphs.slice(0, 2).map((text) => <p>{text}</p>)}
       </div>
+      <Spectrum />
       <ul class="what__highlights reveal" role="list">
         {about.highlights.map((item) => <li>{item}</li>)}
       </ul>
@@ -168,6 +170,8 @@ const [latest, ...recent] = await getArticles();
 <style>
   /* Hero */
   .hero {
+    /* Header plus commitments band height on desktop */
+    --fold-chrome: 10.25rem;
     padding-block: var(--space-xl) var(--space-2xl);
     overflow: clip;
   }
@@ -184,17 +188,21 @@ const [latest, ...recent] = await getArticles();
       gap: var(--space-2xl);
     }
 
+    /* Scales with window height so the hero and commitments band fill the first screen exactly */
     .hero {
-      padding-block: var(--space-2xl) var(--space-3xl);
+      display: grid;
+      align-content: center;
+      min-height: calc(100svh - var(--fold-chrome));
+      padding-block: clamp(var(--space-md), 5svh, var(--space-2xl)) clamp(var(--space-md), 6svh, var(--space-3xl));
     }
   }
 
   .hero__copy > * + * {
-    margin-top: var(--space-md);
+    margin-top: clamp(var(--space-xs), 2.4svh, var(--space-md));
   }
 
   .hero h1 {
-    font-size: clamp(2.5rem, 1.4rem + 3.8vw, 4.5rem);
+    font-size: clamp(2.5rem, min(1.4rem + 3.8vw, 9svh), 4.5rem);
     line-height: 1;
   }
 
@@ -219,7 +227,7 @@ const [latest, ...recent] = await getArticles();
   .hero__art {
     display: grid;
     place-items: center;
-    height: 30rem;
+    height: clamp(16rem, 100svh - 22rem, 30rem);
     padding: var(--space-xl) var(--space-lg);
   }
 
@@ -274,13 +282,12 @@ const [latest, ...recent] = await getArticles();
 
   @media (min-width: 48rem) {
     .commitment {
-      flex-direction: column;
-      align-items: flex-start;
+      gap: var(--space-xs);
     }
 
     .commitment__icon {
-      width: 3.25rem;
-      height: 3.25rem;
+      width: 2.25rem;
+      height: 2.25rem;
     }
   }
 
@@ -302,31 +309,31 @@ const [latest, ...recent] = await getArticles();
       stroke-dashoffset: 1;
     }
 
-    :global(.js-motion) .commitment.is-visible .draw {
+    :global(.js-motion) .commitment .draw {
       animation: commitment-draw 900ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 250ms) forwards;
     }
 
-    :global(.js-motion) .commitment.is-visible .draw--late {
+    :global(.js-motion) .commitment .draw--late {
       animation-delay: calc(var(--reveal-delay, 0ms) + 850ms);
     }
 
-    :global(.js-motion) .commitment.is-visible .commitment__arrow {
+    :global(.js-motion) .commitment .commitment__arrow {
       animation:
         commitment-draw 600ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 850ms) forwards,
         commitment-nudge 5s ease-in-out 3s infinite;
     }
 
-    :global(.js-motion) .commitment.is-visible .commitment__eye {
+    :global(.js-motion) .commitment .commitment__eye {
       animation: commitment-blink 6s ease-in-out 3.5s infinite;
     }
 
-    :global(.js-motion) .commitment.is-visible .commitment__pupil {
+    :global(.js-motion) .commitment .commitment__pupil {
       animation:
         commitment-draw 600ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 850ms) forwards,
         commitment-look 6s ease-in-out 3.5s infinite;
     }
 
-    :global(.js-motion) .commitment.is-visible .commitment__sheen {
+    :global(.js-motion) .commitment .commitment__sheen {
       animation: commitment-sheen 7s ease-in-out 4s infinite;
     }
   }
@@ -363,7 +370,7 @@ const [latest, ...recent] = await getArticles();
   @media (min-width: 48rem) {
     .commitments__list {
       grid-template-columns: repeat(3, 1fr);
-      padding-block: var(--space-lg);
+      padding-block: var(--space-md);
     }
 
     .commitments__list li {

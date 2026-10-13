@@ -34,7 +34,7 @@ const organization = {
   },
 };
 
-// The iPhone app. The Android app is in early access testing, so it isn't listed yet.
+// The iPhone app. The Android app is still being tested, so it isn't listed yet.
 const app = {
   '@type': 'MobileApplication',
   '@id': `${site.url}/#app`,

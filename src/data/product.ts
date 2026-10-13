@@ -97,11 +97,24 @@ export const ethics = [
   },
 ];
 
+// "Early access" section reworded (2026-10-13, Andrew's request) now the iPhone app is live.
+// Original label "Early access"; original text: "Lockstep is now accepting a limited number of
+// early members. Join now to help shape the platform, access new features first, and become part
+// of the founding community as we continue to improve the experience."
 export const status = {
-  label: 'Early access',
-  text: 'Lockstep is now accepting a limited number of early members. Join now to help shape the platform, access new features first, and become part of the founding community as we continue to improve the experience.',
+  label: 'Live on the App Store',
+  text: 'Lockstep is now live on the App Store. Download it today to help shape the platform and become part of the founding community as we continue to improve the experience.',
   note: 'The initial release is UK-focused. Broader availability may follow as the product matures and regulatory considerations are addressed.',
   // Added 2026-10-11 at Andrew's request: the Android app is being tested with a small group first.
-  android:
-    "Android app coming soon. For now it's early access only, while we test it with a small group of users to make sure it works well.",
+  // Reworded 2026-10-13 to drop "early access only" now the iPhone app is live.
+  android: "Android app coming soon. We're testing it with a small group of users first to make sure it works well.",
+  // Shortened for the hero (2026-10-13, Andrew's request).
+  androidShort: 'Android app coming soon',
 };
+
+// New copy (2026-10-12) for the homepage spectrum, not yet approved by Andrew. Tools named as in the app.
+export const spectrum = [
+  { label: 'The odd flutter', title: 'Stay in control', tools: ['Daily check-ins', 'Swap the Night', 'Hold Your Reward'] },
+  { label: 'Starting to slip', title: 'Catch the urge', tools: ['Breathing and grounding', 'Personal reminders', 'Impact calculator'] },
+  { label: "It's taking over", title: 'More structure', tools: ['Support meetings', 'Community', 'Blocking tools'] },
+];

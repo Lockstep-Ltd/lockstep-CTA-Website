@@ -1,0 +1,275 @@
+---
+import { spectrum } from '../data/product';
+---
+<div class="spectrum reveal">
+  <div class="spectrum__track" aria-hidden="true">
+    <div class="spectrum__marker"><span>You</span></div>
+  </div>
+  <ol class="spectrum__zones" role="list">
+    {spectrum.map((zone, i) => (
+      <li class="spectrum__zone">
+        <svg class="spectrum__art" viewBox="0 0 48 48" aria-hidden="true">
+          {i === 0 && [10, 24, 38].map((x) => (
+            <>
+              <circle cx={x} cy="24" r="5.5" fill="none" />
+              <circle class="art-fill" cx={x} cy="24" r="3" />
+            </>
+          ))}
+          {i === 1 && (
+            <>
+              <circle class="art-ring" cx="24" cy="24" r="18" fill="none" />
+              <circle class="art-breath" cx="24" cy="24" r="12" />
+            </>
+          )}
+          {i === 2 && (
+            <>
+              <path class="art-link" pathLength="1" d="M24 12 L11 34 H37 Z" fill="none" />
+              {[[24, 12], [11, 34], [37, 34]].map(([x, y]) => <circle class="art-person" cx={x} cy={y} r="5" />)}
+            </>
+          )}
+        </svg>
+        <p class="spectrum__label">{zone.label}</p>
+        <h3>{zone.title}</h3>
+        <ul role="list">
+          {zone.tools.map((tool) => <li>{tool}</li>)}
+        </ul>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .spectrum {
+    --lit: #9fe3c4;
+    display: grid;
+    gap: var(--space-lg);
+    padding: var(--space-lg) 0;
+  }
+
+  .spectrum__track {
+    position: relative;
+    overflow-x: clip;
+    height: 4px;
+    margin-top: var(--space-xl);
+    border-radius: 2px;
+    background: linear-gradient(to right, color-mix(in srgb, var(--lit) 70%, transparent), color-mix(in srgb, var(--color-cream) 55%, transparent));
+  }
+
+  .spectrum__marker {
+    position: absolute;
+    inset: 0;
+    transform: translateX(16.67%);
+  }
+
+  .spectrum__marker::before,
+  .spectrum__marker::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: -0.55rem 0 0 -0.55rem;
+    border-radius: 50%;
+  }
+
+  .spectrum__marker::before {
+    background: var(--color-cream);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--lit) 45%, transparent);
+  }
+
+  .spectrum__marker::after {
+    border: 2px solid var(--lit);
+    opacity: 0;
+  }
+
+  .spectrum__marker span {
+    position: absolute;
+    bottom: 1.1rem;
+    left: 0;
+    translate: -50% 0;
+    padding: 0.1rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-cream);
+    color: var(--color-green);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .spectrum__zones {
+    display: grid;
+    gap: var(--space-sm);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .spectrum__zones {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+  }
+
+  /* Each stage carries a little more structure: open, then diagonal lines, then a grid */
+  .spectrum__zone {
+    --rule: color-mix(in srgb, var(--color-cream) 7%, transparent);
+    position: relative;
+    max-width: none;
+    padding: var(--space-md);
+    border: 1px solid color-mix(in srgb, var(--color-cream) 18%, transparent);
+    border-radius: var(--radius-lg);
+  }
+
+  .spectrum__zone:nth-child(1) {
+    background: linear-gradient(160deg, color-mix(in srgb, var(--lit) 10%, transparent), transparent 60%);
+  }
+
+  .spectrum__zone:nth-child(2) {
+    background: repeating-linear-gradient(135deg, var(--rule) 0 1px, transparent 1px 18px);
+  }
+
+  .spectrum__zone:nth-child(3) {
+    background:
+      linear-gradient(var(--rule) 1px, transparent 1px) 0 0 / 18px 18px,
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px) 0 0 / 18px 18px,
+      color-mix(in srgb, var(--color-cream) 4%, transparent);
+  }
+
+  .spectrum__art {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    width: 3rem;
+    height: 3rem;
+    overflow: visible;
+    fill: var(--lit);
+    stroke: var(--lit);
+    stroke-width: 2;
+  }
+
+  .spectrum__art .art-fill,
+  .spectrum__art .art-breath,
+  .spectrum__art .art-person {
+    stroke: none;
+  }
+
+  .art-ring {
+    opacity: 0.35;
+  }
+
+  .art-breath {
+    opacity: 0.55;
+  }
+
+  .art-link {
+    opacity: 0.5;
+  }
+
+  .spectrum__art :is(.art-fill, .art-breath, .art-ring) {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .spectrum__label {
+    color: var(--lit);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .spectrum__zone h3 {
+    margin-top: var(--space-3xs);
+  }
+
+  .spectrum__zone ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-top: var(--space-sm);
+    padding: 0;
+    list-style: none;
+  }
+
+  .spectrum__zone ul li {
+    padding: 0.2rem 0.7rem;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--color-cream) 10%, transparent);
+    color: var(--color-cream);
+    font-size: var(--text-sm);
+  }
+
+  /* All three share one alternating clock, so the marker and the lit zone never drift apart */
+  @media screen and (prefers-reduced-motion: no-preference) {
+    :global(.js-motion) .spectrum.is-visible :is(.spectrum__marker, .spectrum__zone) {
+      animation-duration: 18s;
+      animation-timing-function: ease-in-out;
+      animation-delay: 0.8s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-fill-mode: both;
+    }
+
+    :global(.js-motion) .spectrum.is-visible .spectrum__marker { animation-name: drift; }
+    :global(.js-motion) .spectrum.is-visible .spectrum__marker::after { animation: ping 3s ease-out infinite; }
+    :global(.js-motion) .spectrum.is-visible .spectrum__zone:nth-child(1) { animation-name: zone-1; }
+    :global(.js-motion) .spectrum.is-visible .spectrum__zone:nth-child(2) { animation-name: zone-2; }
+    :global(.js-motion) .spectrum.is-visible .spectrum__zone:nth-child(3) { animation-name: zone-3; }
+
+    :global(.js-motion) .spectrum.is-visible .art-fill { animation: check-in 4.5s ease-out infinite; }
+    :global(.js-motion) .spectrum.is-visible .art-fill:nth-of-type(4) { animation-delay: 0.5s; }
+    :global(.js-motion) .spectrum.is-visible .art-fill:nth-of-type(6) { animation-delay: 1s; }
+    :global(.js-motion) .spectrum.is-visible .art-breath { animation: breathe 7s ease-in-out infinite; }
+    :global(.js-motion) .spectrum.is-visible .art-ring { animation: breathe-ring 7s ease-in-out infinite; }
+    :global(.js-motion) .spectrum.is-visible .art-link { stroke-dasharray: 1; animation: link 5s ease-in-out infinite; }
+  }
+
+  @keyframes drift {
+    0%, 25% { transform: translateX(16.67%); }
+    35%, 65% { transform: translateX(50%); }
+    75%, 100% { transform: translateX(83.33%); }
+  }
+
+  @keyframes ping {
+    from { opacity: 0.8; transform: scale(1); }
+    to { opacity: 0; transform: scale(2.6); }
+  }
+
+  @keyframes check-in {
+    0%, 8% { transform: scale(0); }
+    18%, 80% { transform: scale(1); }
+    95%, 100% { transform: scale(0); }
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(0.55); }
+    40%, 55% { transform: scale(1); }
+  }
+
+  @keyframes breathe-ring {
+    0%, 100% { opacity: 0.15; transform: scale(0.85); }
+    40%, 55% { opacity: 0.4; transform: scale(1); }
+  }
+
+  @keyframes link {
+    0% { stroke-dashoffset: 1; }
+    45%, 75% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -1; }
+  }
+
+  @keyframes zone-1 {
+    0%, 25% { opacity: 1; transform: translateY(-4px); }
+    33%, 100% { opacity: 0.4; transform: none; }
+  }
+
+  @keyframes zone-2 {
+    0%, 27% { opacity: 0.4; transform: none; }
+    35%, 65% { opacity: 1; transform: translateY(-4px); }
+    73%, 100% { opacity: 0.4; transform: none; }
+  }
+
+  @keyframes zone-3 {
+    0%, 67% { opacity: 0.4; transform: none; }
+    75%, 100% { opacity: 1; transform: translateY(-4px); }
+  }
+</style>

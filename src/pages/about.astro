@@ -1,9 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
-import Figure from '../components/Figure.astro';
 import { about, principles } from '../data/product';
-import founderPhoto from '../assets/images/andrew-brink.png';
 // Copy from the original lockstep.uk site. Founder story written by Andrew.
 ---
 
@@ -38,41 +36,35 @@ import founderPhoto from '../assets/images/andrew-brink.png';
   </section>
 
   <section class="section" aria-labelledby="founder-heading">
-    <div class="container founder reveal">
-      <Figure
-        src={founderPhoto}
-        class="founder__photo"
-        alt="Andrew Brink, founder of Lockstep"
-        ratio="1"
-        sizes="18rem"
-      />
+    <div class="container reveal">
       <div class="stack">
         <h2 id="founder-heading">Meet the founder</h2>
         <p><strong>Andrew Brink</strong>, Founder</p>
         <p>
-          Like a lot of students, I started gambling casually at university. It began with the
-          odd sports bet with friends or a late trip to the casino after a night out, but over
-          time I noticed it taking up more of my money, time and headspace than I wanted, so I
-          went looking for something to help me keep it in check. What I found was reactive
-          support designed for people already in crisis, with a one-size-fits-all approach. It
-          asked for a commitment I wasn't ready to make: to see myself as someone in crisis and
-          never gamble again.
+          Like many students, I started gambling casually at university. It began with the
+          occasional sports bet among friends or a late trip to the casino after a night out, but
+          over time I noticed it was taking up more of my money, time and headspace than I
+          wanted. When I went looking for something to help me keep it in check, all I could find
+          was reactive support designed for people already in crisis. It took a one-size-fits-all
+          approach and asked for a commitment I wasn't ready to make: to see myself as someone in
+          crisis and to never gamble again.
         </p>
         <p>
-          I attended a virtual GA meeting at 19 and left feeling more out of place than when I
-          arrived. The stories I heard were worlds away from my own. Many people had spent
-          decades in recovery, and their experiences had little in common with the app-based
-          gambling I knew. Claiming to have a gambling problem after losing £200 felt like a lie
-          next to what they'd been through, and being told the only answer was to never gamble
-          again felt like a huge leap. I didn't need a dramatic intervention. I needed something
-          relevant, private and practical, and people going through similar circumstances to
-          talk to.
+          At 19, I attended a virtual Gamblers Anonymous meeting and left feeling more out of
+          place than when I arrived. The stories I heard were worlds away from my own; many of
+          the people there had spent decades in recovery, and their experiences bore little
+          resemblance to the app-based gambling I knew. Next to what they had been through,
+          saying I had a gambling problem after losing £200 felt almost dishonest, and being told
+          that the only answer was to stop altogether felt like an enormous leap. What I needed
+          wasn't a dramatic intervention but something relevant, private and practical, along
+          with people in similar circumstances I could talk to.
         </p>
         <p>
-          Lockstep is what I wish I'd had back then: free, private, judgement-free support that
-          meets you where you are. You decide what control looks like for you, and you'll find
-          practical tools, real alternatives and people who understand what you're going
-          through. Wherever you are with gambling, you don't have to figure it out alone.
+          Lockstep is the support I wish I'd had back then: free, private and judgement-free,
+          meeting you wherever you are. Rather than prescribing a single path, it lets you decide
+          what control looks like for you, offering practical tools, genuine alternatives and a
+          community of people who understand what you're going through. Wherever you are with
+          gambling, you don't have to figure it out on your own.
         </p>
       </div>
     </div>
@@ -121,21 +113,5 @@ import founderPhoto from '../assets/images/andrew-brink.png';
   .principle__text {
     color: var(--color-green);
     font-weight: 600;
-  }
-
-  .founder {
-    display: grid;
-    gap: var(--space-lg);
-    align-items: start;
-  }
-
-  .founder :global(.founder__photo) {
-    max-width: 18rem;
-  }
-
-  @media (min-width: 48rem) {
-    .founder {
-      grid-template-columns: 18rem 1fr;
-    }
   }
 </style>

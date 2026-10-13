@@ -1,6 +1,6 @@
 # Lockstep website
 
-The public website for [Lockstep](https://lockstep.uk), a UK-based mobile app that helps people reduce gambling by redirecting urges towards healthier, real-world alternatives. The app is in early access on the [App Store](https://apps.apple.com/app/id6772143111).
+The public website for [Lockstep](https://lockstep.uk), a UK-based mobile app that helps people reduce gambling by redirecting urges towards healthier, real-world alternatives. The app is live on the [App Store](https://apps.apple.com/app/id6772143111).
 
 This is a full rebuild of the current Bubble site. The Bubble site stays live until this one is ready; then the `lockstep.uk` domain switches over.
 
@@ -171,7 +171,7 @@ Keystatic rewrites a file's frontmatter when you save it. Any `# TODO` comments 
 
 ### Legal pages (fixed URLs)
 
-- **Source:** the privacy policy, terms of use, community guidelines and affiliate disclosure are Markdown files in `src/content/legal/`, migrated word for word from the old site.
+- **Source:** the privacy policy, terms of use, community guidelines and affiliate disclosure are Markdown files in `src/content/legal/`, migrated word for word from the old site. On 2026-10-13 Andrew had the privacy policy and terms updated for the move off Bubble: they now name Lockstep Ltd and the services used (Supabase, Vercel, Resend, Daily, Mapbox, postcodes.io, Skiddle, Ticketmaster). **If you add a service that handles personal data, add it to the privacy policy's provider list.**
 - **Fixed URLs:** the Lockstep app links to these exact paths, with underscores: `/privacy_policy`, `/terms_of_use`, `/community_guidelines` and `/affiliate_disclosure`. It also links to `/articles`.
 - **Before renaming or removing one:** update the app's links in the same release, or add a redirect.
 
@@ -235,6 +235,16 @@ Anything not yet supplied is marked `PLACEHOLDER`, `TODO` or `VERIFY BEFORE LAUN
 - Make small, logical commits with clear messages (e.g. "Add base layout and navigation").
 - Open a pull request into `main`. GitHub checks the site builds before merging.
 - Merging into `main` deploys to Vercel automatically.
+
+## Speed
+
+Measured with Lighthouse (simulated mid-range phone on slow 4G) on 2026-10-11: performance 98–99, accessibility, best practices and SEO 100 on every page tested.
+
+- **Pages are static HTML** with the stylesheet inlined (`build.inlineStylesheets: 'always'`), so nothing blocks the first paint.
+- **JavaScript:** one tiny inline script for scroll reveals. No libraries.
+- **Fonts:** self-hosted woff2, by far the largest download (about 177 KB). Newsreader includes optical sizing (132 KB); the weight-only file is 58 KB but makes large headlines look narrower and lighter.
+- **Form function:** `/api/suggest-article` runs in London (`regions` in `vercel.json`). The unused `sharp` image library is left out of it (`excludeFiles` in `astro.config.mjs`), shrinking it from 23 MB to 3.4 MB for quicker cold starts.
+- **Caching:** files in `/_astro/` have content hashes and are cached for a year (set by the Vercel adapter).
 
 ## Deployment
 
