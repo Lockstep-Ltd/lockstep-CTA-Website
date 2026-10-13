@@ -16,7 +16,16 @@ const isSection = (href: string) => href !== '/' && current.startsWith(href);
       <Image src={logo} alt={`${site.name} home`} height={40} densities={[1, 2]} class="logo__img" loading="eager" />
     </a>
 
-    <nav aria-label="Main">
+    <!-- Phones only: opens the nav below using the browser's built-in popover (no JavaScript) -->
+    <button class="menu-button" type="button" popovertarget="site-nav" aria-controls="site-nav">
+      <svg class="menu-button__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path class="menu-button__open" d="M4 7h16M4 12h16M4 17h16" />
+        <path class="menu-button__close" d="M6 6l12 12M18 6L6 18" />
+      </svg>
+      Menu
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Main" popover>
       <ul class="nav-list">
         {navigation.map((item) => (
           <li>
@@ -92,8 +101,123 @@ const isSection = (href: string) => href !== '/' && current.startsWith(href);
     height: 2.5rem;
   }
 
-  /* On small screens the links wrap onto their own row below the logo:
-     no menu button needed, so no JavaScript and nothing hidden. */
+  /* Phones: a Menu button opens the links as a panel below the header. It is a
+     native popover, so tapping outside it or pressing Escape closes it too.
+     Browsers without popover support simply show the links in the header. */
+  .menu-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    min-height: 2.75rem;
+    padding: var(--space-2xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: none;
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .menu-button:hover {
+    background: var(--color-sage);
+    color: var(--color-primary);
+  }
+
+  .menu-button__icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .menu-button__close,
+  .site-header:has(.site-nav:popover-open) .menu-button__open {
+    display: none;
+  }
+
+  .site-header:has(.site-nav:popover-open) .menu-button__close {
+    display: inline;
+  }
+
+  .site-nav[popover] {
+    position: fixed;
+    inset: 4.5rem var(--space-sm) auto;
+    width: auto;
+    margin: 0;
+    padding: var(--space-xs);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg);
+    color: var(--color-text);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .site-nav[popover]::backdrop {
+    background: rgb(30 61 54 / 0.2);
+  }
+
+  .site-nav[popover] .nav-list {
+    flex-direction: column;
+  }
+
+  .site-nav[popover] .nav-list a {
+    display: block;
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--text-base);
+  }
+
+  @supports not selector(:popover-open) {
+    .menu-button {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .site-nav[popover]:popover-open {
+      animation: menu-in var(--duration-fast) var(--ease-out);
+    }
+  }
+
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-0.5rem);
+    }
+  }
+
+  /* Larger screens: no button, the links sit in the header as usual */
+  @media (min-width: 48rem) {
+    .menu-button {
+      display: none;
+    }
+
+    .site-nav[popover] {
+      position: static;
+      display: block;
+      inset: auto;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      box-shadow: none;
+      animation: none;
+    }
+
+    .site-nav[popover] .nav-list {
+      flex-direction: row;
+    }
+
+    .site-nav[popover] .nav-list a {
+      display: inline-block;
+      padding: var(--space-2xs) var(--space-xs);
+      font-size: var(--text-sm);
+    }
+  }
+
   .nav-list {
     display: flex;
     flex-wrap: wrap;

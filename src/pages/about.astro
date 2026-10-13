@@ -37,9 +37,11 @@ import { about, principles } from '../data/product';
 
   <section class="section" aria-labelledby="founder-heading">
     <div class="container reveal">
-      <div class="stack">
+      <div class="stack founder-head">
         <h2 id="founder-heading">Meet the founder</h2>
         <p><strong>Andrew Brink</strong>, Founder</p>
+      </div>
+      <div class="founder-story">
         <p>
           Like many students, I started gambling casually at university. It began with the
           occasional sports bet among friends or a late trip to the casino after a night out, but
@@ -108,6 +110,29 @@ import { about, principles } from '../data/product';
 
   .principle p {
     margin-top: var(--space-2xs);
+  }
+
+  .founder-head {
+    padding-bottom: var(--space-md);
+    margin-bottom: var(--space-md);
+    border-bottom: 2px solid var(--color-green);
+  }
+
+  .founder-story p {
+    max-width: none;
+  }
+
+  .founder-story p + p {
+    margin-top: var(--space-sm);
+  }
+
+  /* Wider screens: the story reads in two newspaper-style columns */
+  @media (min-width: 48rem) {
+    .founder-story {
+      columns: 2;
+      column-gap: var(--space-xl);
+      column-rule: 1px solid var(--color-border);
+    }
   }
 
   .principle__text {

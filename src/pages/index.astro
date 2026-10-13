@@ -224,9 +224,21 @@ const [latest, ...recent] = await getArticles();
     padding: var(--space-xl) var(--space-lg);
   }
 
+  /* Phones and tablets: the lock goes above the headline, smaller, so its
+     animation plays on screen as the page opens rather than below the fold */
   @media (max-width: 55.99rem) {
+    .hero {
+      padding-top: var(--space-sm);
+    }
+
+    .hero__grid {
+      gap: var(--space-sm);
+    }
+
     .hero__art {
-      height: 20rem;
+      order: -1;
+      height: 12rem;
+      padding: var(--space-sm) 0 0;
     }
   }
 
