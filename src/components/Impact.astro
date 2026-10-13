@@ -1,0 +1,200 @@
+---
+import { impact } from '../data/product';
+
+const monthly = Math.round((impact.weekly * 52) / 12);
+const yearly = impact.weekly * 52;
+const figures = [
+  { label: 'A week', value: impact.weekly },
+  { label: 'A month', value: monthly },
+  { label: 'A year', value: yearly },
+];
+---
+<div class="impact reveal">
+  <ol class="impact__figures" role="list">
+    {figures.map((f, i) => (
+      <li style={`--to: ${f.value}; --i: ${i}`}>
+        <span class="impact__label">{f.label}</span>
+        <span class="impact__value"><span class="visually-hidden">£{f.value}</span><span class="impact__count" aria-hidden="true">£</span></span>
+      </li>
+    ))}
+  </ol>
+
+  <div class="impact__bar" aria-hidden="true">
+    {impact.swaps.map((s, i) => <span style={`--w: ${s.price / yearly}; --i: ${i}`}></span>)}
+  </div>
+
+  <ul class="impact__swaps" role="list">
+    {impact.swaps.map((s, i) => (
+      <li style={`--i: ${i}`}><span class="impact__swatch" aria-hidden="true"></span>{s.name} <strong>£{s.price}</strong></li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  @property --n {
+    syntax: '<integer>';
+    inherits: false;
+    initial-value: 0;
+  }
+
+  .impact {
+    --c0: var(--color-green);
+    --c1: var(--color-emerald);
+    --c2: #4f8f78;
+    --c3: #84c3a6;
+    --c4: #bfe3d1;
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .impact__figures {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+    padding: 0;
+    list-style: none;
+  }
+
+  .impact__figures li {
+    display: grid;
+    gap: var(--space-3xs);
+    max-width: none;
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--color-cream);
+  }
+
+  .impact__figures li:last-child {
+    background: var(--color-green);
+    color: var(--color-cream);
+  }
+
+  .impact__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  .impact__value {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--color-green);
+  }
+
+  .impact__figures li:last-child .impact__value {
+    color: var(--color-cream);
+  }
+
+  .impact__count {
+    --n: var(--to);
+    counter-reset: n var(--n);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .impact__count::after {
+    content: counter(n);
+  }
+
+  .impact__bar {
+    position: relative;
+    display: flex;
+    height: 1.25rem;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--color-green) 10%, transparent);
+  }
+
+  .impact__bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 30%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.35), transparent);
+    transform: translateX(-100%);
+  }
+
+  .impact__bar span {
+    flex: var(--w) 0 0;
+    transform-origin: left;
+  }
+
+  .impact__swaps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-md);
+    padding: 0;
+    list-style: none;
+  }
+
+  .impact__swaps li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    max-width: none;
+  }
+
+  .impact__swaps strong {
+    color: var(--color-green);
+  }
+
+  .impact__swatch {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+  }
+
+  .impact__bar span:nth-child(1), .impact__swaps li:nth-child(1) .impact__swatch { background: var(--c0); }
+  .impact__bar span:nth-child(2), .impact__swaps li:nth-child(2) .impact__swatch { background: var(--c1); }
+  .impact__bar span:nth-child(3), .impact__swaps li:nth-child(3) .impact__swatch { background: var(--c2); }
+  .impact__bar span:nth-child(4), .impact__swaps li:nth-child(4) .impact__swatch { background: var(--c3); }
+  .impact__bar span:nth-child(5), .impact__swaps li:nth-child(5) .impact__swatch { background: var(--c4); }
+
+  @media (max-width: 47.99rem) {
+    .impact__value {
+      font-size: var(--text-xl);
+    }
+
+    .impact__figures li {
+      padding: var(--space-sm);
+    }
+  }
+
+  @media screen and (prefers-reduced-motion: no-preference) {
+    :global(.js-motion) .impact.is-visible .impact__count {
+      animation: count 1.4s cubic-bezier(0.2, 0.7, 0.3, 1) calc(0.3s + var(--i) * 0.5s) backwards;
+    }
+
+    :global(.js-motion) .impact.is-visible .impact__bar span {
+      animation: fill 0.7s var(--ease-out) calc(2s + var(--i) * 0.35s) backwards;
+    }
+
+    :global(.js-motion) .impact.is-visible .impact__bar::after {
+      animation: sheen 6s ease-in-out 4.5s infinite;
+    }
+
+    :global(.js-motion) .impact.is-visible .impact__swaps li {
+      animation: settle 0.6s var(--ease-out) calc(2.1s + var(--i) * 0.35s) backwards;
+    }
+  }
+
+  @keyframes count {
+    from { --n: 0; }
+  }
+
+  @keyframes fill {
+    from { transform: scaleX(0); }
+  }
+
+  @keyframes sheen {
+    0% { transform: translateX(-100%); }
+    35%, 100% { transform: translateX(340%); }
+  }
+
+  @keyframes settle {
+    from { opacity: 0; transform: translateY(8px); }
+  }
+</style>

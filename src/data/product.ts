@@ -118,3 +118,15 @@ export const spectrum = [
   { label: 'Starting to slip', title: 'Catch the urge', tools: ['Breathing and grounding', 'Personal reminders', 'Impact calculator'] },
   { label: "It's taking over", title: 'More structure', tools: ['Support meetings', 'Community', 'Blocking tools'] },
 ];
+
+// New copy (2026-10-12), not yet approved by Andrew. Prices sit within the app's own swap ranges.
+export const impact = {
+  weekly: 15,
+  swaps: [
+    { name: 'A weekend in Edinburgh', price: 300 },
+    { name: 'A spa day', price: 155 },
+    { name: 'New trainers', price: 120 },
+    { name: 'Gig tickets for two', price: 100 },
+    { name: 'Three takeaway film nights', price: 105 },
+  ],
+};

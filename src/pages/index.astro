@@ -4,9 +4,10 @@ import LockMark from '../components/LockMark.astro';
 import Staircase from '../components/Staircase.astro';
 import SwapDeck from '../components/SwapDeck.astro';
 import Spectrum from '../components/Spectrum.astro';
+import Impact from '../components/Impact.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getArticles } from '../lib/articles';
-import { about, commitments, heroNote, status, steps, tagline } from '../data/product';
+import { about, commitments, heroNote, impact, status, steps, tagline } from '../data/product';
 import { site } from '../data/site';
 
 const [latest, ...recent] = await getArticles();
@@ -109,6 +110,18 @@ const [latest, ...recent] = await getArticles();
       <p class="reveal">
         <a class="text-link what__more" href="/about/">More about Lockstep <span class="arrow" aria-hidden="true">→</span></a>
       </p>
+    </div>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="impact-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="stack">
+          <h2 id="impact-heading">What £{impact.weekly} a week becomes</h2>
+          <p class="lead">Small, regular stakes add up quietly. Here's the same money, a year on.</p>
+        </div>
+      </div>
+      <Impact />
     </div>
   </section>
 
