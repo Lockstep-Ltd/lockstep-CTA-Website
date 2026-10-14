@@ -11,6 +11,8 @@ const articles = defineCollection({
     /** One or two sentences for cards and search results. */
     description: z.string(),
     date: z.coerce.date(),
+    /** Optional: when the article was last changed in a meaningful way. Search engines only. */
+    updated: z.coerce.date().optional(),
     author: z.string(),
     authorRole: z.string().optional(),
     /** e.g. "4 min read" or "30–35 min watch" */

@@ -13,6 +13,10 @@ export const site = {
   locale: 'en_GB',
   // The "Download" link on the original site (Lockstep: Habit Management App, iOS).
   appStoreUrl: 'https://apps.apple.com/app/id6772143111',
+  appStoreId: '6772143111',
+  // As shown in "Meet the founder" on the About page. Articles by the founder link there
+  // in the search engine data (JSON-LD).
+  founder: { name: 'Andrew Brink', url: '/about/#founder-heading' },
   // As registered at Companies House. Used in the footer and the search engine data (JSON-LD).
   company: {
     legalName: 'Lockstep Ltd',
