@@ -49,8 +49,12 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
 
     <!-- Favicons are resized copies of the original app icon (src/assets/brand/lockstep-icon.png) -->
-    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <!-- Google shows the icon in search results and needs one at least 48px square -->
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Safari on iPhone shows a "Get the app" banner for the Lockstep app. No script, nothing tracked. -->
+    <meta name="apple-itunes-app" content={`app-id=${site.appStoreId}`} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <!-- Matches the page background (--color-cream) -->
     <meta name="theme-color" content="#FBF6E8" />

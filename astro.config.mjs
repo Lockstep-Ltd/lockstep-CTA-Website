@@ -10,14 +10,16 @@ import { globSync, readdirSync, readFileSync } from 'node:fs';
 // public site stays fully static with no JavaScript sent to visitors.
 const isDev = process.argv.includes('dev');
 
-// Article dates for the sitemap's <lastmod>, read from each article's frontmatter.
+// Article dates for the sitemap's <lastmod>, read from each article's frontmatter
+// (the "updated" date if there is one, otherwise the publish date).
 // Other pages have no reliable "last changed" date, so they're left without one.
 const articleDir = './src/content/articles';
 const articleDates = new Map(
   readdirSync(articleDir)
     .filter((file) => file.endsWith('.md'))
     .map((file) => {
-      const date = readFileSync(`${articleDir}/${file}`, 'utf8').match(/^date:\s*["']?([\d-]+)/m)?.[1];
+      const text = readFileSync(`${articleDir}/${file}`, 'utf8');
+      const date = (text.match(/^updated:\s*["']?([\d-]+)/m) ?? text.match(/^date:\s*["']?([\d-]+)/m))?.[1];
       return [`https://lockstep.uk/articles/${file.replace(/\.md$/, '')}/`, date];
     }),
 );

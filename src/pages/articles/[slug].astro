@@ -19,7 +19,7 @@ interface Props {
 }
 
 const { article, more } = Astro.props;
-const { title, description, date, author, authorRole, readingTime, watchUrl, references } = article.data;
+const { title, description, date, updated, author, authorRole, readingTime, watchUrl, references } = article.data;
 const { Content } = await render(article);
 const isoDate = date.toISOString().slice(0, 10);
 ---
@@ -33,6 +33,7 @@ const isoDate = date.toISOString().slice(0, 10);
   structuredData={articleNodes(article)}
 >
   <meta slot="head" property="article:published_time" content={isoDate} />
+  {updated && <meta slot="head" property="article:modified_time" content={updated.toISOString().slice(0, 10)} />}
   <meta slot="head" name="author" content={author} />
 
   <div class="progress" aria-hidden="true"></div>

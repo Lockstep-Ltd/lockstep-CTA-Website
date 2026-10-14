@@ -99,7 +99,8 @@ The site has no logins, accounts or database. Every page is static except one sm
 .
 ├── .github/workflows/deploy.yml   # Build check on PRs; deploy to Vercel on push to main
 ├── public/                        # Files served as-is
-│   ├── favicon-32.png             # Resized from the original app icon
+│   ├── favicon.ico                # 16, 32 and 48px, resized from the original app icon
+│   ├── icon-192.png               # Resized from the original app icon (search results, Android)
 │   ├── apple-touch-icon.png       # Resized from the original app icon
 │   └── robots.txt
 ├── scripts/
@@ -208,7 +209,10 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 - **Headings:** one `<h1>` per page, then `<h2>` and `<h3>` in order, without skipping levels.
 - **Canonical URLs** end with a slash (`/about/`). Link to that form inside the site. The app's legal links without the slash still work.
 - **Sitemap:** built automatically at `/sitemap-index.xml`, with each article's date as `<lastmod>`. `/sitemap.xml` redirects there (in `vercel.json`) and `robots.txt` points to it. Pages marked `noindex` (the 404 page) are left out.
-- **Structured data:** `src/lib/structured-data.ts` describes Lockstep Ltd and the website on every page, and adds article and breadcrumb data to articles. It uses only facts already on the site. Check changes with Google's [Rich Results Test](https://search.google.com/test/rich-results).
+- **Structured data:** `src/lib/structured-data.ts` describes Lockstep Ltd, its founder (linked to "Meet the founder" on the About page), the website and the app on every page, and adds article and breadcrumb data to articles. It uses only facts already on the site.
+- **Article dates:** the publish date is `date`. If you change an article in a meaningful way, set `updated` (the "Last updated" field in Keystatic). It isn't shown on the page; it goes into the sitemap and the search engine data.
+- **Icons:** Google shows the site icon next to search results and needs one that's a multiple of 48px, so `favicon.ico` includes a 48px size and there's a 192px PNG. Both are resized from the original icon, centred on cream like the Apple touch icon (the original isn't square).
+- **App banner:** an `apple-itunes-app` meta tag makes Safari on iPhone show a "Get the app" banner linking to the App Store. It's built into Safari: no script, nothing tracked. Check changes with Google's [Rich Results Test](https://search.google.com/test/rich-results).
 - **Sharing images:** generated at build time by `src/pages/og/[...route].ts`.
 
 ### Accessibility tests

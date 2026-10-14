@@ -8,7 +8,16 @@ import type { Article } from './articles';
 
 const orgId = `${site.url}/#organization`;
 const websiteId = `${site.url}/#website`;
+const founderId = `${site.url}/#founder`;
 const abs = (path: string) => new URL(path, site.url).href;
+
+const founder = {
+  '@type': 'Person',
+  '@id': founderId,
+  name: site.founder.name,
+  jobTitle: 'Founder',
+  url: abs(site.founder.url),
+};
 
 const organization = {
   '@type': 'Organization',
@@ -19,6 +28,7 @@ const organization = {
   // Resized copy of the original app icon (180×180)
   logo: abs('/apple-touch-icon.png'),
   email: site.email,
+  founder: { '@id': founderId },
   description: site.defaultDescription,
   identifier: {
     '@type': 'PropertyValue',
@@ -58,12 +68,12 @@ const website = {
 
 /** The graph for one page: the organisation, website and app, plus anything page-specific. */
 export function pageGraph(nodes: Record<string, unknown>[] = []) {
-  return { '@context': 'https://schema.org', '@graph': [organization, website, app, ...nodes] };
+  return { '@context': 'https://schema.org', '@graph': [organization, founder, website, app, ...nodes] };
 }
 
 /** An article, with breadcrumbs (Home › Articles › title). */
 export function articleNodes(article: Article): Record<string, unknown>[] {
-  const { title, description, date, author, authorRole } = article.data;
+  const { title, description, date, updated, author, authorRole } = article.data;
   const url = abs(`/articles/${article.id}/`);
   return [
     {
@@ -72,7 +82,12 @@ export function articleNodes(article: Article): Record<string, unknown>[] {
       headline: title,
       description,
       datePublished: date.toISOString().slice(0, 10),
-      author: { '@type': 'Person', name: author, ...(authorRole && { jobTitle: authorRole }) },
+      ...(updated && { dateModified: updated.toISOString().slice(0, 10) }),
+      // The founder's articles point to the founder described above (with a link to the About page)
+      author:
+        author === site.founder.name
+          ? { '@id': founderId }
+          : { '@type': 'Person', name: author, ...(authorRole && { jobTitle: authorRole }) },
       publisher: { '@id': orgId },
       isPartOf: { '@id': websiteId },
       mainEntityOfPage: url,
