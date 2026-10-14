@@ -7,6 +7,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
 import { pageGraph } from '../lib/structured-data';
+import revealScript from '../scripts/reveal.js?raw';
 
 interface Props {
   /** Page-specific title. The site name is added automatically. */
@@ -68,8 +69,17 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Structured data for search engines (not run by browsers) -->
-    {!noindex && <script is:inline type="application/ld+json" set:html={JSON.stringify(pageGraph(structuredData))} />}
+    <!-- Structured data for search engines (not run by browsers). "<" is escaped so text
+         such as "</script>" in an article title can't end the tag early. -->
+    {
+      !noindex && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(pageGraph(structuredData)).replace(/</g, '\\u003c')}
+        />
+      )
+    }
     <slot name="head" />
 
     <!--
@@ -78,34 +88,7 @@ const ogImageUrl = new URL(ogImage, Astro.site);
       CSS in global.css does the animating. It sends nothing anywhere. Without
       JavaScript, or with reduced motion on, everything simply shows as normal.
     -->
-    <script is:inline>
-      (() => {
-        const root = document.documentElement;
-        if (!('IntersectionObserver' in window) || !matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
-        root.classList.add('js-motion');
-        const watch = (options) => {
-          const observer = new IntersectionObserver((entries) => {
-            // Items arriving together are staggered slightly, in page order
-            let i = 0;
-            for (const entry of entries) {
-              if (!entry.isIntersecting) continue;
-              entry.target.style.setProperty('--reveal-delay', `${i++ * 90}ms`);
-              entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
-            }
-          }, options);
-          return observer;
-        };
-        const reveals = watch({ rootMargin: '0px 0px -12% 0px' });
-        // The staircase waits until half of it is on screen, and on tall screens until the
-        // hero has finished, so it builds while someone is actually looking at it
-        const stairs = watch({ threshold: 0.5 });
-        addEventListener('DOMContentLoaded', () => {
-          document.querySelectorAll('.reveal').forEach((el) => reveals.observe(el));
-          setTimeout(() => document.querySelectorAll('.stairs').forEach((el) => stairs.observe(el)), 1600);
-        });
-      })();
-    </script>
+    <script is:inline set:html={revealScript} />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>

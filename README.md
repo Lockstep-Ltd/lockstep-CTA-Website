@@ -42,7 +42,7 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 
 ### Motion
 
-- **Mostly CSS.** The one exception is a tiny inline script in `BaseLayout.astro` (allowed by Andrew on 2026-10-11). It only notes when a `.reveal` element or the staircase scrolls into view and adds `.is-visible`; CSS does all the animating. It works the same in every browser, including Safari on iPhone, and sends nothing anywhere.
+- **Mostly CSS.** The one exception is a tiny inline script, `src/scripts/reveal.js`, put into every page by `BaseLayout.astro` (allowed by Andrew on 2026-10-11). It only notes when a `.reveal` element or the staircase scrolls into view and adds `.is-visible`; CSS does all the animating. It works the same in every browser, including Safari on iPhone, and sends nothing anywhere.
 - **Page fades:** the browser's cross-document View Transitions.
 - **Scroll reveals:** sections fade up as they come into view, and items arriving together are slightly staggered.
 - **Staircase:** each step grows up from the floor in turn (a `clip-path` reveal, so the numbers aren't squashed), then its number and text settle in.
@@ -120,6 +120,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   ├── content.config.ts          # Article fields (title, date, author, ...)
 │   ├── lib/articles.ts            # Article sorting, date formatting, URLs
 │   ├── lib/structured-data.ts     # JSON-LD for search engines (organisation, articles)
+│   ├── scripts/                   # Inline scripts, hashed for the Content Security Policy (see Security)
 │   ├── data/
 │   │   ├── site.ts                # Site name, contact email, navigation, SEO defaults
 │   │   ├── product.ts             # App copy: tagline, steps, principles, ethics, status
@@ -188,6 +189,15 @@ Keystatic rewrites a file's frontmatter when you save it. Any `# TODO` comments 
 - **Stored data:** none. The suggestion exists only as an email in the inbox.
 - **Testing locally:** with no `RESEND_API_KEY` in `.env`, `npm run dev` prints the email to the dev log (`npx astro dev logs`) instead of sending it.
 
+### Security
+
+- **Content Security Policy:** set with `security.csp` in [astro.config.mjs](astro.config.mjs). Every built page gets a `<meta>` tag that only allows files from lockstep.uk itself, plus hashes of the page's inline styles and of the scripts in `src/scripts/`. A browser refuses to run any other script, so injected code can't run.
+  - **Adding or changing a script:** put it in `src/scripts/` and include it with `<script is:inline set:html={...} />` from a `?raw` import (see `BaseLayout.astro`). Its hash is worked out on every build. A plain `<script is:inline>` written straight into a page or component is blocked.
+  - **Checking it:** the policy is off in `npm run dev`. Check changes in a built page and look for "Content Security Policy" errors in the browser console.
+- **Headers:** `vercel.json` adds `frame-ancestors 'none'` and `X-Frame-Options` (no other site can show lockstep.uk in a frame), `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy` to every response.
+- **Form abuse:** the spam protection above doesn't stop a script that sends the form directly, and each valid post sends an email. A Vercel Firewall rate limit on `/api/suggest-article` (Vercel → Project → Firewall, not in this repo) caps that: 5 posts a minute per IP address (paths starting with `/api/suggest-article`, so the trailing-slash address is covered too), then a 429. Set up on 2026-10-14.
+- **Email spoofing:** `lockstep.uk` has SPF and DKIM for Google Workspace and Resend. A DMARC record (`_dmarc.lockstep.uk`) tells other mail servers what to do with mail that fails them. Not set up yet as of 2026-10-14.
+
 ### Old Bubble links
 
 [vercel.json](vercel.json) redirects the old site's addresses so saved and shared links keep working:
@@ -243,7 +253,7 @@ Anything not yet supplied is marked `PLACEHOLDER`, `TODO` or `VERIFY BEFORE LAUN
 Measured with Lighthouse (simulated mid-range phone on slow 4G) on 2026-10-11: performance 98–99, accessibility, best practices and SEO 100 on every page tested.
 
 - **Pages are static HTML** with the stylesheet inlined (`build.inlineStylesheets: 'always'`), so nothing blocks the first paint.
-- **JavaScript:** one tiny inline script for scroll reveals. No libraries.
+- **JavaScript:** small inline scripts in `src/scripts/` (scroll reveals, and tapping the home page lock to replay it). No libraries.
 - **Fonts:** self-hosted woff2, by far the largest download (about 177 KB). Newsreader includes optical sizing (132 KB); the weight-only file is 58 KB but makes large headlines look narrower and lighter.
 - **Form function:** `/api/suggest-article` runs in London (`regions` in `vercel.json`). The unused `sharp` image library is left out of it (`excludeFiles` in `astro.config.mjs`), shrinking it from 23 MB to 3.4 MB for quicker cold starts.
 - **Caching:** files in `/_astro/` have content hashes and are cached for a year (set by the Vercel adapter).
