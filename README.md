@@ -134,6 +134,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   │   ├── how-it-works.astro     # /how-it-works/
 │   │   ├── articles/index.astro   # /articles/
 │   │   ├── articles/[slug].astro  # /articles/<file-name>/
+│   │   ├── articles.json.ts       # /articles.json: article feed for the app (built at build time)
 │   │   ├── articles/suggest/      # Suggest-an-article form, thanks and error pages
 │   │   ├── api/suggest-article.ts # Form handler: emails suggestions via Resend (serverless)
 │   │   ├── [legal].astro          # /privacy_policy, /terms_of_use, /community_guidelines, /affiliate_disclosure
@@ -178,6 +179,16 @@ Keystatic rewrites a file's frontmatter when you save it. Any `# TODO` comments 
 - **Source:** the privacy policy, terms of use, community guidelines and affiliate disclosure are Markdown files in `src/content/legal/`, migrated word for word from the old site. On 2026-10-13 Andrew had the privacy policy and terms updated for the move off Bubble: they now name Lockstep Ltd and the services used (Supabase, Vercel, Resend, Daily, Mapbox, postcodes.io, Skiddle, Ticketmaster). **If you add a service that handles personal data, add it to the privacy policy's provider list.**
 - **Fixed URLs:** the Lockstep app links to these exact paths, with underscores: `/privacy_policy`, `/terms_of_use`, `/community_guidelines` and `/affiliate_disclosure`. It also links to `/articles`.
 - **Before renaming or removing one:** update the app's links in the same release, or add a redirect.
+
+### Article feed (for the app)
+
+The Lockstep app lists articles from `https://lockstep.uk/articles.json` and opens each one on the website. It's generated at build time by [src/pages/articles.json.ts](src/pages/articles.json.ts), so publishing an article here is all it takes for the app to show it.
+
+- **What's in it:** a `version` number and the published articles, newest first. Each has `id` (the file name), `url`, `title`, `description`, `date` (YYYY-MM-DD), `author`, `readingTime` and `image` (the sharing image), plus `updated`, `authorRole` and `watchUrl` when the article has them. Drafts are left out.
+- **Fixed URL:** the app depends on `/articles.json`. Don't move or remove it.
+- **Keep it backwards compatible:** adding fields is fine. Renaming or removing one needs a new `version` and an app update in the same release.
+- **IDs are permanent:** an article's file name is its ID in the app, so renaming a file makes it look like a new article.
+- **Headers** (in `vercel.json`): `Access-Control-Allow-Origin: *` so the app can read it, and a 5-minute cache so new articles show up quickly.
 
 ### Article suggestions
 
@@ -235,7 +246,7 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 ### Common edits
 
 - **Page text:** edit the files in `src/pages/`. App copy shared across pages (steps, principles and so on) lives in `src/data/product.ts`.
-- **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL (don't name one `all`: `/articles/all/` lists every article). Articles are ordered by date: the newest is featured on `/articles/` with the next three beside it, and "See all articles" leads to the full list. Set `draft: true` to hide one.
+- **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL (don't name one `all`: `/articles/all/` lists every article). Articles are ordered by date: the newest is featured on `/articles/` with the next three beside it, and "See all articles" leads to the full list. Set `draft: true` to hide one. Published articles also appear in the app through the [article feed](#article-feed-for-the-app); don't rename an article's file once it's published.
 - **Article sources:** keep citations in the text short, e.g. "(Gambling Commission, 2025)", and list the full source under `references` in the frontmatter (or the References field in Keystatic). They appear behind a "References" link at the end of the article.
 - **Navigation or contact email:** `src/data/site.ts`.
 - **Support services:** `src/data/support.ts`. Set `verified: true` once each entry is checked.
