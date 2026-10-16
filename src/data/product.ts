@@ -144,11 +144,11 @@ export const features = {
   ],
 };
 
-// The free Chrome extension (confirmed by Andrew, 2026-10-16; name and link from Andrew). The text is from the
-// privacy policy's description of the extension, word for word.
+// The free Chrome extension (confirmed by Andrew, 2026-10-16; name and link from Andrew).
+// Text written by Andrew (2026-10-16), word for word apart from capitalising "Chrome".
 export const chromeExtension = {
   // Its full name on the Chrome Web Store. Always use this, not just "Lockstep".
   name: 'Lockstep: Gambling Content Blocker',
-  text: 'Lockstep blocks gambling-related content on YouTube, Google Search, Ecosia, Instagram, and known gambling websites, using on-device keyword and domain matching.',
+  text: "Lockstep's Chrome extension adds a further layer of resistance to temptations, by reducing exposure to gambling via platforms like YouTube, Google Search, Ecosia, Instagram, and known gambling websites, using on-device keyword and domain matching.",
   storeUrl: 'https://chromewebstore.google.com/detail/lockstep-gambling-content/jojaaefjdebldfocnbnkhbdjdhedgkhl',
 };
