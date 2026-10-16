@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Staircase from '../components/Staircase.astro';
-import { ethics, steps } from '../data/product';
+import { chromeExtension, ethics, features, steps } from '../data/product';
 // Search description: "reduce gambling" added for search engines (approved by Andrew, 2026-10-11).
 ---
 
@@ -28,25 +28,33 @@ import { ethics, steps } from '../data/product';
     <div class="container stack-lg">
       <h2 id="tools-heading" class="reveal">Inside the app</h2>
       <!-- Screenshots left out for now. To add them later, put the images in
-           src/assets/images/ and add a <Figure src={...} alt="..."> above each <h3>. -->
+           src/assets/images/, add an image to each card in src/data/product.ts and
+           show it with <Figure src={...} alt="..."> above the <h3>. -->
       <div class="grid grid--2">
-        <article class="card stack reveal">
-          <h3>Swap the Night</h3>
-          <p>
-            Tell us what you were planning to spend and the kind of night you're after, then
-            swipe through real events and things to do from Skiddle and Ticketmaster that you
-            could spend it on instead.
-          </p>
-        </article>
-        <article class="card stack reveal">
-          <h3>Relevant Meetings</h3>
-          <p>
-            Find support meetings with people in a similar situation to you. Lockstep matches
-            meetings to you and your circumstances, and shows how relevant each one is as a
-            percentage.
-          </p>
-        </article>
+        {features.cards.map((card) => (
+          <article class="card stack reveal">
+            <h3>{card.title}</h3>
+            <p>{card.text}</p>
+          </article>
+        ))}
       </div>
+      <div class="stack reveal">
+        <h3 id="more-heading">Also in the app</h3>
+        <ul class="feature-list" aria-labelledby="more-heading">
+          {features.more.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="extension-heading">
+    <div class="container stack reveal">
+      <div>
+        <p class="kicker">Chrome extension</p>
+        <h2 id="extension-heading">{chromeExtension.name}</h2>
+      </div>
+      <p class="lead">{chromeExtension.text}</p>
+      <p><a class="button" href={chromeExtension.storeUrl}>Add to Chrome</a></p>
     </div>
   </section>
 
@@ -75,6 +83,37 @@ import { ethics, steps } from '../data/product';
 </BaseLayout>
 
 <style>
+  .feature-list {
+    display: grid;
+    gap: var(--space-xs) var(--space-lg);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .feature-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .feature-list li {
+    position: relative;
+    padding-left: 1.75em;
+  }
+
+  /* Tick drawn in CSS, so screen readers just hear the list */
+  .feature-list li::before {
+    content: '';
+    position: absolute;
+    left: 0.2em;
+    top: 0.35em;
+    width: 0.45em;
+    height: 0.8em;
+    border: solid var(--color-emerald);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
   .ethics {
     display: grid;
     gap: var(--space-md);

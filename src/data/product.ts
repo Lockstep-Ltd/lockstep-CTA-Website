@@ -111,3 +111,44 @@ export const status = {
   // Shortened for the hero (2026-10-13, Andrew's request).
   androidShort: 'Android app coming soon',
 };
+
+// "Inside the app" on the How it works page. Swap the Night and Relevant Meetings are the
+// original site cards. The rest is from the App Store description (October 2026), word for
+// word apart from capitalisation and dropping "with" / " - " where a feature name became a title.
+export const features = {
+  cards: [
+    {
+      title: 'Swap the Night',
+      text: "Tell us what you were planning to spend and the kind of night you're after, then swipe through real events and things to do from Skiddle and Ticketmaster that you could spend it on instead.",
+    },
+    {
+      title: 'Relevant Meetings',
+      text: 'Find support meetings with people in a similar situation to you. Lockstep matches meetings to you and your circumstances, and shows how relevant each one is as a percentage.',
+    },
+    {
+      title: 'Recovery Toolbox',
+      text: 'Personal reminders, future self messages, photos and music links that help users reconnect with their long-term goals.',
+    },
+    {
+      title: 'Hold Your Reward',
+      text: 'Reframe gambling spend into tangible rewards, experiences and real-world value.',
+    },
+  ],
+  more: [
+    'Daily challenges and intentional habit building',
+    'Financial blockers and self-exclusion tools',
+    'Gambling impact and true cost calculators',
+    'Reflection tools, milestones and progress tracking',
+    'Private or public community posting',
+    'Relevance-based recommendations tailored to your goals and interests',
+  ],
+};
+
+// The free Chrome extension (confirmed by Andrew, 2026-10-16; name and link from Andrew). The text is from the
+// privacy policy's description of the extension, word for word.
+export const chromeExtension = {
+  // Its full name on the Chrome Web Store. Always use this, not just "Lockstep".
+  name: 'Lockstep: Gambling Content Blocker',
+  text: 'Lockstep blocks gambling-related content on YouTube, Google Search, Ecosia, Instagram, and known gambling websites, using on-device keyword and domain matching.',
+  storeUrl: 'https://chromewebstore.google.com/detail/lockstep-gambling-content/jojaaefjdebldfocnbnkhbdjdhedgkhl',
+};
