@@ -1,0 +1,143 @@
+---
+/*
+ * Line icons for the kinds of organisation Lockstep works with. Decorative only.
+ * Always place them inside a .reveal element: they draw themselves in once it scrolls into view,
+ * then make a small, occasional idle movement (as the home page commitments do).
+ * Stroke colour comes from --icon-stroke, so they also work on dark sections.
+ */
+interface Props {
+  name: 'university' | 'charity' | 'funder' | 'international';
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+---
+
+<svg class:list={['partner-icon', `partner-icon--${name}`, className]} viewBox="0 0 48 48" aria-hidden="true">
+  {name === 'university' && (
+    <>
+      <path class="draw" pathLength="1" d="M4 18 L24 9 L44 18 L24 27 Z" />
+      <path class="draw draw--late" pathLength="1" d="M12 22 V31 C12 37 36 37 36 31 V22" />
+      <path class="draw draw--late partner-icon__tassel" pathLength="1" d="M44 18 V29" />
+    </>
+  )}
+  {name === 'charity' && (
+    <>
+      <path class="draw partner-icon__heart" pathLength="1" d="M24 20 C21 14 12 14 12 21 C12 27 24 32 24 32 C24 32 36 27 36 21 C36 14 27 14 24 20 Z" />
+      <path class="draw draw--late" pathLength="1" d="M5 30 C10 41 38 41 43 30" />
+    </>
+  )}
+  {name === 'funder' && (
+    <>
+      <path class="draw" pathLength="1" d="M14 42 H34" />
+      <path class="draw" pathLength="1" d="M24 42 V22" />
+      <g class="partner-icon__leaves">
+        <path class="draw draw--late" pathLength="1" d="M24 27 C24 19 18 15 10 15 C10 23 16 27 24 27 Z" />
+        <path class="draw draw--late" pathLength="1" d="M24 22 C24 14 30 9 38 9 C38 17 32 22 24 22 Z" />
+      </g>
+    </>
+  )}
+  {name === 'international' && (
+    <>
+      <circle class="draw" pathLength="1" cx="24" cy="24" r="18" />
+      <path class="draw draw--late" pathLength="1" d="M6 24 H42 M10 15 H38 M10 33 H38" />
+      <ellipse class="draw draw--late partner-icon__meridian" pathLength="1" cx="24" cy="24" rx="8" ry="18" />
+    </>
+  )}
+</svg>
+
+<style>
+  .partner-icon {
+    flex: none;
+    width: 3rem;
+    height: 3rem;
+    fill: none;
+    stroke: var(--icon-stroke, var(--color-emerald));
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    overflow: visible;
+  }
+
+  :is(.partner-icon__tassel, .partner-icon__heart, .partner-icon__leaves, .partner-icon__meridian) {
+    transform-box: fill-box;
+  }
+
+  .partner-icon__tassel {
+    transform-origin: top;
+  }
+
+  .partner-icon__heart,
+  .partner-icon__meridian {
+    transform-origin: center;
+  }
+
+  .partner-icon__leaves {
+    transform-origin: bottom;
+  }
+
+  @media screen and (prefers-reduced-motion: no-preference) {
+    :global(.js-motion) .draw {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+
+    :global(.js-motion .is-visible) .draw {
+      animation: icon-draw 900ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 250ms) forwards;
+    }
+
+    :global(.js-motion .is-visible) .draw--late {
+      animation-delay: calc(var(--reveal-delay, 0ms) + 750ms);
+    }
+
+    :global(.js-motion .is-visible) .partner-icon__tassel {
+      animation:
+        icon-draw 600ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 750ms) forwards,
+        icon-swing 7s ease-in-out 3s infinite;
+    }
+
+    :global(.js-motion .is-visible) .partner-icon__heart {
+      animation:
+        icon-draw 900ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 250ms) forwards,
+        icon-beat 6s ease-in-out 3s infinite;
+    }
+
+    :global(.js-motion .is-visible) .partner-icon__leaves {
+      animation: icon-sway 8s ease-in-out 3s infinite;
+    }
+
+    :global(.js-motion .is-visible) .partner-icon__meridian {
+      animation:
+        icon-draw 900ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 750ms) forwards,
+        icon-turn 9s linear 2.5s infinite;
+    }
+  }
+
+  @keyframes icon-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes icon-swing {
+    0%, 70%, 100% { transform: none; }
+    76% { transform: rotate(14deg); }
+    84% { transform: rotate(-8deg); }
+    92% { transform: rotate(3deg); }
+  }
+
+  @keyframes icon-beat {
+    0%, 72%, 84%, 100% { transform: none; }
+    76% { transform: scale(1.12); }
+    80% { transform: scale(0.97); }
+  }
+
+  @keyframes icon-sway {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(4deg); }
+  }
+
+  /* The meridian narrows and widens, so the globe seems to turn */
+  @keyframes icon-turn {
+    0%, 50%, 100% { transform: scaleX(1); }
+    25%, 75% { transform: scaleX(0.1); }
+  }
+</style>

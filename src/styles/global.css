@@ -176,6 +176,34 @@ a:hover {
   padding: var(--space-md);
 }
 
+/* Rounded deep-green call-to-action panel with a soft emerald glow.
+   Use together with .section--dark for its text, link and focus colours. */
+.cta-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  padding: var(--space-xl) var(--space-md);
+  border-radius: var(--radius-xl);
+  --icon-stroke: color-mix(in srgb, var(--color-cream) 80%, var(--color-green));
+}
+
+.cta-panel::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  inset: -40% -10% auto 35%;
+  aspect-ratio: 1;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--color-emerald) 85%, transparent), transparent);
+}
+
+@media (min-width: 48rem) {
+  .cta-panel {
+    padding: var(--space-2xl) var(--space-xl);
+  }
+}
+
 /* Buttons */
 .button {
   display: inline-flex;
@@ -210,13 +238,13 @@ a:hover {
 }
 
 /* Light button for dark green sections */
-.button--light {
+.button.button--light {
   background: var(--color-cream);
   border-color: var(--color-cream);
   color: var(--color-green);
 }
 
-.button--light:hover {
+.button.button--light:hover {
   background: var(--color-white);
   border-color: var(--color-white);
   color: var(--color-green);
@@ -371,6 +399,11 @@ a:hover {
     box-shadow: var(--shadow-soft);
   }
 
+  /* The call-to-action glow drifts slowly */
+  .cta-panel::before {
+    animation: glow-drift 14s ease-in-out infinite alternate;
+  }
+
   /* Entrance on page load: add .enter and set --i for a stagger */
   .enter {
     animation: rise var(--duration-slow) var(--ease-out) both;
@@ -402,6 +435,12 @@ a:hover {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes glow-drift {
+  to {
+    transform: translate(-18%, 12%) scale(1.15);
   }
 }
 
