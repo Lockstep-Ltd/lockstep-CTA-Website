@@ -1,9 +1,11 @@
 ---
 # Migrated verbatim from lockstep.uk/terms_of_use on 2026-10-06. Headings changed to sentence case only.
 # Updated 2026-10-13 at Andrew's request: Lockstep Ltd and its company details added.
+# Updated 2026-10-16 at Andrew's request: 18+ requirement added (the app asks people to confirm it), and
+# "early-access basis" replaced now that the app is live on the App Store.
 title: "Terms of Use"
 description: "The terms that govern access to and use of the Lockstep website, app and related services."
-updated: "13/10/2026"
+updated: "16/10/2026"
 ---
 
 These Terms of Use govern access to and use of the Lockstep website, mobile application, and any related services or platforms operated by Lockstep Ltd (“Lockstep”), a company registered in England and Wales (company number 17328022), whose registered office is at Lingcroft, Pyrford Road, West Byfleet, KT14 6QS. By accessing or using the Service, you agree to these Terms. If you do not agree, you should not use the Service. Subject to your compliance with these Terms, Lockstep grants you a limited, non-exclusive, non-transferable, revocable licence to access and use the Service for personal, non-commercial purposes.
@@ -13,6 +15,8 @@ These Terms of Use govern access to and use of the Lockstep website, mobile appl
 Lockstep is a self-directed digital platform designed to support people in managing their gambling behaviour through practical tools, structured alternatives, and optional community features. The Service is informational and supportive in nature. It does not provide medical, therapeutic, counselling, financial, or legal advice, and it should not be treated as a substitute for professional support.
 
 Lockstep does not diagnose conditions, prescribe actions, or direct user behaviour. The Service is intended to support awareness, reflection, and choice, rather than to enforce abstinence or guarantee outcomes.
+
+You must be 18 or over to create an account and use the Lockstep app.
 
 ## Responsible Use
 
@@ -30,7 +34,7 @@ The Service may include outbound links to third-party websites, services, or res
 
 ## Availability and Changes
 
-Lockstep is provided on an early-access basis. Features, functionality, and content may change, be added, or be removed over time. Lockstep does not guarantee uninterrupted availability of the Service and may suspend or restrict access where necessary to protect users, maintain the integrity of the platform, or comply with legal obligations.
+Lockstep is in active development. Features, functionality, and content may change, be added, or be removed over time. Lockstep does not guarantee uninterrupted availability of the Service and may suspend or restrict access where necessary to protect users, maintain the integrity of the platform, or comply with legal obligations.
 
 ## Intellectual Property
 
