@@ -135,6 +135,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   │   ├── articles/index.astro   # /articles/
 │   │   ├── articles/[slug].astro  # /articles/<file-name>/
 │   │   ├── articles.json.ts       # /articles.json: article feed for the app (built at build time)
+│   │   ├── llms.txt.ts            # /llms.txt: plain-text site summary for AI assistants
 │   │   ├── articles/suggest/      # Suggest-an-article form, thanks and error pages
 │   │   ├── api/suggest-article.ts # Form handler: emails suggestions via Resend (serverless)
 │   │   ├── [legal].astro          # /privacy_policy, /terms_of_use, /community_guidelines, /affiliate_disclosure
@@ -231,6 +232,9 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 - **Canonical URLs** end with a slash (`/about/`). Link to that form inside the site. The app's legal links without the slash still work.
 - **Sitemap:** built automatically at `/sitemap-index.xml`, with each article's date as `<lastmod>`. `/sitemap.xml` redirects there (in `vercel.json`) and `robots.txt` points to it. Pages marked `noindex` (the 404 page) are left out.
 - **Structured data:** `src/lib/structured-data.ts` describes Lockstep Ltd, its founder (linked to "Meet the founder" on the About page), the website and the app on every page, and adds article and breadcrumb data to articles. It uses only facts already on the site.
+- **Telling Lockstep apart from other "Lockstep"s:** the name is shared with other companies (such as Sage's accounting software), so the search engine data gives the App Store name ("Lockstep: Habit Management") as an alternate name and lists Lockstep Ltd's official pages elsewhere (`profiles` in `src/data/site.ts`, shown as `sameAs`). Add each new official profile or directory listing there.
+- **App facts:** the app and the Chrome extension are both free (confirmed by Andrew, 2026-10-16), so the search engine data includes a free `Offer` and the app's feature list. The extension's full name is "Lockstep: Gambling Content Blocker" (as on the Chrome Web Store); use it rather than just "Lockstep".
+- **AI assistants:** `/llms.txt` (built by `src/pages/llms.txt.ts`) is a plain-text summary of the site and a list of its pages and articles, following [llmstxt.org](https://llmstxt.org). New articles appear in it automatically; it reuses wording already on the site. `robots.txt` allows all crawlers, AI ones included (checked 2026-10-16: GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot and others all get through).
 - **Article dates:** the publish date is `date`. If you change an article in a meaningful way, set `updated` (the "Last updated" field in Keystatic). It isn't shown on the page; it goes into the sitemap and the search engine data.
 - **Icons:** Google shows the site icon next to search results and needs one that's a multiple of 48px, so `favicon.ico` includes a 48px size and there's a 192px PNG. Both are resized from the original icon, centred on cream like the Apple touch icon (the original isn't square).
 - **App banner:** an `apple-itunes-app` meta tag makes Safari on iPhone show a "Get the app" banner linking to the App Store. It's built into Safari: no script, nothing tracked. Check changes with Google's [Rich Results Test](https://search.google.com/test/rich-results).
@@ -245,7 +249,7 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 
 ### Common edits
 
-- **Page text:** edit the files in `src/pages/`. App copy shared across pages (steps, principles and so on) lives in `src/data/product.ts`.
+- **Page text:** edit the files in `src/pages/`. App copy shared across pages (steps, principles, the feature list, the Chrome extension and so on) lives in `src/data/product.ts`. The feature list on How it works is the App Store description's wording; keep the two in step.
 - **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL (don't name one `all`: `/articles/all/` lists every article). Articles are ordered by date: the newest is featured on `/articles/` with the next three beside it, and "See all articles" leads to the full list. Set `draft: true` to hide one. Published articles also appear in the app through the [article feed](#article-feed-for-the-app); don't rename an article's file once it's published.
 - **Article sources:** keep citations in the text short, e.g. "(Gambling Commission, 2025)", and list the full source under `references` in the frontmatter (or the References field in Keystatic). They appear behind a "References" link at the end of the article.
 - **Navigation or contact email:** `src/data/site.ts`.

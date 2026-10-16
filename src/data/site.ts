@@ -14,6 +14,14 @@ export const site = {
   // The "Download" link on the original site (Lockstep: Habit Management App, iOS).
   appStoreUrl: 'https://apps.apple.com/app/id6772143111',
   appStoreId: '6772143111',
+  // TODO: change to 'Lockstep UK' once Apple approves the app's rename (requested by Andrew, 2026-10-16).
+  appStoreName: 'Lockstep: Habit Management',
+  // Lockstep Ltd's official pages elsewhere, listed as `sameAs` in the search engine data (JSON-LD).
+  // TODO: add the AlternativeTo and SaaSHub listings once they're live (Andrew is listing them after the rename).
+  profiles: [
+    'https://apps.apple.com/gb/developer/lockstep-ltd/id6772143113',
+    'https://find-and-update.company-information.service.gov.uk/company/17328022',
+  ],
   // As shown in "Meet the founder" on the About page. Articles by the founder link there
   // in the search engine data (JSON-LD).
   founder: { name: 'Andrew Brink', url: '/about/#founder-heading' },

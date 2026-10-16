@@ -3,7 +3,7 @@
 // browsers don't run it, so no JavaScript is sent to visitors.
 // Only facts already on the site go here. Test changes at https://search.google.com/test/rich-results
 import { site } from '../data/site';
-import { tagline } from '../data/product';
+import { chromeExtension, features, tagline } from '../data/product';
 import type { Article } from './articles';
 
 const orgId = `${site.url}/#organization`;
@@ -30,6 +30,9 @@ const organization = {
   email: site.email,
   founder: { '@id': founderId },
   description: site.defaultDescription,
+  // Official profiles of this Lockstep, so search engines and AI assistants don't
+  // confuse it with other companies called Lockstep. Add new profiles here as they're set up.
+  sameAs: site.profiles,
   identifier: {
     '@type': 'PropertyValue',
     propertyID: 'Companies House company number',
@@ -49,11 +52,30 @@ const app = {
   '@type': 'MobileApplication',
   '@id': `${site.url}/#app`,
   name: site.name,
+  // The app's name on the App Store
+  alternateName: site.appStoreName,
   description: tagline.summary,
   operatingSystem: 'iOS',
   applicationCategory: 'HealthApplication',
   installUrl: site.appStoreUrl,
   url: site.appStoreUrl,
+  // Free to download (confirmed by Andrew, 2026-10-16)
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+  featureList: [...features.cards.map((card) => card.title), ...features.more],
+  publisher: { '@id': orgId },
+};
+
+// The free Chrome extension
+const extension = {
+  '@type': 'SoftwareApplication',
+  '@id': `${site.url}/#chrome-extension`,
+  name: chromeExtension.name,
+  description: chromeExtension.text,
+  operatingSystem: 'Chrome',
+  applicationCategory: 'BrowserApplication',
+  installUrl: chromeExtension.storeUrl,
+  url: chromeExtension.storeUrl,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
   publisher: { '@id': orgId },
 };
 
@@ -68,7 +90,7 @@ const website = {
 
 /** The graph for one page: the organisation, website and app, plus anything page-specific. */
 export function pageGraph(nodes: Record<string, unknown>[] = []) {
-  return { '@context': 'https://schema.org', '@graph': [organization, founder, website, app, ...nodes] };
+  return { '@context': 'https://schema.org', '@graph': [organization, founder, website, app, extension, ...nodes] };
 }
 
 /** An article, with breadcrumbs (Home › Articles › title). */
