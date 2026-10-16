@@ -46,6 +46,7 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 - **Page fades:** the browser's cross-document View Transitions.
 - **Scroll reveals:** sections fade up as they come into view, and items arriving together are slightly staggered.
 - **Staircase:** each step grows up from the floor in turn (a `clip-path` reveal, so the numbers aren't squashed), then its number and text settle in.
+- **Partner page and home page partner panel:** line icons (`PartnerIcon.astro`) draw themselves in, then make a small occasional movement (the globe turns, the heart beats). The points' dividing rules draw across and their ticks pop in, one after another. The dark call-to-action panels (`.cta-panel` in `global.css`) have a slowly drifting glow.
 - **Scroll-driven CSS:** the header edge and the article reading-progress bar.
 - **Fallbacks:** with reduced motion turned on, without JavaScript, or when printing, everything shows straight away with no animation.
 - **Hero:** the lock-and-steps illustration fades up with the hero text when the page loads. On phones and tablets it sits above the headline so the animation plays on screen.
@@ -109,6 +110,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   ├── components/
 │   │   ├── Header.astro           # Logo + main navigation (Menu button on phones)
 │   │   ├── Footer.astro           # Support section, footer links, legal line
+│   │   ├── PartnerIcon.astro      # Self-drawing line icons for the partner sections
 │   │   ├── Staircase.astro        # The four steps, laid out as rising stairs
 │   │   ├── ArticleCard.astro      # Article preview (feature or row style)
 │   │   ├── Figure.astro           # Image slot: placeholder until a photo is supplied
