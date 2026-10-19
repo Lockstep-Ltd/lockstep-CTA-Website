@@ -109,7 +109,8 @@ The site has no logins, accounts or database. Every page is static except one sm
 ├── src/
 │   ├── components/
 │   │   ├── Header.astro           # Logo + main navigation (Menu button on phones)
-│   │   ├── Footer.astro           # Support section, footer links, legal line
+│   │   ├── Footer.astro           # Support section, footer links, social links, legal line
+│   │   ├── SocialIcon.astro       # Instagram and LinkedIn icons (inline SVG)
 │   │   ├── PartnerIcon.astro      # Self-drawing line icons for the partner sections
 │   │   ├── Staircase.astro        # The four steps, laid out as rising stairs
 │   │   ├── ArticleCard.astro      # Article preview (feature or row style)
@@ -126,6 +127,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   ├── scripts/                   # Inline scripts, hashed for the Content Security Policy (see Security)
 │   ├── data/
 │   │   ├── site.ts                # Site name, contact email, navigation, SEO defaults
+│   │   ├── faq.ts                 # FAQ questions and answers (page + search engine data)
 │   │   ├── product.ts             # App copy: tagline, steps, principles, ethics, status
 │   │   └── support.ts             # UK support services (VERIFY BEFORE LAUNCH)
 │   ├── layouts/
@@ -144,6 +146,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   │   ├── og/[...route].ts       # Social sharing images, generated at build (astro-og-canvas)
 │   │   ├── partner.astro          # /partner/
 │   │   ├── contact.astro          # /contact/
+│   │   ├── faq.astro              # /faq/: frequently asked questions (linked from the footer)
 │   │   └── 404.astro              # "Page not found"
 │   └── styles/
 │       ├── tokens.css             # Design tokens: colours, type scale, spacing
@@ -255,6 +258,8 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 - **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL (don't name one `all`: `/articles/all/` lists every article). Articles are ordered by date: the newest is featured on `/articles/` with the next three beside it, and "See all articles" leads to the full list. Set `draft: true` to hide one. Published articles also appear in the app through the [article feed](#article-feed-for-the-app); don't rename an article's file once it's published.
 - **Article sources:** keep citations in the text short, e.g. "(Gambling Commission, 2025)", and list the full source under `references` in the frontmatter (or the References field in Keystatic). They appear behind a "References" link at the end of the article.
 - **Navigation or contact email:** `src/data/site.ts`.
+- **Social links:** `social` in `src/data/site.ts` (Instagram @lockstep.app and LinkedIn). They show as icons under the logo in the footer and are listed in the search engine data. A new network also needs an icon in `src/components/SocialIcon.astro`. They're plain links: nothing loads from Instagram or LinkedIn.
+- **FAQs:** questions and answers are in `src/data/faq.ts`, grouped by topic. The page at `/faq/` is linked from the footer only, not the header. Each answer opens with a native `<details>` element, so it needs no JavaScript. Each question has an `id`, so you can link straight to it (e.g. `/faq/#is-it-free`). The same questions go to search engines as FAQPage structured data. Answers were drafted on 2026-10-19 from wording already on the site and in the legal pages; Andrew to approve before launch.
 - **Support services:** `src/data/support.ts`. Set `verified: true` once each entry is checked.
 - **Colours, fonts, spacing:** `src/styles/tokens.css`.
 

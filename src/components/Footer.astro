@@ -1,7 +1,8 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/brand/lockstep-logo.png';
-import { legalLinks, navigation, site } from '../data/site';
+import { legalLinks, navigation, site, social } from '../data/site';
+import SocialIcon from './SocialIcon.astro';
 import { supportServices, urgentHelp } from '../data/support';
 
 const year = new Date().getFullYear();
@@ -28,6 +29,16 @@ const helpline = supportServices.find((s) => s.phone)!;
           <Image src={logo} alt={`${site.name} home`} height={40} densities={[1, 2]} class="footer-logo__img" />
         </a>
         <p>Regain control. Redirect the urge.</p>
+        <ul class="social" role="list">
+          {social.map((item) => (
+            <li>
+              <a class="social__link" href={item.href} rel="me">
+                <SocialIcon name={item.label} />
+                <span class="visually-hidden">{site.name} on {item.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <nav class="site-footer__explore" aria-label="Footer">
@@ -37,6 +48,7 @@ const helpline = supportServices.find((s) => s.phone)!;
           {navigation.map((item) => (
             <li><a href={item.href}>{item.label}</a></li>
           ))}
+          <li><a href="/faq/">FAQs</a></li>
         </ul>
       </nav>
 
@@ -144,6 +156,39 @@ const helpline = supportServices.find((s) => s.phone)!;
   .footer-logo :global(.footer-logo__img) {
     width: auto;
     height: 2.5rem;
+  }
+
+  /* Social links: round icon buttons, 44px so they're easy to tap */
+  .social {
+    display: flex;
+    gap: var(--space-2xs);
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__bottom .social__link {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid color-mix(in srgb, var(--color-cream) 30%, transparent);
+    border-radius: 50%;
+    color: var(--color-cream);
+  }
+
+  .site-footer__bottom .social__link:hover {
+    border-color: var(--color-cream);
+    background: var(--color-cream);
+    color: var(--color-green);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .site-footer__bottom .social__link {
+      transition:
+        background-color var(--duration-fast) var(--ease-out),
+        border-color var(--duration-fast) var(--ease-out),
+        color var(--duration-fast) var(--ease-out);
+    }
   }
 
   .footer-heading {

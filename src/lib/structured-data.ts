@@ -2,7 +2,7 @@
 // what each page is. It's data in a <script type="application/ld+json"> tag:
 // browsers don't run it, so no JavaScript is sent to visitors.
 // Only facts already on the site go here. Test changes at https://search.google.com/test/rich-results
-import { site } from '../data/site';
+import { site, social } from '../data/site';
 import { chromeExtension, features, tagline } from '../data/product';
 import type { Article } from './articles';
 
@@ -32,7 +32,7 @@ const organization = {
   description: site.defaultDescription,
   // Official profiles of this Lockstep, so search engines and AI assistants don't
   // confuse it with other companies called Lockstep. Add new profiles here as they're set up.
-  sameAs: site.profiles,
+  sameAs: [...site.profiles, ...social.map((s) => s.href)],
   identifier: {
     '@type': 'PropertyValue',
     propertyID: 'Companies House company number',

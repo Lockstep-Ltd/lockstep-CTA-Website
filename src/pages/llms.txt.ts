@@ -16,6 +16,7 @@ const pages = [
   { name: 'About', path: '/about/', description: 'Lockstep is designed for people who want to stay in control of gambling without being told what that control must look like.' },
   { name: 'Articles & insights', path: '/articles/', description: 'Practical ideas, research and stories around gambling, habits and regaining control, from the Lockstep team.' },
   { name: 'Partner with us', path: '/partner/', description: 'Universities, charities, support services and funders: work with Lockstep to help people reduce gambling and stay in control.' },
+  { name: 'FAQs', path: '/faq/', description: "Answers to common questions about Lockstep: what it costs, who it's for, how the community is moderated and how your data is handled." },
   { name: 'Contact', path: '/contact/', description: 'Email the Lockstep team at contact@lockstep.uk with questions, feedback or partnership ideas.' },
 ];
 
