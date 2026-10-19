@@ -1,0 +1,353 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+import { faqGroups, faqStructuredData } from '../data/faq';
+// Questions and answers live in src/data/faq.ts. Each answer is a native <details>
+// disclosure, so the page needs no JavaScript and find-in-page searches closed answers too.
+// Every answer has an id, so a question can be linked to directly and opens, e.g. /faq/#is-it-free.
+
+const number = (i: number) => String(i + 1).padStart(2, '0');
+---
+
+<BaseLayout
+  title="FAQs"
+  description="Answers to common questions about Lockstep: what it costs, who it's for, how the community is moderated and how your data is handled."
+  structuredData={[faqStructuredData()]}
+>
+  <PageHero eyebrow="FAQs" title="Frequently asked questions">
+    <p>
+      Quick answers about Lockstep, the community and your privacy. Can't find what you're
+      looking for? Email us at <a href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+  </PageHero>
+
+  <section class="section section--surface faq" aria-label="Questions and answers">
+    <div class="container faq__layout">
+      <nav class="topics" aria-labelledby="topics-heading">
+        <h2 id="topics-heading" class="topics__heading">Topics</h2>
+        <ol class="topics__list" role="list">
+          {faqGroups.map((group, i) => (
+            <li>
+              <a class="topics__link" href={`#${group.id}`}>
+                <span class="topics__num" aria-hidden="true">{number(i)}</span>
+                {group.title}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+
+      <div class="faq__groups">
+        {faqGroups.map((group, i) => (
+          <section class="faq-group" id={group.id} aria-labelledby={`${group.id}-heading`}>
+            <header class="faq-group__head reveal">
+              <span class="faq-group__num" aria-hidden="true">{number(i)}</span>
+              <h2 id={`${group.id}-heading`}>{group.title}</h2>
+            </header>
+            <div class="faq-list">
+              {group.items.map((item) => (
+                <details class="faq-item reveal">
+                  <summary class="faq-item__question">
+                    <h3>{item.question}</h3>
+                    <span class="faq-item__icon" aria-hidden="true"></span>
+                  </summary>
+                  {/* The id is on the answer: browsers open a closed <details> when a link targets something inside it */}
+                  <div class="faq-item__answer stack" id={item.id} set:html={item.answer} />
+                </details>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark" aria-labelledby="still-heading">
+    <div class="container still reveal">
+      <div class="stack">
+        <h2 id="still-heading">Still have a question?</h2>
+        <p>Questions and feedback are always welcome. We read every message.</p>
+      </div>
+      <div class="button-row">
+        <a class="button button--light" href={`mailto:${site.email}`}>Email {site.email}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Layout: topics above the questions on phones, a sticky column beside them on desktop */
+  .faq__layout {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 64rem) {
+    .faq__layout {
+      grid-template-columns: 15rem 1fr;
+      gap: var(--space-3xl);
+      align-items: start;
+    }
+
+    .topics {
+      position: sticky;
+      top: var(--space-3xl);
+    }
+  }
+
+  /* Topics */
+  .topics__heading {
+    margin-bottom: var(--space-xs);
+    color: var(--color-emerald);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .topics__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xs);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 64rem) {
+    .topics__list {
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-left: 1px solid var(--color-border);
+    }
+  }
+
+  .topics__link {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: baseline;
+    min-height: 2.75rem;
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    color: var(--color-heading);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .topics__link:hover {
+    border-color: var(--color-emerald);
+  }
+
+  @media (min-width: 64rem) {
+    .topics__link {
+      margin-left: -1px;
+      border: 0;
+      border-left: 2px solid transparent;
+      border-radius: 0;
+      background: none;
+      padding-block: var(--space-2xs);
+    }
+
+    .topics__link:hover {
+      border-left-color: var(--color-green);
+    }
+  }
+
+  .topics__num {
+    color: var(--color-emerald);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Groups */
+  .faq__groups {
+    display: grid;
+    gap: var(--space-2xl);
+  }
+
+  .faq-group {
+    scroll-margin-top: var(--space-2xl);
+  }
+
+  .faq-group__head {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: baseline;
+    margin-bottom: var(--space-sm);
+  }
+
+  .faq-group__num {
+    color: var(--color-emerald);
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .faq-group__head h2 {
+    font-size: var(--text-3xl);
+  }
+
+  /* Questions: white cards with a hairline border */
+  .faq-list {
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .faq-item {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+  }
+
+  .faq-item[open] {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .faq-item__question {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md);
+    border-radius: inherit;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-item__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item__question h3 {
+    color: var(--color-heading);
+    font-size: var(--text-xl);
+    line-height: var(--leading-tight);
+  }
+
+  /* Plus that turns into a minus when open */
+  .faq-item__icon {
+    position: relative;
+    flex: none;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+  }
+
+  .faq-item__icon::before,
+  .faq-item__icon::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 0.875rem;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--color-green);
+    translate: -50% -50%;
+  }
+
+  .faq-item__icon::after {
+    rotate: 90deg;
+  }
+
+  .faq-item__question:hover .faq-item__icon {
+    border-color: var(--color-green);
+  }
+
+  .faq-item[open] .faq-item__icon {
+    border-color: var(--color-green);
+    background: var(--color-green);
+  }
+
+  .faq-item[open] .faq-item__icon::before,
+  .faq-item[open] .faq-item__icon::after {
+    background: var(--color-cream);
+  }
+
+  .faq-item[open] .faq-item__icon::after {
+    rotate: 0deg;
+  }
+
+  .faq-item__answer {
+    /* Room for the sticky header and the question above, when linked to directly */
+    scroll-margin-top: 10rem;
+    max-width: var(--measure);
+    padding: 0 var(--space-md) var(--space-md);
+  }
+
+  /* Closing call to action */
+  .still {
+    display: grid;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  .still h2 {
+    font-size: var(--text-3xl);
+  }
+
+  /* .section--dark colours every link cream, which would hide the light button's label */
+  .still .button--light {
+    color: var(--color-green);
+  }
+
+  @media (min-width: 48rem) {
+    .still {
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .faq-item,
+    .faq-item__icon,
+    .faq-item__icon::before,
+    .faq-item__icon::after,
+    .topics__link {
+      transition-duration: var(--duration-fast);
+      transition-timing-function: var(--ease-out);
+    }
+
+    .faq-item {
+      transition-property: box-shadow;
+    }
+
+    .faq-item__icon,
+    .topics__link {
+      transition-property: border-color, background-color;
+    }
+
+    .faq-item__icon::before,
+    .faq-item__icon::after {
+      transition-property: rotate, background-color;
+      transition-duration: var(--duration);
+    }
+
+    /* Answers slide open in browsers that support it; others open instantly */
+    .faq-item {
+      interpolate-size: allow-keywords;
+    }
+
+    .faq-item::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition:
+        block-size var(--duration) var(--ease-out),
+        opacity var(--duration) var(--ease-out),
+        content-visibility var(--duration) allow-discrete;
+    }
+
+    .faq-item[open]::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+
+    /* Opened by a link to the answer: no slide, so the browser can scroll straight to it */
+    .faq-item:has(:target)::details-content {
+      transition: none;
+    }
+  }
+</style>

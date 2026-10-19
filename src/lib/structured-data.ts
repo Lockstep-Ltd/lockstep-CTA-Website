@@ -2,7 +2,7 @@
 // what each page is. It's data in a <script type="application/ld+json"> tag:
 // browsers don't run it, so no JavaScript is sent to visitors.
 // Only facts already on the site go here. Test changes at https://search.google.com/test/rich-results
-import { site } from '../data/site';
+import { site, social } from '../data/site';
 import { tagline } from '../data/product';
 import type { Article } from './articles';
 
@@ -19,6 +19,7 @@ const organization = {
   // Resized copy of the original app icon (180×180)
   logo: abs('/apple-touch-icon.png'),
   email: site.email,
+  sameAs: social.map((s) => s.href),
   description: site.defaultDescription,
   identifier: {
     '@type': 'PropertyValue',

@@ -23,6 +23,13 @@ export const site = {
   },
 };
 
+// Lockstep's social media accounts (from Andrew, 2026-10-19). Shown in the footer and listed
+// as the organisation's profiles in the search engine data (JSON-LD `sameAs`).
+export const social = [
+  { label: 'Instagram', handle: '@lockstep.app', href: 'https://www.instagram.com/lockstep.app/' },
+  { label: 'LinkedIn', handle: 'Lockstep', href: 'https://www.linkedin.com/company/lockstep-uk/' },
+] as const;
+
 export const navigation = [
   { label: 'How it works', href: '/how-it-works/' },
   { label: 'Articles', href: '/articles/' },
