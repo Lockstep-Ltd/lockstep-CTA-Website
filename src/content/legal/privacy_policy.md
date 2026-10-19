@@ -3,10 +3,15 @@
 # Updated 2026-10-13 at Andrew's request: Bubble removed, providers named (Supabase, Vercel, Resend, Daily,
 # Mapbox, postcodes.io, Skiddle, Ticketmaster, with ticket links marked as affiliate links), Lockstep Ltd named as controller, website form,
 # cookies, international transfers and ICO complaint right added.
-# TODO: confirm the international transfer safeguards, and that meetings are never recorded, before launch.
+# Updated 2026-10-16 at Andrew's request, checked against the app's code: explicit consent for gambling
+# (health) data, 18+, profile details, check-ins and reminders, community and moderation, pilot evaluation
+# and email opt-ins, account deletion, Cloudflare and Google Fonts added; only Skiddle links marked as
+# affiliate links; transfer safeguards named per provider. Meetings confirmed not recorded (Daily rooms
+# have recording off).
+# TODO: confirm Daily's data processing addendum (available from Daily on request) covers UK transfers.
 title: "Privacy Policy"
 description: "What information Lockstep collects, how it is used, and the choices available to you."
-updated: "13/10/2026"
+updated: "16/10/2026"
 ---
 
 Lockstep (“we”, “our”, “us”) respects your privacy and is committed to handling personal data responsibly and transparently. This Privacy Policy explains what information we collect, how it is used, and the choices available to you concerning our practices. Lockstep is a UK-based digital platform designed to help people manage their gambling behaviour through practical tools, community access, and real-world alternatives. It is not a gambling service, advertising platform, or therapeutic provider.
@@ -23,15 +28,23 @@ Lockstep collects only the information necessary to operate the service and to u
 
 ### Account and Identification Data
 
-If you choose to create an account or contact us, we may collect basic identifying information such as your name and email address. Where authentication or analytics tools assign unique identifiers (for example, device or session identifiers), these may be collected to support functionality and security. If, in future, Lockstep offers sign-in via third-party providers (such as Apple or similar services), we may receive limited information from those providers, typically a name and email address, in accordance with your settings on the third-party platform.
+If you choose to create an account or contact us, we may collect basic identifying information such as your name and email address. When you create an account in the app, you also choose a public name that other users see, confirm that you are 18 or over, and may tell us your age range, nationality, goals, interests, contact preferences and meeting preferences. You can add a profile photo if you wish. Where authentication or analytics tools assign unique identifiers (for example, device or session identifiers), these may be collected to support functionality and security. If, in future, Lockstep offers sign-in via third-party providers (such as Apple or similar services), we may receive limited information from those providers, typically a name and email address, in accordance with your settings on the third-party platform.
 
 ### Usage and Interaction Data
 
 We may collect limited information about how the platform is used, such as interactions with tools, features, or daily activities logged by the user. This information is used to operate the service and to improve relevance and usability over time. Lockstep does not collect usage data for advertising or behavioural profiling.
 
+### Information About Your Gambling
+
+To provide the service, the app stores information you give it about your gambling. This includes your current relationship with gambling (your “stage”), daily check-ins (such as your urge level, mood, triggers and a short journal note), your answers to the self-check and its result, figures you enter into money calculators, and the personal reminders you save, such as images, videos and links. Information about gambling can be health information, which UK data protection law treats as special category data. We therefore only store it with your explicit consent, which you give when you create your account. This consent is needed to use the app. You can withdraw it at any time by deleting your account in the app’s Settings, which permanently deletes your account and the information you have shared.
+
 ### Communications and Feedback
 
 If you contact us directly with questions, feedback, or support requests, we may collect the information you choose to provide. Participation in surveys, questionnaires, or research requests is entirely optional, and responses are used only to understand user needs and improve the service.
+
+### Pilot Evaluation
+
+If you choose to opt in when you create your account, we use your data, without your name, to evaluate the Welsh pilot of Lockstep. This is optional, and you can change your choice at any time in the app’s Settings.
 
 ### Social Media Interactions
 
@@ -43,23 +56,23 @@ If you suggest an article through the form on the Lockstep website, we collect t
 
 ### Location and Event Searches
 
-When you search for events or real-world alternatives in the app, such as through Swap the Night, you may enter a postcode or place name. This is converted into approximate map coordinates using postcodes.io or Mapbox. The coordinates, together with your chosen search radius, dates, and type of event, are then sent to Skiddle and Ticketmaster to find events near you. Your name, email address, and account details are not sent to these services. If you choose to follow a link to buy tickets, your purchase is handled by that provider under its own terms and privacy policy. These ticket links are affiliate links, and Lockstep may earn a commission on purchases, as explained in our [Affiliate Disclosure](/affiliate_disclosure/).
+When you search for events or real-world alternatives in the app, such as through Swap the Night, you may enter a postcode or place name. This is converted into approximate map coordinates using postcodes.io or Mapbox. The coordinates, together with your chosen search radius, dates, and type of event, are then sent to Skiddle and Ticketmaster to find events near you. Your name, email address, and account details are not sent to these services. If you choose to follow a link to buy tickets, your purchase is handled by that provider under its own terms and privacy policy. Links to buy tickets from Skiddle are affiliate links, and Lockstep may earn a commission on purchases, as explained in our [Affiliate Disclosure](/affiliate_disclosure/).
 
 ### Group Meetings
 
-Video and audio for Lockstep meetings are provided by Daily, a video calling service. When you join a meeting, your display name and the audio and video you choose to share are processed by Daily so that other participants can see and hear you. Lockstep does not record meetings. If you are invited to a meeting, we may send you an email invitation using Resend, in line with your contact preferences.
+Video and audio for Lockstep meetings are provided by Daily, a video calling service. When you join a meeting, your display name, an account identifier, and the audio and video you choose to share are processed by Daily so that other participants can see and hear you. Lockstep does not record meetings. If you are invited to a meeting, we may send you an email invitation using Resend, in line with your contact preferences.
 
 ### Cookies & Analytics
 
-The Lockstep website does not use cookies, analytics, or tracking technologies of any kind. The Lockstep app uses only cookies and similar browser storage that are strictly necessary for the operation and security of the service, such as keeping you signed in. These essential technologies enable core functionality and are not used for advertising, marketing, or cross-site tracking. Lockstep does not currently use analytics tools. If this changes, we will update this policy and ask for your consent where the law requires it.
+The Lockstep website does not use cookies, analytics, or tracking technologies of any kind. The Lockstep app uses only cookies and similar browser storage that are strictly necessary for the operation and security of the service, such as keeping you signed in and remembering your language choice. These essential technologies enable core functionality and are not used for advertising, marketing, or cross-site tracking. The app loads its fonts from Google Fonts, so Google receives your device’s IP address when the app opens. Lockstep does not currently use analytics tools. If this changes, we will update this policy and ask for your consent where the law requires it.
 
 For more information about cookies, please visit <https://allaboutcookies.org/> .
 
 ## How we use information
 
-Lockstep uses information in a limited and intentional way to operate the service, improve its usefulness, and ensure that facets of the service remain relevant to each user. We process personal data on the basis of user consent, performance of the service, and legitimate interests where appropriate. Information provided by users, such as stated interests, preferences, and interactions with tools, may be used to tailor how content, real-world alternatives, and available meetings are ordered and presented within the Service. This may include the use of relevance scores to surface meetings that are more likely to be more suitable, based on shared characteristics or interests. This personalisation is designed to improve relevance and usability within Lockstep and is not used for advertising, cross-site tracking, or third-party profiling. Lockstep may also use information in aggregated and anonymised form to understand how the platform is used overall, to assess the effectiveness of features, and to guide future improvements. Aggregated data does not identify individual users and may be shared at a high level with partners or stakeholders, for example as general usage statistics.
+Lockstep uses information in a limited and intentional way to operate the service, improve its usefulness, and ensure that facets of the service remain relevant to each user. We process personal data on the basis of user consent, performance of the service, and legitimate interests where appropriate. Information about your gambling is processed only with your explicit consent, as described above. Information provided by users, such as stated interests, preferences, and interactions with tools, may be used to tailor how content, real-world alternatives, and available meetings are ordered and presented within the Service. This may include the use of relevance scores to surface meetings that are more likely to be more suitable, based on shared characteristics or interests. A meeting’s relevance score is worked out by comparing your age range, nationality, stage, interests and goals with those the meeting is aimed at. The score is shown only to you, and it changes the order in which meetings are listed, not whether you can join them. This personalisation is designed to improve relevance and usability within Lockstep and is not used for advertising, cross-site tracking, or third-party profiling. Lockstep may also use information in aggregated and anonymised form to understand how the platform is used overall, to assess the effectiveness of features, and to guide future improvements. Aggregated data does not identify individual users and may be shared at a high level with partners or stakeholders, for example as general usage statistics.
 
-If you contact Lockstep directly, information you provide may be used to respond to enquiries, provide support, or communicate important service-related updates. Where contact details have been provided, we may also send occasional non-promotional updates about Lockstep, such as changes to the service or early access availability. You can opt out of non-essential communications at any time. Where outbound links are shown within the Service, some may be affiliate links. These do not affect the price paid by the user. Recommendations are prioritised based on relevance and suitability rather than commercial relationships. Lockstep does not sell personal data and does not share personal data with advertisers for behavioural or cross-site targeting.
+If you contact Lockstep directly, information you provide may be used to respond to enquiries, provide support, or communicate important service-related updates. If you opt in, we may also send occasional non-promotional updates about Lockstep, such as changes to the service or new features. You can opt out of non-essential communications at any time, including in the app’s Settings. Where outbound links are shown within the Service, some may be affiliate links. These do not affect the price paid by the user. Recommendations are prioritised based on relevance and suitability rather than commercial relationships. Lockstep does not sell personal data and does not share personal data with advertisers for behavioural or cross-site targeting.
 
 ## Affiliate & outbound links
 
@@ -76,15 +89,19 @@ We may share personal data with trusted third-party service providers who perfor
 The service providers we currently use are:
 
 - **Supabase**: account sign-in, database storage, and the server functions that run the app.
-- **Vercel**: hosting for the Lockstep website and app.
+- **Vercel**: hosting for the Lockstep website.
+- **Cloudflare**: hosting for the Lockstep app.
 - **Resend**: delivery of emails, such as meeting invitations and article suggestions sent through the website.
 - **Daily**: video and audio for group meetings.
 - **Mapbox** and **postcodes.io**: converting a postcode or place name into approximate map coordinates for event searches.
 - **Skiddle** and **Ticketmaster**: finding events near a location you search for. These services receive search details only, not your account details.
+- **Google Fonts**: the fonts used in the app. Google receives your device’s IP address when the app loads them.
 
 ### Community and Other Users
 
 Certain information may be visible to other users where this is necessary to support participation in meetings, community features, or shared spaces within the Service. This may include a display name, limited profile information, or content that a user chooses to share with others. Users control what information they choose to share within the community. Any content or information that a user voluntarily makes visible to others may be accessed, collected, or used by those users.
+
+In the community, the app stores the posts you share, your connections with other users, and anyone you block. If you report a post or another user, we store your report and the reason you give. Reports are reviewed by Lockstep’s moderators, who may record the outcome, any warnings, and internal notes against the accounts involved, as explained in our [Community Guidelines](/community_guidelines/). These notes are not visible to other users. If you invite a sponsor, we store the email address you give us for them.
 
 ### Business Transfers
 
@@ -96,21 +113,25 @@ We may disclose personal data where required to do so by law or where we reasona
 
 ## Data storage and security
 
-Lockstep takes reasonable steps to protect personal data against unauthorised access, loss, misuse, or alteration. Data is stored and processed using reputable third-party infrastructure providers that apply industry-standard security measures. App data, including account details, is stored by Supabase, which provides the database, sign-in, and server infrastructure for the Lockstep app. The website and app are hosted by Vercel. These providers are responsible for maintaining the underlying technical, physical, and network security of their platforms.
+Lockstep takes reasonable steps to protect personal data against unauthorised access, loss, misuse, or alteration. Data is stored and processed using reputable third-party infrastructure providers that apply industry-standard security measures. App data, including account details, is stored by Supabase, which provides the database, sign-in, and server infrastructure for the Lockstep app. The website is hosted by Vercel, and the app by Cloudflare. These providers are responsible for maintaining the underlying technical, physical, and network security of their platforms.
 
 Lockstep is responsible for how personal data is used within the application, including access controls, configuration, and internal handling. Access to administrative systems is restricted to authorised individuals only, and reasonable measures are taken to ensure that personal data is accessed solely where necessary for legitimate operational purposes. Personal data is retained only for as long as necessary to provide the Service and to meet legitimate operational, legal, or compliance requirements. Retention periods vary depending on the type of data and the purpose for which it is used. Data may be deleted or anonymised when it is no longer required, or upon user request, subject to applicable obligations.
 
 No method of transmission or storage is completely secure. While Lockstep works to protect personal data, absolute security cannot be guaranteed. Users are encouraged to take appropriate steps to protect their own devices and account credentials.
 
-Some of our service providers are based in, or process data in, countries outside the UK, including the United States. Where personal data is transferred outside the UK, we rely on appropriate safeguards recognised under UK data protection law, such as the UK International Data Transfer Addendum or the UK Extension to the EU-US Data Privacy Framework.
+Some of our service providers are based in, or process data in, countries outside the UK, including the United States. Where personal data is transferred outside the UK, we rely on appropriate safeguards recognised under UK data protection law, such as the UK International Data Transfer Addendum or the UK Extension to the EU-US Data Privacy Framework. Vercel, Cloudflare, Resend, Mapbox and Google are certified under the UK Extension to the EU-US Data Privacy Framework. Supabase’s data processing terms include the UK International Data Transfer Addendum to the EU standard contractual clauses.
 
 ## Your rights
 
 Under applicable data protection laws, including UK GDPR, you have certain rights in relation to your personal data. These include the right to request access to the personal data we hold about you, to request correction of inaccurate or incomplete information, and to request deletion of your personal data where appropriate. You may also have the right to restrict or object to certain types of processing. Where processing is based on your consent, you may withdraw that consent at any time. Exercising your rights will not affect the lawfulness of processing carried out before the withdrawal.
 
-Requests can be made by contacting Lockstep using the contact details provided in this policy. We may need to verify your identity before responding. We will respond to requests in accordance with applicable legal requirements.
+You can delete your account at any time in the app’s Settings. This permanently deletes your account and the information you have shared, and cannot be undone. Other requests can be made by contacting Lockstep using the contact details provided in this policy. We may need to verify your identity before responding. We will respond to requests in accordance with applicable legal requirements.
 
 If you are unhappy with how we have handled your personal data, you have the right to complain to the Information Commissioner’s Office (ICO), the UK data protection regulator, at <https://ico.org.uk/make-a-complaint/>. We would appreciate the chance to address your concerns first, so please contact us before approaching the ICO.
+
+## Age
+
+The Lockstep app is for people aged 18 and over, and you must confirm that you are 18 or over to create an account. We do not knowingly collect personal data from anyone under 18. If you believe someone under 18 has created an account, please contact us so that we can delete it.
 
 ## Changes to the privacy policy
 

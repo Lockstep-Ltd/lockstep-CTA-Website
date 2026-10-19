@@ -1,7 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
+import PartnerIcon from '../components/PartnerIcon.astro';
 import { site } from '../data/site';
+
+const mailto = `mailto:${site.email}?subject=Partnering%20with%20Lockstep`;
+
+// The four audiences, in page order: used for the jump links and section numbers
+const audiences = [
+  { id: 'universities', icon: 'university', title: 'Universities and colleges' },
+  { id: 'charities', icon: 'charity', title: 'Charities and support services' },
+  { id: 'funders', icon: 'funder', title: 'Funders and supporters' },
+  { id: 'international', icon: 'international', title: 'Organisations outside the UK' },
+] as const;
+const [universities, charities, funders, international] = audiences;
 ---
 
 <BaseLayout
@@ -14,113 +26,478 @@ import { site } from '../data/site';
       redirecting urges towards healthier, real-world alternatives.
     </p>
     <div class="button-row">
-      <a class="button" href={`mailto:${site.email}?subject=Partnering%20with%20Lockstep`}>
+      <a class="button" href={mailto}>
         Email us about partnering
       </a>
     </div>
   </PageHero>
 
-  <section class="section section--surface" aria-labelledby="universities-heading">
-    <div class="container stack reveal">
-      <h2 id="universities-heading">Universities and colleges</h2>
-      <p>
-        Offer students a practical, judgement-free tool that sits alongside your existing
-        wellbeing and student support services.
-      </p>
-      <p>
-        For many people, gambling starts at university, alongside sport, nights out and group
-        chats. Lockstep gives students somewhere to turn early, long before things reach a
-        crisis. Working together could include:
-      </p>
-      <ul class="points">
-        <li>Introducing Lockstep to students through your wellbeing team, students' union and welcome events</li>
-        <li>Running a pilot with a group of students and learning from their feedback</li>
-        <li>Connecting Lockstep with your existing support, so students who need more help know where to go</li>
-      </ul>
-      <p>We never share information about individual students.</p>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="charities-heading">
-    <div class="container stack reveal">
-      <h2 id="charities-heading">Charities and support services</h2>
-      <p>
-        Prevention and treatment work best together. We want to help people find the right
-        support at the right time, and to learn from organisations already doing this work.
-      </p>
-      <p>We'd like to work with you on:</p>
-      <ul class="points">
-        <li>
-          <strong>Meetings:</strong> listing your support groups in Lockstep, so people can find
-          meetings that fit their situation
-        </li>
-        <li>
-          <strong>Referrals:</strong> pointing people who need more help towards your services,
-          and offering a lighter-touch option to people who aren't ready for formal treatment
-        </li>
-        <li>
-          <strong>Co-design and research:</strong> shaping new features with the people you
-          support, and sharing what we learn
-        </li>
+  <nav class="jump" aria-label="Jump to a section">
+    <div class="container">
+      <ul class="jump__list" role="list">
+        {audiences.map((item, i) => (
+          <li class="reveal">
+            <a class="jump__link" href={`#${item.id}`}>
+              <span class="jump__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <PartnerIcon name={item.icon} />
+              <span class="jump__title">{item.title}</span>
+              <span class="jump__arrow arrow" aria-hidden="true">↓</span>
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
-  </section>
+  </nav>
 
-  <section class="section section--surface" id="funders" aria-labelledby="funders-heading">
-    <div class="container stack reveal">
-      <h2 id="funders-heading">Funders and supporters</h2>
-      <p>
-        Your support helps us build and test Lockstep with the people who use it, and measure
-        what really makes a difference.
-      </p>
-      <p>Lockstep is at an early stage. Funding would help us:</p>
-      <ul class="points">
-        <li>Develop and test new features with the people who use them</li>
-        <li>Reach more people earlier, before gambling becomes a crisis</li>
-        <li>Measure our impact properly, and share what we find</li>
-      </ul>
-      <p>
-        If you'd like to hear more about our plans, we'd be glad to talk.
-      </p>
+  <section class="section section--surface" id={universities.id} aria-labelledby="universities-heading">
+    <div class="container audience">
+      <header class="audience__head reveal">
+        <span class="audience__num" aria-hidden="true">01</span>
+        <PartnerIcon name={universities.icon} />
+        <h2 id="universities-heading">{universities.title}</h2>
+      </header>
+      <div class="audience__body stack-lg">
+        <p class="lead reveal">
+          Offer students a practical, judgement-free tool that sits alongside your existing
+          wellbeing and student support services.
+        </p>
+        <p class="reveal">
+          For many people, gambling starts at university, alongside sport, nights out and group
+          chats. Lockstep gives students somewhere to turn early, long before things reach a
+          crisis. Working together could include:
+        </p>
+        <ul class="points" role="list">
+          <li class="reveal">Introducing Lockstep to students through your wellbeing team, students' union and welcome events</li>
+          <li class="reveal">Running a pilot with a group of students and learning from their feedback</li>
+          <li class="reveal">Connecting Lockstep with your existing support, so students who need more help know where to go</li>
+        </ul>
+        <p class="assurance reveal">We never share information about individual students.</p>
+      </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="international-heading">
-    <div class="container stack reveal">
-      <h2 id="international-heading">Organisations outside the UK</h2>
-      <p>
-        Gambling harm isn't only a UK problem. We're looking to bring Lockstep to new countries
-        by working with NGOs and public agencies that already know their communities.
-      </p>
-      <p>
-        We provide the app and adapt it for each country, from language to local support
-        services and meetings. Our partners lead how it reaches people locally.
-      </p>
+  <section class="section" id={charities.id} aria-labelledby="charities-heading">
+    <div class="container audience">
+      <header class="audience__head reveal">
+        <span class="audience__num" aria-hidden="true">02</span>
+        <PartnerIcon name={charities.icon} />
+        <h2 id="charities-heading">{charities.title}</h2>
+      </header>
+      <div class="audience__body stack-lg">
+        <p class="lead reveal">
+          Prevention and treatment work best together. We want to help people find the right
+          support at the right time, and to learn from organisations already doing this work.
+        </p>
+        <p class="reveal">We'd like to work with you on:</p>
+        <ul class="points points--titled" role="list">
+          <li class="reveal">
+            <strong>Meetings<span class="visually-hidden">:</span></strong> listing your support groups in Lockstep, so people can find
+            meetings that fit their situation
+          </li>
+          <li class="reveal">
+            <strong>Referrals<span class="visually-hidden">:</span></strong> pointing people who need more help towards your services,
+            and offering a lighter-touch option to people who aren't ready for formal treatment
+          </li>
+          <li class="reveal">
+            <strong>Co-design and research<span class="visually-hidden">:</span></strong> shaping new features with the people you
+            support, and sharing what we learn
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <section class="section section--surface" aria-labelledby="partner-cta-heading">
-    <div class="container stack reveal">
-      <h2 id="partner-cta-heading">Start a conversation</h2>
-      <p>
-        Tell us a little about your organisation and what you have in mind. We'll get back to
-        you. You can also write to us directly at <a href={`mailto:${site.email}`}>{site.email}</a>.
-      </p>
-      <p>
-        <a class="button" href={`mailto:${site.email}?subject=Partnering%20with%20Lockstep`}>
-          Email us about partnering
-        </a>
-      </p>
+  <section class="section section--surface" id={funders.id} aria-labelledby="funders-heading">
+    <div class="container audience">
+      <header class="audience__head reveal">
+        <span class="audience__num" aria-hidden="true">03</span>
+        <PartnerIcon name={funders.icon} />
+        <h2 id="funders-heading">{funders.title}</h2>
+      </header>
+      <div class="audience__body stack-lg">
+        <p class="lead reveal">
+          Your support helps us build and test Lockstep with the people who use it, and measure
+          what really makes a difference.
+        </p>
+        <p class="reveal">Lockstep is at an early stage. Funding would help us:</p>
+        <ul class="points" role="list">
+          <li class="reveal">Develop and test new features with the people who use them</li>
+          <li class="reveal">Reach more people earlier, before gambling becomes a crisis</li>
+          <li class="reveal">Measure our impact properly, and share what we find</li>
+        </ul>
+        <p class="reveal">
+          If you'd like to hear more about our plans, we'd be glad to talk.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark world" id={international.id} aria-labelledby="international-heading">
+    <div class="container audience">
+      <header class="audience__head reveal">
+        <span class="audience__num" aria-hidden="true">04</span>
+        <PartnerIcon name={international.icon} />
+        <h2 id="international-heading">{international.title}</h2>
+      </header>
+      <div class="audience__body stack-lg">
+        <p class="lead reveal">
+          Gambling harm isn't only a UK problem. We're looking to bring Lockstep to new countries
+          by working with NGOs and public agencies that already know their communities.
+        </p>
+        <p class="reveal">
+          We provide the app and adapt it for each country, from language to local support
+          services and meetings. Our partners lead how it reaches people locally.
+        </p>
+      </div>
+    </div>
+    <div class="world__globe reveal" aria-hidden="true">
+      <PartnerIcon name="international" />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="partner-cta-heading">
+    <div class="container">
+      <div class="cta-panel section--dark cta reveal">
+        <h2 id="partner-cta-heading">Start a conversation</h2>
+        <div class="cta__copy stack-lg">
+          <p class="lead">
+            Tell us a little about your organisation and what you have in mind. We'll get back to
+            you. You can also write to us directly at <a href={`mailto:${site.email}`}>{site.email}</a>.
+          </p>
+          <p>
+            <a class="button button--light" href={mailto}>
+              Email us about partnering <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .points {
-    padding-left: 1.25em;
+  /* Jump links to each audience, laid out as a ruled index rather than cards.
+     On phones it's a contents list; on wide screens, four columns. On hover a
+     deep-green fill rises behind the link and the text turns cream. */
+  .jump {
+    padding-bottom: var(--space-2xl);
   }
 
-  .points li + li {
-    margin-top: var(--space-2xs);
+  .jump__list {
+    display: grid;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .jump__list li {
+    max-width: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .jump__link {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    display: grid;
+    grid-template-columns: 2.25rem auto 1fr auto;
+    align-items: center;
+    gap: var(--space-sm);
+    height: 100%;
+    padding: var(--space-sm) var(--space-2xs);
+    color: var(--color-green);
+    text-decoration: none;
+    --icon-stroke: var(--color-emerald);
+  }
+
+  .jump__link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-green);
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+
+  .jump__link:is(:hover, :focus-visible) {
+    color: var(--color-cream);
+    --icon-stroke: var(--color-cream);
+  }
+
+  .jump__link:is(:hover, :focus-visible)::before {
+    transform: none;
+  }
+
+  .jump__link :global(.partner-icon) {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .jump__num {
+    color: var(--color-emerald);
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+
+  .jump__link:is(:hover, :focus-visible) .jump__num {
+    color: var(--color-on-dark-muted);
+  }
+
+  .jump__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: var(--leading-tight);
+  }
+
+  @media (min-width: 56rem) {
+    .jump__list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .jump__list li + li {
+      border-left: 1px solid var(--color-border);
+    }
+
+    .jump__link {
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto 1fr auto;
+      align-items: start;
+      gap: var(--space-lg) var(--space-sm);
+      padding: var(--space-md);
+    }
+
+    .jump__link :global(.partner-icon) {
+      grid-area: 1 / 1;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .jump__num {
+      grid-area: 1 / 2;
+    }
+
+    .jump__title {
+      grid-area: 3 / 1;
+      font-size: var(--text-xl);
+    }
+
+    .jump__arrow {
+      grid-area: 3 / 2;
+      align-self: end;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .jump__link,
+    .jump__num {
+      transition: color var(--duration) var(--ease-out);
+    }
+
+    .jump__link::before {
+      transition: transform var(--duration) var(--ease-out);
+    }
+
+    /* Down arrows nudge down, not sideways */
+    .jump__link:is(:hover, :focus-visible) .arrow {
+      transform: translateY(0.2em);
+    }
+  }
+
+  /* One audience: heading on the left (it stays in view on wide screens), detail on the right */
+  .audience {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 56rem) {
+    .audience {
+      grid-template-columns: 5fr 7fr;
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+
+    .audience__head {
+      position: sticky;
+      top: 7rem;
+    }
+  }
+
+  .audience__head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .audience__head :global(.partner-icon) {
+    grid-area: 1 / 1;
+  }
+
+  .audience__head h2 {
+    grid-area: 2 / 1 / auto / -1;
+    font-size: var(--text-3xl);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+  }
+
+  .audience__num {
+    grid-area: 1 / 2;
+    justify-self: end;
+    color: var(--color-emerald);
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+
+  .audience__body {
+    padding-top: var(--space-2xs);
+  }
+
+  /* Points as ruled rows. Each rule draws across as the row arrives. */
+  .points {
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .points li {
+    position: relative;
+    max-width: none;
+    padding: var(--space-sm) 0 var(--space-sm) 2.25rem;
+  }
+
+  .points li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-border);
+    transform-origin: left;
+  }
+
+  /* A small check, in the brand's emerald */
+  .points li::after {
+    content: '';
+    position: absolute;
+    top: calc(var(--space-sm) + 0.35em);
+    left: 0.15rem;
+    width: 0.95rem;
+    height: 0.5rem;
+    border-left: 2.5px solid var(--color-emerald);
+    border-bottom: 2.5px solid var(--color-emerald);
+    transform: rotate(-45deg);
+  }
+
+  .points--titled li {
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  .points--titled strong {
+    color: var(--color-green);
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: var(--leading-tight);
+  }
+
+  .assurance {
+    padding-left: var(--space-sm);
+    border-left: 3px solid var(--color-emerald);
+    color: var(--color-green);
+    font-weight: 600;
+  }
+
+  @media screen and (prefers-reduced-motion: no-preference) {
+    :global(.js-motion) .points li:not(:global(.is-visible))::before {
+      transform: scaleX(0);
+    }
+
+    :global(.js-motion) .points li:global(.is-visible)::before {
+      animation: rule-draw var(--duration-slow) var(--ease-out) var(--reveal-delay, 0ms) backwards;
+    }
+
+    :global(.js-motion) .points li:not(:global(.is-visible))::after {
+      opacity: 0;
+    }
+
+    :global(.js-motion) .points li:global(.is-visible)::after {
+      animation: check-pop 500ms var(--ease-out) calc(var(--reveal-delay, 0ms) + 300ms) backwards;
+    }
+  }
+
+  @keyframes rule-draw {
+    from { transform: scaleX(0); }
+  }
+
+  @keyframes check-pop {
+    from {
+      opacity: 0;
+      transform: rotate(-45deg) scale(0.4);
+    }
+  }
+
+  /* Outside the UK: dark section with a large, slowly turning globe behind */
+  .world {
+    position: relative;
+    overflow: clip;
+    background:
+      radial-gradient(ellipse at 90% 100%, color-mix(in srgb, var(--color-emerald) 70%, transparent), transparent 60%),
+      var(--color-green);
+    --icon-stroke: color-mix(in srgb, var(--color-cream) 80%, var(--color-green));
+  }
+
+  .world .audience {
+    position: relative;
+    z-index: 1;
+  }
+
+  .world .audience__num {
+    color: var(--color-on-dark-muted);
+  }
+
+  .world__globe {
+    position: absolute;
+    right: -8rem;
+    bottom: -8rem;
+    width: 26rem;
+    opacity: 0.12;
+  }
+
+  .world__globe :global(.partner-icon) {
+    width: 100%;
+    height: auto;
+    stroke-width: 0.6;
+  }
+
+  /* Closing call to action: the heading on the left, the message and button on the right */
+  .cta {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 56rem) {
+    .cta {
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+  }
+
+  .cta h2 {
+    font-size: var(--text-4xl);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+
+  .cta a:not(.button) {
+    overflow-wrap: anywhere;
   }
 </style>

@@ -47,10 +47,11 @@ const { steps, headingLevel: Heading = 'h3' } = Astro.props;
     flex-direction: row-reverse;
     justify-content: flex-end;
     align-items: flex-start;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
     max-width: none;
-    /* Mobile: each step sits a little further in, like a flight of stairs */
-    margin-left: calc((var(--n) - 1) * 0.9rem);
+    /* Mobile: each step sits a little further in, like a flight of stairs.
+       Kept small so the last step's text still has room on narrow phones. */
+    margin-left: calc((var(--n) - 1) * 0.5rem);
   }
 
   .stair:nth-child(even) {

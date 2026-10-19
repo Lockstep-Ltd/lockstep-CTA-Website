@@ -1,18 +1,20 @@
 ---
 # Migrated verbatim from lockstep.uk/affiliate_disclosure on 2026-10-06. Headings changed to sentence case only.
 # Updated 2026-10-13 at Andrew's request: Skiddle and Ticketmaster affiliate programmes added.
+# Updated 2026-10-16 at Andrew's request: only Skiddle links carry Lockstep's affiliate code in the app
+# (checked in its event search code), so Ticketmaster links are described as ordinary links.
 title: "Affiliate Disclosure"
 description: "How affiliate and outbound links work in Lockstep, and what that means for your data."
-updated: "13/10/2026"
+updated: "16/10/2026"
 ---
 
 Lockstep may include links to third-party products, services, experiences, or organisations that are intended to support healthier, real-world alternatives to gambling. Some of these outbound links may be affiliate links, meaning Lockstep may receive a commission if a user chooses to follow the link and complete an action, at no additional cost to the user. Affiliate relationships are used to help support the development and operation of the platform. They do not influence how recommendations are prioritised or presented. Suggestions are surfaced based on relevance to the user, including stated interests and context, rather than commercial arrangements.
 
 ## Event and ticket links
 
-Lockstep takes part in the affiliate programmes run by Skiddle and Ticketmaster. When you search for events in the app, such as through Swap the Night, Lockstep uses the Skiddle and Ticketmaster APIs to show events near you. Links to buy tickets for these events are affiliate links: if you follow one and buy tickets, Lockstep may receive a commission from Skiddle or Ticketmaster as part of their affiliate programmes. This does not change the price you pay.
+When you search for events in the app, such as through Swap the Night, Lockstep uses the Skiddle and Ticketmaster APIs to show events near you. Lockstep takes part in Skiddle’s affiliate programme, so links to buy tickets from Skiddle are affiliate links: if you follow one and buy tickets, Lockstep may receive a commission from Skiddle. This does not change the price you pay. Links to Ticketmaster are ordinary links, and Lockstep does not currently earn a commission from them. If this changes, we will update this page.
 
-To credit the sale to Lockstep, the link includes a referral code that identifies Lockstep, not you. Skiddle or Ticketmaster may then use their own cookies or similar technologies on their websites to record the purchase. Your ticket purchase is handled entirely by Skiddle or Ticketmaster under their own terms and privacy policies. Events are shown based on your search, such as location, dates, and type of event, and not on the commission Lockstep may earn.
+To credit a Skiddle sale to Lockstep, the link includes a referral code that identifies Lockstep, not you. Skiddle may then use its own cookies or similar technologies on its website to record the purchase. Your ticket purchase is handled entirely by Skiddle or Ticketmaster under their own terms and privacy policies. Events are shown based on your search, such as location, dates, and type of event, and not on the commission Lockstep may earn.
 
 ## Other affiliate relationships
 

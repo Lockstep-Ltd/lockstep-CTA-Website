@@ -42,14 +42,16 @@ The logo (a padlock with steps, plus the "Lockstep" wordmark) and the app icon a
 
 ### Motion
 
-- **Mostly CSS.** The one exception is a tiny inline script in `BaseLayout.astro` (allowed by Andrew on 2026-10-11). It only notes when a `.reveal` element or the staircase scrolls into view and adds `.is-visible`; CSS does all the animating. It works the same in every browser, including Safari on iPhone, and sends nothing anywhere.
+- **Mostly CSS.** The one exception is a tiny inline script, `src/scripts/reveal.js`, put into every page by `BaseLayout.astro` (allowed by Andrew on 2026-10-11). It only notes when a `.reveal` element or the staircase scrolls into view and adds `.is-visible`; CSS does all the animating. It works the same in every browser, including Safari on iPhone, and sends nothing anywhere.
 - **Page fades:** the browser's cross-document View Transitions.
 - **Scroll reveals:** sections fade up as they come into view, and items arriving together are slightly staggered.
 - **Staircase:** each step grows up from the floor in turn (a `clip-path` reveal, so the numbers aren't squashed), then its number and text settle in.
+- **Partner page and home page partner panel:** line icons (`PartnerIcon.astro`) draw themselves in, then make a small occasional movement (the globe turns, the heart beats). The points' dividing rules draw across and their ticks pop in, one after another. The dark call-to-action panels (`.cta-panel` in `global.css`) have a slowly drifting glow.
 - **Scroll-driven CSS:** the header edge and the article reading-progress bar.
 - **Fallbacks:** with reduced motion turned on, without JavaScript, or when printing, everything shows straight away with no animation.
 - **Hero:** the lock-and-steps illustration fades up with the hero text when the page loads. On phones and tablets it sits above the headline so the animation plays on screen.
-- **Phone menu:** below 48rem the header links are behind a Menu button. It uses the native HTML popover (no JavaScript), so tapping outside or pressing Escape closes it.
+- **Phone menu:** below 48rem the header links are behind a Menu button. It uses the native HTML popover (no JavaScript), so tapping outside or pressing Escape closes it. The header stays at the top of the screen as you scroll, slimmer on phones.
+- **Legal pages on phones:** a "Contents" button in the corner (shown once you scroll, CSS scroll-driven) jumps back to the "On this page" list.
 - **Reduced motion:** everything is switched off when the visitor asks for reduced motion.
 - **Unsupported browsers:** they just show the content.
 - **Classes:** use `.enter` (with `--i` for stagger) for load-in and `.reveal` for on-scroll.
@@ -98,7 +100,8 @@ The site has no logins, accounts or database. Every page is static except one sm
 .
 ├── .github/workflows/deploy.yml   # Build check on PRs; deploy to Vercel on push to main
 ├── public/                        # Files served as-is
-│   ├── favicon-32.png             # Resized from the original app icon
+│   ├── favicon.ico                # 16, 32 and 48px, resized from the original app icon
+│   ├── icon-192.png               # Resized from the original app icon (search results, Android)
 │   ├── apple-touch-icon.png       # Resized from the original app icon
 │   └── robots.txt
 ├── scripts/
@@ -108,6 +111,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   │   ├── Header.astro           # Logo + main navigation (Menu button on phones)
 │   │   ├── Footer.astro           # Support section, footer links, social links, legal line
 │   │   ├── SocialIcon.astro       # Instagram and LinkedIn icons (inline SVG)
+│   │   ├── PartnerIcon.astro      # Self-drawing line icons for the partner sections
 │   │   ├── Staircase.astro        # The four steps, laid out as rising stairs
 │   │   ├── ArticleCard.astro      # Article preview (feature or row style)
 │   │   ├── Figure.astro           # Image slot: placeholder until a photo is supplied
@@ -120,6 +124,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   ├── content.config.ts          # Article fields (title, date, author, ...)
 │   ├── lib/articles.ts            # Article sorting, date formatting, URLs
 │   ├── lib/structured-data.ts     # JSON-LD for search engines (organisation, articles)
+│   ├── scripts/                   # Inline scripts, hashed for the Content Security Policy (see Security)
 │   ├── data/
 │   │   ├── site.ts                # Site name, contact email, navigation, SEO defaults
 │   │   ├── faq.ts                 # FAQ questions and answers (page + search engine data)
@@ -133,6 +138,8 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   │   ├── how-it-works.astro     # /how-it-works/
 │   │   ├── articles/index.astro   # /articles/
 │   │   ├── articles/[slug].astro  # /articles/<file-name>/
+│   │   ├── articles.json.ts       # /articles.json: article feed for the app (built at build time)
+│   │   ├── llms.txt.ts            # /llms.txt: plain-text site summary for AI assistants
 │   │   ├── articles/suggest/      # Suggest-an-article form, thanks and error pages
 │   │   ├── api/suggest-article.ts # Form handler: emails suggestions via Resend (serverless)
 │   │   ├── [legal].astro          # /privacy_policy, /terms_of_use, /community_guidelines, /affiliate_disclosure
@@ -179,6 +186,16 @@ Keystatic rewrites a file's frontmatter when you save it. Any `# TODO` comments 
 - **Fixed URLs:** the Lockstep app links to these exact paths, with underscores: `/privacy_policy`, `/terms_of_use`, `/community_guidelines` and `/affiliate_disclosure`. It also links to `/articles`.
 - **Before renaming or removing one:** update the app's links in the same release, or add a redirect.
 
+### Article feed (for the app)
+
+The Lockstep app lists articles from `https://lockstep.uk/articles.json` and opens each one on the website. It's generated at build time by [src/pages/articles.json.ts](src/pages/articles.json.ts), so publishing an article here is all it takes for the app to show it.
+
+- **What's in it:** a `version` number and the published articles, newest first. Each has `id` (the file name), `url`, `title`, `description`, `date` (YYYY-MM-DD), `author`, `readingTime` and `image` (the sharing image), plus `updated`, `authorRole` and `watchUrl` when the article has them. Drafts are left out.
+- **Fixed URL:** the app depends on `/articles.json`. Don't move or remove it.
+- **Keep it backwards compatible:** adding fields is fine. Renaming or removing one needs a new `version` and an app update in the same release.
+- **IDs are permanent:** an article's file name is its ID in the app, so renaming a file makes it look like a new article.
+- **Headers** (in `vercel.json`): `Access-Control-Allow-Origin: *` so the app can read it, and a 5-minute cache so new articles show up quickly.
+
 ### Article suggestions
 
 - **The page:** `/articles/suggest/` is a plain HTML form that works without JavaScript. It posts to [src/pages/api/suggest-article.ts](src/pages/api/suggest-article.ts).
@@ -189,6 +206,15 @@ Keystatic rewrites a file's frontmatter when you save it. Any `# TODO` comments 
   - posts from other websites are blocked (Astro's origin check)
 - **Stored data:** none. The suggestion exists only as an email in the inbox.
 - **Testing locally:** with no `RESEND_API_KEY` in `.env`, `npm run dev` prints the email to the dev log (`npx astro dev logs`) instead of sending it.
+
+### Security
+
+- **Content Security Policy:** set with `security.csp` in [astro.config.mjs](astro.config.mjs). Every built page gets a `<meta>` tag that only allows files from lockstep.uk itself, plus hashes of the page's inline styles and of the scripts in `src/scripts/`. A browser refuses to run any other script, so injected code can't run.
+  - **Adding or changing a script:** put it in `src/scripts/` and include it with `<script is:inline set:html={...} />` from a `?raw` import (see `BaseLayout.astro`). Its hash is worked out on every build. A plain `<script is:inline>` written straight into a page or component is blocked.
+  - **Checking it:** the policy is off in `npm run dev`. Check changes in a built page and look for "Content Security Policy" errors in the browser console.
+- **Headers:** `vercel.json` adds `frame-ancestors 'none'` and `X-Frame-Options` (no other site can show lockstep.uk in a frame), `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy` to every response.
+- **Form abuse:** the spam protection above doesn't stop a script that sends the form directly, and each valid post sends an email. A Vercel Firewall rate limit on `/api/suggest-article` (Vercel → Project → Firewall, not in this repo) caps that: 5 posts a minute per IP address (paths starting with `/api/suggest-article`, so the trailing-slash address is covered too), then a 429. Set up on 2026-10-14.
+- **Email spoofing:** `lockstep.uk` has SPF and DKIM for Google Workspace and Resend. A DMARC record (`_dmarc.lockstep.uk`) tells other mail servers what to do with mail that fails them. Not set up yet as of 2026-10-14.
 
 ### Old Bubble links
 
@@ -210,7 +236,13 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 - **Headings:** one `<h1>` per page, then `<h2>` and `<h3>` in order, without skipping levels.
 - **Canonical URLs** end with a slash (`/about/`). Link to that form inside the site. The app's legal links without the slash still work.
 - **Sitemap:** built automatically at `/sitemap-index.xml`, with each article's date as `<lastmod>`. `/sitemap.xml` redirects there (in `vercel.json`) and `robots.txt` points to it. Pages marked `noindex` (the 404 page) are left out.
-- **Structured data:** `src/lib/structured-data.ts` describes Lockstep Ltd and the website on every page, and adds article and breadcrumb data to articles. It uses only facts already on the site. Check changes with Google's [Rich Results Test](https://search.google.com/test/rich-results).
+- **Structured data:** `src/lib/structured-data.ts` describes Lockstep Ltd, its founder (linked to "Meet the founder" on the About page), the website and the app on every page, and adds article and breadcrumb data to articles. It uses only facts already on the site.
+- **Telling Lockstep apart from other "Lockstep"s:** the name is shared with other companies (such as Sage's accounting software), so the search engine data gives the App Store name ("Lockstep: Habit Management") as an alternate name and lists Lockstep Ltd's official pages elsewhere (`profiles` in `src/data/site.ts`, shown as `sameAs`). Add each new official profile or directory listing there.
+- **App facts:** the app and the Chrome extension are both free (confirmed by Andrew, 2026-10-16), so the search engine data includes a free `Offer` and the app's feature list. The extension's full name is "Lockstep: Gambling Content Blocker" (as on the Chrome Web Store); use it rather than just "Lockstep".
+- **AI assistants:** `/llms.txt` (built by `src/pages/llms.txt.ts`) is a plain-text summary of the site and a list of its pages and articles, following [llmstxt.org](https://llmstxt.org). New articles appear in it automatically; it reuses wording already on the site. `robots.txt` allows all crawlers, AI ones included (checked 2026-10-16: GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot and others all get through).
+- **Article dates:** the publish date is `date`. If you change an article in a meaningful way, set `updated` (the "Last updated" field in Keystatic). It isn't shown on the page; it goes into the sitemap and the search engine data.
+- **Icons:** Google shows the site icon next to search results and needs one that's a multiple of 48px, so `favicon.ico` includes a 48px size and there's a 192px PNG. Both are resized from the original icon, centred on cream like the Apple touch icon (the original isn't square).
+- **App banner:** an `apple-itunes-app` meta tag makes Safari on iPhone show a "Get the app" banner linking to the App Store. It's built into Safari: no script, nothing tracked. Check changes with Google's [Rich Results Test](https://search.google.com/test/rich-results).
 - **Sharing images:** generated at build time by `src/pages/og/[...route].ts`.
 
 ### Accessibility tests
@@ -222,8 +254,8 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 
 ### Common edits
 
-- **Page text:** edit the files in `src/pages/`. App copy shared across pages (steps, principles and so on) lives in `src/data/product.ts`.
-- **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL (don't name one `all`: `/articles/all/` lists every article). Articles are ordered by date: the newest is featured on `/articles/` with the next three beside it, and "See all articles" leads to the full list. Set `draft: true` to hide one.
+- **Page text:** edit the files in `src/pages/`. App copy shared across pages (steps, principles, the feature list, the Chrome extension and so on) lives in `src/data/product.ts`. The feature list on How it works is the App Store description's wording; keep the two in step.
+- **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL (don't name one `all`: `/articles/all/` lists every article). Articles are ordered by date: the newest is featured on `/articles/` with the next three beside it, and "See all articles" leads to the full list. Set `draft: true` to hide one. Published articles also appear in the app through the [article feed](#article-feed-for-the-app); don't rename an article's file once it's published.
 - **Article sources:** keep citations in the text short, e.g. "(Gambling Commission, 2025)", and list the full source under `references` in the frontmatter (or the References field in Keystatic). They appear behind a "References" link at the end of the article.
 - **Navigation or contact email:** `src/data/site.ts`.
 - **Social links:** `social` in `src/data/site.ts` (Instagram @lockstep.app and LinkedIn). They show as icons under the logo in the footer and are listed in the search engine data. A new network also needs an icon in `src/components/SocialIcon.astro`. They're plain links: nothing loads from Instagram or LinkedIn.
@@ -247,7 +279,7 @@ Anything not yet supplied is marked `PLACEHOLDER`, `TODO` or `VERIFY BEFORE LAUN
 Measured with Lighthouse (simulated mid-range phone on slow 4G) on 2026-10-11: performance 98–99, accessibility, best practices and SEO 100 on every page tested.
 
 - **Pages are static HTML** with the stylesheet inlined (`build.inlineStylesheets: 'always'`), so nothing blocks the first paint.
-- **JavaScript:** one tiny inline script for scroll reveals. No libraries.
+- **JavaScript:** small inline scripts in `src/scripts/` (scroll reveals, and tapping the home page lock to replay it). No libraries.
 - **Fonts:** self-hosted woff2, by far the largest download (about 177 KB). Newsreader includes optical sizing (132 KB); the weight-only file is 58 KB but makes large headlines look narrower and lighter.
 - **Form function:** `/api/suggest-article` runs in London (`regions` in `vercel.json`). The unused `sharp` image library is left out of it (`excludeFiles` in `astro.config.mjs`), shrinking it from 23 MB to 3.4 MB for quicker cold starts.
 - **Caching:** files in `/_astro/` have content hashes and are cached for a year (set by the Vercel adapter).

@@ -29,6 +29,10 @@ export default config({
           validation: { isRequired: true },
         }),
         date: fields.date({ label: 'Publish date', validation: { isRequired: true } }),
+        updated: fields.date({
+          label: 'Last updated',
+          description: 'Optional. Set when you change an article in a meaningful way (tells search engines).',
+        }),
         author: fields.text({ label: 'Author', defaultValue: 'Andrew Brink', validation: { isRequired: true } }),
         authorRole: fields.text({ label: 'Author role', defaultValue: 'Founder, Lockstep' }),
         readingTime: fields.text({
