@@ -8,10 +8,15 @@
 # and email opt-ins, account deletion, Cloudflare and Google Fonts added; only Skiddle links marked as
 # affiliate links; transfer safeguards named per provider. Meetings confirmed not recorded (Daily rooms
 # have recording off).
+# Updated 2026-10-20 for app changes in LockstepUK PR #65 (push notifications) and PR #66 (onboarding): profile
+# details now ask for the part of the UK you live in instead of nationality, and contact preferences are gone; Sign
+# in with Apple and Google is live, so the out-of-date "if, in future" sentence is replaced; new "Emails and
+# Notifications" subsection (meeting invite emails, opt-in update emails, iPhone push notifications); Apple Push
+# Notification service and Sentry (error reporting, on in the live app) added to the providers.
 # TODO: confirm Daily's data processing addendum (available from Daily on request) covers UK transfers.
 title: "Privacy Policy"
 description: "What information Lockstep collects, how it is used, and the choices available to you."
-updated: "16/10/2026"
+updated: "20/10/2026"
 ---
 
 Lockstep (“we”, “our”, “us”) respects your privacy and is committed to handling personal data responsibly and transparently. This Privacy Policy explains what information we collect, how it is used, and the choices available to you concerning our practices. Lockstep is a UK-based digital platform designed to help people manage their gambling behaviour through practical tools, community access, and real-world alternatives. It is not a gambling service, advertising platform, or therapeutic provider.
@@ -28,7 +33,7 @@ Lockstep collects only the information necessary to operate the service and to u
 
 ### Account and Identification Data
 
-If you choose to create an account or contact us, we may collect basic identifying information such as your name and email address. When you create an account in the app, you also choose a public name that other users see, confirm that you are 18 or over, and may tell us your age range, nationality, goals, interests, contact preferences and meeting preferences. You can add a profile photo if you wish. Where authentication or analytics tools assign unique identifiers (for example, device or session identifiers), these may be collected to support functionality and security. If, in future, Lockstep offers sign-in via third-party providers (such as Apple or similar services), we may receive limited information from those providers, typically a name and email address, in accordance with your settings on the third-party platform.
+If you choose to create an account or contact us, we may collect basic identifying information such as your name and email address. When you create an account in the app, you also choose a public name that other users see, confirm that you are 18 or over, and may tell us your age range, the part of the UK you live in (or that you’d prefer not to say), goals, interests and meeting preferences. You can add a profile photo if you wish. Where authentication or analytics tools assign unique identifiers (for example, device or session identifiers), these may be collected to support functionality and security. If you sign in with Apple or Google, we receive your name and email address from them. If you sign in with Apple, Apple may give us a private relay address instead of your own email address.
 
 ### Usage and Interaction Data
 
@@ -74,6 +79,14 @@ Lockstep uses information in a limited and intentional way to operate the servic
 
 If you contact Lockstep directly, information you provide may be used to respond to enquiries, provide support, or communicate important service-related updates. If you opt in, we may also send occasional non-promotional updates about Lockstep, such as changes to the service or new features. You can opt out of non-essential communications at any time, including in the app’s Settings. Where outbound links are shown within the Service, some may be affiliate links. These do not affect the price paid by the user. Recommendations are prioritised based on relevance and suitability rather than commercial relationships. Lockstep does not sell personal data and does not share personal data with advertisers for behavioural or cross-site targeting.
 
+### Emails and Notifications
+
+When another member invites you to a private meeting, we email you to let you know. The email names the host and the time of the meeting, and never includes the meeting’s title or anything about gambling. These are service messages about your account, so they are sent by default, on the basis of our legitimate interests in providing the service to you. You can turn them off at any time in Edit Profile, using “Email me meeting invites”.
+
+Occasional update emails about Lockstep are separate from these service messages. We only send them if you choose to receive them by ticking the box when you create your account, which is unticked by default.
+
+If you use the Lockstep iPhone app, we send push notifications only if you allow them on your phone. To send them, we store a device token linked to your account, and we delete it when you log out or the app is removed. We send push notifications for meeting invites, when someone joins your meeting, for connection requests and when someone accepts yours, and as a reminder 15 minutes before a meeting you are going to. Notifications never mention gambling or meeting titles. You can turn them off at any time in your phone’s settings.
+
 ## Affiliate & outbound links
 
 Lockstep may include outbound links to third-party products, services, experiences, or resources that are intended to support healthier, real-world alternatives to gambling. Some of these outbound links may be affiliate links, meaning Lockstep may receive a commission if a user chooses to follow the link and completes an action, at no additional cost to the user. Affiliate relationships do not influence how recommendations are prioritised or presented. Alternatives and suggestions are ranked based on relevance, suitability, and alignment with user interests and context, rather than commercial arrangements. Lockstep does not sell personal data and does not share personal data with advertisers or affiliate partners for behavioural advertising, profiling, or cross-site tracking. Any interaction with a third-party website or service is governed by that third party’s own terms and privacy practices.
@@ -96,6 +109,8 @@ The service providers we currently use are:
 - **Mapbox** and **postcodes.io**: converting a postcode or place name into approximate map coordinates for event searches.
 - **Skiddle** and **Ticketmaster**: finding events near a location you search for. These services receive search details only, not your account details.
 - **Google Fonts**: the fonts used in the app. Google receives your device’s IP address when the app loads them.
+- **Apple Push Notification service**: delivering notifications to iPhones. Apple receives the device token and the notification text.
+- **Sentry**: error and crash reporting for the app. When something goes wrong, Sentry receives a technical report of the error, and it also receives performance timings from a sample of page loads. Reports identify you only by your account ID. They leave out your IP address, cookies, the content of requests and anything shown in the app’s console, and Sentry does not record your screen.
 
 ### Community and Other Users
 
