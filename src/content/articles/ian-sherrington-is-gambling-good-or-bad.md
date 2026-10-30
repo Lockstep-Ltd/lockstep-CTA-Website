@@ -1,12 +1,14 @@
 ---
 # Migrated from lockstep.uk/articles on 2026-10-06. Wording unchanged.
+# 2026-10-30 (Andrew's request): the link now goes straight to the full article rather than Crownstar's teaser
+# page, and the reading time says "min read" like the other articles.
 title: "Ian Sherrington: Is Gambling Good or Bad?"
 description: "The creator of the world's first online sportsbook looks back on the industry he helped transform, and asks what it has meant for society."
 date: 2026-08-13
 author: "Crownstar Consultancy"
 authorRole: "Ian Sherrington, Chief Executive Officer"
-readingTime: "30–35 min"
-watchUrl: "https://crownstar.com/crownstar/is-gambling-good-or-bad/"
+readingTime: "30–35 min read"
+watchUrl: "https://crownstar.com/crownstar/article-17-is-gambling-good-or-bad/"
 ---
 
 Ian Sherrington has a fairly unique perspective from which to ask whether gambling is ultimately a force for good or bad. Having spent most of his life working within the industry, Sherrington was the creator of Intertops.com, the world's first online sportsbook, which launched in 1996 and helped usher gambling into the internet age.

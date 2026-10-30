@@ -71,7 +71,7 @@ const originalSite = watchUrl && new URL(watchUrl).hostname.replace(/^www\./, ''
     </header>
 
     <div class="container">
-      <div class="prose enter" style="--i: 3">
+      <div class:list={['prose enter', !external && 'prose--dropcap']} style="--i: 3">
         <Content />
       </div>
 
@@ -200,7 +200,8 @@ const originalSite = watchUrl && new URL(watchUrl).hostname.replace(/^www\./, ''
     margin-top: 1.25em;
   }
 
-  .prose :global(p:first-child::first-letter) {
+  /* Large first letter on our own articles only, so a summary doesn't look like the full article */
+  .prose--dropcap :global(p:first-child::first-letter) {
     float: left;
     margin: 0.08em 0.12em 0 0;
     color: var(--color-green);

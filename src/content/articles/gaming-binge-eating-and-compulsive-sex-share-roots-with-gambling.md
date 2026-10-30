@@ -1,7 +1,7 @@
 ---
 # Summary of an external article, added 2026-10-30 at Andrew's request. Title and date as published on
 # Scientific Inquirer. The description is the original's subheading, with British spelling. The summary
-# below was drafted by Claude from the original (and the study details it reports), for Andrew to review.
+# below was drafted by Claude from the original (and the study details it reports). Approved by Andrew 2026-10-30.
 title: "Gaming, Binge Eating and Compulsive Sex Share Deep Roots With Gambling Addiction, Major Review Finds"
 description: "A review of nearly 250 systematic reviews finds gaming disorder 98.9% similar to gambling disorder, with binge eating and compulsive sexual behaviour overlapping recognised addictions."
 date: 2026-10-14

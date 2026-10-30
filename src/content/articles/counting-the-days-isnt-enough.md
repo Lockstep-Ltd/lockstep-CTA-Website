@@ -1,6 +1,8 @@
 ---
 # Added 2026-10-30 from Andrew's document "Counting the days isn't enough (Article 5)". Wording unchanged.
-# TODO: Andrew to approve the description (drafted by Claude; the article itself is word for word).
+# Description drafted by Claude, approved by Andrew 2026-10-30.
+# Tone edit (approved by Andrew, 2026-10-30): "problem gamblers" (twice) became "people experiencing problem
+# gambling", to avoid labelling people.
 title: "Counting the Days Isn’t Enough"
 description: "Quitting leaves a gap, and something usually fills it. Why the number of days since someone last gambled can’t be the only measure of recovery."
 date: 2026-10-30
@@ -36,7 +38,7 @@ This article makes one argument. When someone quits an addiction, the gap it lea
 
 Many people will recognise the consequences and chain of events around their habits. For some, they drink, so they gamble. They gamble, so they smoke. Each habit lowers the guard against the next, whilst the loss of control in one place seeps into others.
 
-The research on co-occurrence supports at least part of this. A systematic review of population surveys found that nicotine dependence was the most common co-occurring condition among problem gamblers, at a mean prevalence of 60.1%, followed by a substance use disorder at 57.5% (Lorains, Cowlishaw and Thomas, 2011). A telling statistic comes from the 2007 British Gambling Prevalence Survey, in which they posit smokers were over three times more likely than non-smokers to be problem gamblers (Griffiths et al., 2010). However, it should be noted that in a more recent British survey, researchers struggled to find conclusive data on whether at-risk gambling was more linked to smoking or risky drinking (Kock et al., 2024). So, whilst we can assume the link is real, it is difficult to be proven given the amount of variables one would have to consider over a larger sample size.
+The research on co-occurrence supports at least part of this. A systematic review of population surveys found that nicotine dependence was the most common co-occurring condition among people experiencing problem gambling, at a mean prevalence of 60.1%, followed by a substance use disorder at 57.5% (Lorains, Cowlishaw and Thomas, 2011). A telling statistic comes from the 2007 British Gambling Prevalence Survey, in which they posit smokers were over three times more likely than non-smokers to experience problem gambling (Griffiths et al., 2010). However, it should be noted that in a more recent British survey, researchers struggled to find conclusive data on whether at-risk gambling was more linked to smoking or risky drinking (Kock et al., 2024). So, whilst we can assume the link is real, it is difficult to be proven given the amount of variables one would have to consider over a larger sample size.
 
 ## Does quitting really lead to something else?
 

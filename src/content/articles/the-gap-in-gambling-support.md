@@ -1,5 +1,7 @@
 ---
 # Migrated from lockstep.uk/articles on 2026-10-06. Wording unchanged.
+# Tone edit (approved by Andrew, 2026-10-30): "Support for younger gamblers" became "Support for young people
+# who gamble", to avoid labelling people.
 title: "The Gap in Gambling Support"
 description: "Pathways into gambling are now instant and frictionless. Support still waits for a crisis. What are we offering young people in the years before that?"
 date: 2026-09-08
@@ -45,7 +47,7 @@ Perhaps one of the weaknesses in our current approach is the assumption that gam
 
 For someone at an earlier stage, support might begin with privately assessing their habits, considering what unspent money could fund, finding another evening activity or speaking anonymously with someone who understands. This is not about replacing treatment or suggesting that serious addiction can be solved through better user experience. It is about recognising that a 19-year-old questioning their gambling and someone seeking specialist treatment after years of harm may need different entry points into the same support system. The Gambling Commission’s research highlights why this matters: among 11–17-year-olds who had gambled with their own money, 78% said they did so because it was fun. That may sound obvious, but it reveals a gap. If gambling provides excitement, competition, anticipation, escape or something to do, simply stopping does not replace those experiences. It may protect someone’s money while leaving the boredom, routine or social gap gambling filled.
 
-Support for younger gamblers should therefore do more than prevent gambling; it should help them build alternatives. £50 not gambled could become dinner with friends, while an evening spent betting could become a concert, football match or another activity. Progress can become something a person experiences, not just something they abstain from.
+Support for young people who gamble should therefore do more than prevent gambling; it should help them build alternatives. £50 not gambled could become dinner with friends, while an evening spent betting could become a concert, football match or another activity. Progress can become something a person experiences, not just something they abstain from.
 
 If one quarter of people eventually entering gambling treatment say their problems had already begun by 18, then waiting until someone identifies themselves as needing treatment leaves an obvious question unanswered.
 
