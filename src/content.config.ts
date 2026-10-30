@@ -23,6 +23,8 @@ const articles = defineCollection({
     references: z
       .array(z.object({ citation: z.string(), url: z.url().optional() }))
       .default([]),
+    /** Topics, from the list in src/lib/articles.ts. Used for "Keep reading" suggestions. */
+    topics: z.array(z.enum(['Research', 'Young people', 'Policy & industry', 'Recovery & support'])).default([]),
     draft: z.boolean().default(false),
   }),
 });

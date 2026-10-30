@@ -6,6 +6,8 @@ date: 2026-08-18
 author: "Andrew Brink"
 authorRole: "Founder, Lockstep"
 readingTime: "4 min read"
+topics:
+  - "Policy & industry"
 references:
   - citation: "Gambling Commission (2024). Industry Statistics: November 2024."
     url: "https://www.gamblingcommission.gov.uk/statistics-and-research/publication/industry-statistics-november-2024-official-statistics"

@@ -8,6 +8,9 @@ date: 2026-09-08
 author: "Andrew Brink"
 authorRole: "Founder, Lockstep"
 readingTime: "6 min read"
+topics:
+  - "Young people"
+  - "Recovery & support"
 references:
   - citation: "Gambling Commission (2025). Young People and Gambling 2025: Official statistics."
     url: "https://www.gamblingcommission.gov.uk/statistics-and-research/publication/young-people-and-gambling-2025-official-statistics"

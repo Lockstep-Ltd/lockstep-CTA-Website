@@ -9,6 +9,8 @@ author: "Crownstar Consultancy"
 authorRole: "Ian Sherrington, Chief Executive Officer"
 readingTime: "30–35 min read"
 watchUrl: "https://crownstar.com/crownstar/article-17-is-gambling-good-or-bad/"
+topics:
+  - "Policy & industry"
 ---
 
 Ian Sherrington has a fairly unique perspective from which to ask whether gambling is ultimately a force for good or bad. Having spent most of his life working within the industry, Sherrington was the creator of Intertops.com, the world's first online sportsbook, which launched in 1996 and helped usher gambling into the internet age.

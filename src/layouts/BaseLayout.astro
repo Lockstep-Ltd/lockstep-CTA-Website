@@ -57,6 +57,7 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     <!-- Safari on iPhone shows a "Get the app" banner for the Lockstep app. No script, nothing tracked. -->
     <meta name="apple-itunes-app" content={`app-id=${site.appStoreId}`} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Lockstep articles" href="/rss.xml" />
     <!-- Matches the page background (--color-cream) -->
     <meta name="theme-color" content="#FBF6E8" />
 

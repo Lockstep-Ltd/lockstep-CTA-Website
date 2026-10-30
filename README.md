@@ -122,7 +122,8 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   ├── content/articles/          # One Markdown file per article
 │   ├── content/legal/             # Privacy policy, terms, community guidelines, affiliate disclosure
 │   ├── content.config.ts          # Article fields (title, date, author, ...)
-│   ├── lib/articles.ts            # Article sorting, date formatting, URLs
+│   ├── lib/articles.ts            # Article sorting, date formatting, URLs, topics
+│   ├── lib/citation-links.mjs     # Links in-text citations to the References list (build time)
 │   ├── lib/structured-data.ts     # JSON-LD for search engines (organisation, articles)
 │   ├── scripts/                   # Inline scripts, hashed for the Content Security Policy (see Security)
 │   ├── data/
@@ -139,6 +140,7 @@ The site has no logins, accounts or database. Every page is static except one sm
 │   │   ├── articles/index.astro   # /articles/
 │   │   ├── articles/[slug].astro  # /articles/<file-name>/
 │   │   ├── articles.json.ts       # /articles.json: article feed for the app (built at build time)
+│   │   ├── rss.xml.ts             # /rss.xml: RSS feed of the articles for feed readers
 │   │   ├── llms.txt.ts            # /llms.txt: plain-text site summary for AI assistants
 │   │   ├── articles/suggest/      # Suggest-an-article form, thanks and error pages
 │   │   ├── api/suggest-article.ts # Form handler: emails suggestions via Resend (serverless)
@@ -258,6 +260,10 @@ Put photos and screenshots in `src/assets/images/` and pass them to `<Figure src
 - **Articles:** add a Markdown file to `src/content/articles/`. Copy the frontmatter from an existing article. The file name becomes the URL (don't name one `all`: `/articles/all/` lists every article). Articles are ordered by date: the newest is featured on `/articles/` with the next three beside it, and "See all articles" leads to the full list. Set `draft: true` to hide one. Published articles also appear in the app through the [article feed](#article-feed-for-the-app); don't rename an article's file once it's published.
 - **External articles:** set `watchUrl` to the original's address (the "Link to original" field in Keystatic) and write a short summary as the article text. A summary should be short, credit the original's author, and explain the context and perspective they're writing from. The page here is clearly marked as a summary, with a "Read the full article" button at the top and the end. On cards, summaries have a "Summary" tag, a Muted Emerald background with cream text and "Original by <author>". Cards still open the summary page, which is also what the Lockstep app opens.
 - **All articles page:** a two-column grid. On screens wide enough for two columns, a "Sorted by date" switch puts every article in one column, newest first. It's a checkbox styled as a switch, and CSS does the rest (`:has()`), so it adds no JavaScript. It isn't remembered between visits.
+- **Topics:** tag articles with `topics` (Research, Young people, Policy & industry, Recovery & support), the "Topics" field in Keystatic. They show under the title, and "Keep reading" suggests articles sharing the most topics, then the newest. The list lives in `src/lib/articles.ts`, `src/content.config.ts` and `keystatic.config.ts`: change all three together.
+- **Citations:** in-text citations like "(Aubin et al., 2012)" link to their entry in the References list automatically. A citation matches a reference when the reference's first word (usually the first author's surname, or an organisation) appears in it and the years match. Anything ambiguous stays as plain text. This runs at build time, as a plugin for Astro's Markdown processor, in `src/lib/citation-links.mjs`.
+- **Contents list:** an article with three or more `##` sections gets an "In this article" list of links under its header.
+- **RSS feed:** `/rss.xml` lists every article for feed readers and news apps. It's linked from the articles page and every page's `<head>`. It's separate from `/articles.json`, which is the app's feed.
 - **Authors:** cards and the top of an article say "By The Lockstep Team" for our own articles. The writer's name and role (`author`, `authorRole`) appear only at the end of the article, and in the search engine data.
 - **Article sources:** keep citations in the text short, e.g. "(Gambling Commission, 2025)", and list the full source under `references` in the frontmatter (or the References field in Keystatic). They appear behind a "References" link at the end of the article.
 - **Navigation or contact email:** `src/data/site.ts`.

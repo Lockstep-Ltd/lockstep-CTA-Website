@@ -2,14 +2,14 @@
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import { formatDate, getArticles, isExternal, teamName, titleTransition, type Article } from '../../lib/articles';
+import { formatDate, getArticles, isExternal, relatedArticles, teamName, titleTransition, type Article } from '../../lib/articles';
 import { articleNodes } from '../../lib/structured-data';
 
 export async function getStaticPaths() {
   const articles = await getArticles();
   return articles.map((article) => ({
     params: { slug: article.id },
-    props: { article, more: articles.filter((a) => a.id !== article.id).slice(0, 2) },
+    props: { article, more: relatedArticles(article, articles) },
   }));
 }
 
@@ -19,8 +19,10 @@ interface Props {
 }
 
 const { article, more } = Astro.props;
-const { title, description, date, updated, author, authorRole, readingTime, watchUrl, references } = article.data;
-const { Content } = await render(article);
+const { title, description, date, updated, author, authorRole, readingTime, watchUrl, references, topics } = article.data;
+const { Content, headings } = await render(article);
+// "In this article": a contents list for longer articles with three or more sections
+const sections = headings.filter((h) => h.depth === 2);
 const isoDate = date.toISOString().slice(0, 10);
 // External articles: this page is our short summary, so it says so clearly and links to the original
 const external = isExternal(article);
@@ -56,6 +58,11 @@ const originalSite = watchUrl && new URL(watchUrl).hostname.replace(/^www\./, ''
           <time datetime={isoDate}>{formatDate(date)}</time>
           <span>{external ? `Full article: ${readingTime}` : readingTime}</span>
         </p>
+        {topics.length > 0 && (
+          <ul class="topics enter" style="--i: 2" role="list" aria-label="Topics">
+            {topics.map((t) => <li>{t}</li>)}
+          </ul>
+        )}
         {external && (
           <div class="original enter" style="--i: 3">
             <p>
@@ -71,6 +78,17 @@ const originalSite = watchUrl && new URL(watchUrl).hostname.replace(/^www\./, ''
     </header>
 
     <div class="container">
+      {sections.length >= 3 && (
+        <nav class="toc enter" style="--i: 3" aria-labelledby="toc-heading">
+          <h2 id="toc-heading" class="toc__heading">In this article</h2>
+          <ol class="toc__list">
+            {sections.map((h) => (
+              <li><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+
       <div class:list={['prose enter', !external && 'prose--dropcap']} style="--i: 3">
         <Content />
       </div>
@@ -94,8 +112,8 @@ const originalSite = watchUrl && new URL(watchUrl).hostname.replace(/^www\./, ''
         <details class="references" id="references">
           <summary>References <span class="references__count">({references.length})</span></summary>
           <ol>
-            {references.map((ref) => (
-              <li>
+            {references.map((ref, i) => (
+              <li id={`ref-${i + 1}`}>
                 {ref.citation}
                 {ref.url && (
                   <>
@@ -259,6 +277,78 @@ const originalSite = watchUrl && new URL(watchUrl).hostname.replace(/^www\./, ''
   .original__heading {
     color: var(--color-cream);
     font-size: var(--text-xl);
+  }
+
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    padding: 0;
+    list-style: none;
+  }
+
+  .topics li {
+    padding: 0.15em 0.7em;
+    border-radius: var(--radius-pill);
+    background: var(--color-sage);
+    color: var(--color-emerald);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  /* In this article */
+  .toc {
+    max-width: 40rem;
+    margin: var(--space-md) auto 0;
+    padding: var(--space-sm) var(--space-md);
+    border-left: 3px solid var(--color-green);
+    background: var(--color-sage);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .toc__heading {
+    margin-bottom: var(--space-2xs);
+    color: var(--color-emerald);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .toc__list {
+    display: grid;
+    gap: var(--space-3xs);
+    padding-left: 1.25em;
+  }
+
+  .toc__list a {
+    display: inline-block;
+    padding-block: var(--space-3xs);
+    color: var(--color-heading);
+    font-weight: 500;
+  }
+
+  /* Section headings and references clear the sticky header when jumped to */
+  .prose :global(h2[id]),
+  .references li {
+    scroll-margin-top: 6rem;
+  }
+
+  /* In-text citations that link to the References list */
+  .prose :global(a.cite) {
+    color: inherit;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--color-emerald);
+  }
+
+  .prose :global(a.cite:hover) {
+    color: var(--color-link);
+  }
+
+  /* A reference jumped to from the text is briefly highlighted */
+  .references li:target {
+    background: var(--color-sage);
+    border-radius: var(--radius-sm);
   }
 
   .signoff {

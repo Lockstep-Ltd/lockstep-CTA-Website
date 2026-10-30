@@ -9,6 +9,9 @@ date: 2026-10-30
 author: "Andrew Brink"
 authorRole: "Founder, Lockstep"
 readingTime: "6 min read"
+topics:
+  - "Recovery & support"
+  - "Research"
 references:
   - citation: "Aubin, H.-J., Farley, A., Lycett, D., Lahmek, P. and Aveyard, P. (2012) 'Weight gain in smokers after quitting cigarettes: meta-analysis', BMJ, 345, e4439."
     url: "https://doi.org/10.1136/bmj.e4439"

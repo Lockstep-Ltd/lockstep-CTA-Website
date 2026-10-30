@@ -6,6 +6,8 @@ date: 2026-08-08
 author: "Andrew Brink"
 authorRole: "Founder, Lockstep"
 readingTime: "3 min read"
+topics:
+  - "Young people"
 ---
 
 If you ask most people where gambling begins, they'll likely say around the age of 18. That's the legal age to place a bet, walk into a betting shop or open an online casino account. However, in today’s entertainment centric society that reality is being challenged as gambling exposure and tendencies are introduced to younger and younger audiences. Not with money. With rewards.

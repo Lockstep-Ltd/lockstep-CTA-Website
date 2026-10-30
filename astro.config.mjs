@@ -6,6 +6,8 @@ import keystatic from '@keystatic/astro';
 import vercel from '@astrojs/vercel';
 import { createHash } from 'node:crypto';
 import { globSync, readdirSync, readFileSync } from 'node:fs';
+import { satteri } from '@astrojs/markdown-satteri';
+import { citationLinks } from './src/lib/citation-links.mjs';
 
 // The Keystatic editor (/keystatic) only runs in local development, so the
 // public site stays fully static with no JavaScript sent to visitors.
@@ -56,6 +58,12 @@ export default defineConfig({
   // else. Everything else is limited to lockstep.uk itself. frame-ancestors can't go in a
   // <meta> tag, so it's sent as a header from vercel.json with the other security headers.
   // Not active in `npm run dev`, only in built pages.
+  // In-text citations in articles, e.g. "(Aubin et al., 2012)", link to their entry in the
+  // References list. Done at build time (src/lib/citation-links.mjs), so no JavaScript.
+  // Sätteri is Astro's default Markdown processor; this only adds the plugin to it.
+  markdown: {
+    processor: satteri({ hastPlugins: [citationLinks] }),
+  },
   security: {
     csp: {
       directives: [

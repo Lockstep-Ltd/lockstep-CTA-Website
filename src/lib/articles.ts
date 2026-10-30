@@ -2,6 +2,22 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export type Article = CollectionEntry<'articles'>;
 
+/** Topics an article can be tagged with (shown on the article page; used for "Keep reading").
+ *  Keep in sync with keystatic.config.ts. */
+export const topics = ['Research', 'Young people', 'Policy & industry', 'Recovery & support'] as const;
+
+/** Up to `count` other articles, those sharing the most topics first, then the newest. */
+export function relatedArticles(article: Article, all: Article[], count = 2): Article[] {
+  const mine = new Set(article.data.topics);
+  const shared = (a: Article) => a.data.topics.filter((t) => mine.has(t)).length;
+  return all
+    .filter((a) => a.id !== article.id)
+    .map((a, i) => ({ a, score: shared(a), i }))
+    .sort((x, y) => y.score - x.score || x.i - y.i)
+    .slice(0, count)
+    .map(({ a }) => a);
+}
+
 /** Published articles, newest first. */
 export async function getArticles(): Promise<Article[]> {
   const articles = await getCollection('articles', ({ data }) => !data.draft);

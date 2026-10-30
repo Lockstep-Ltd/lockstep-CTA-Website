@@ -8,6 +8,8 @@ date: 2026-10-14
 author: "Scientific Inquirer"
 readingTime: "4–5 min read"
 watchUrl: "https://scientificinquirer.com/2026/10/14/gaming-binge-eating-and-compulsive-sex-share-deep-roots-with-gambling-addiction-major-review-finds/"
+topics:
+  - "Research"
 ---
 
 Scientific Inquirer, a science news site, reports on a wide-ranging study of how other compulsive behaviours compare with gambling disorder. Its write-up draws on Flinders University's announcement of the research, and adds a careful reading of what the findings do and don't show.

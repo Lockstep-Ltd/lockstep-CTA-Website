@@ -6,6 +6,8 @@ date: 2026-08-26
 author: "Andrew Brink"
 authorRole: "Founder, Lockstep"
 readingTime: "4 min read"
+topics:
+  - "Recovery & support"
 references:
   - citation: "Lindson N, Livingstone-Banks J, Butler AR, et al. (2025). Electronic cigarettes for smoking cessation. Cochrane Database of Systematic Reviews, Issue 11."
     url: "https://doi.org/10.1002/14651858.CD010216.pub10"
