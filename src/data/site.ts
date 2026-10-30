@@ -35,11 +35,16 @@ export const site = {
   },
 };
 
-// Lockstep's social media accounts (from Andrew, 2026-10-19). Shown in the footer and listed
+// Lockstep's social media accounts (from Andrew, 2026-10-19 and 2026-10-30). Shown in the footer and listed
 // alongside `site.profiles` as the organisation's official pages in the search engine data (JSON-LD `sameAs`).
 export const social = [
   { label: 'Instagram', handle: '@lockstep.app', href: 'https://www.instagram.com/lockstep.app/' },
   { label: 'LinkedIn', handle: 'Lockstep', href: 'https://www.linkedin.com/company/lockstep-uk/' },
+  // TikTok, Facebook and YouTube added 2026-10-30 (from Andrew). Facebook's address is a numbered profile page;
+  // YouTube links to the channel home rather than its Shorts tab.
+  { label: 'TikTok', handle: '@lockstepapp', href: 'https://www.tiktok.com/@lockstepapp' },
+  { label: 'Facebook', handle: 'Lockstep', href: 'https://www.facebook.com/profile.php?id=61592617577790' },
+  { label: 'YouTube', handle: '@LockstepApp', href: 'https://www.youtube.com/@LockstepApp' },
 ] as const;
 
 export const navigation = [
