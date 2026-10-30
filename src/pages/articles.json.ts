@@ -30,6 +30,7 @@ export const GET: APIRoute = async () => {
         readingTime: data.readingTime,
         ...(data.watchUrl && { watchUrl: data.watchUrl }),
         image: new URL(`/og/articles/${id}.png`, site.url).href,
+        ...(data.topics.length > 0 && { topics: data.topics }),
       };
     }),
   };

@@ -56,6 +56,11 @@ export default config({
             itemLabel: (props) => props.fields.citation.value || 'Reference',
           },
         ),
+        topics: fields.multiselect({
+          label: 'Topics',
+          description: 'Shown under the title. "Keep reading" suggests articles with the same topics.',
+          options: ['Research', 'Young people', 'Policy & industry', 'Recovery & support'].map((t) => ({ label: t, value: t })),
+        }),
         draft: fields.checkbox({ label: 'Draft', description: 'Hide this article from the site.' }),
         content: fields.markdoc({ label: 'Article', extension: 'md' }),
       },

@@ -2,14 +2,14 @@
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import { formatDate, getArticles, titleTransition, type Article } from '../../lib/articles';
+import { formatDate, getArticles, isExternal, relatedArticles, teamName, titleTransition, type Article } from '../../lib/articles';
 import { articleNodes } from '../../lib/structured-data';
 
 export async function getStaticPaths() {
   const articles = await getArticles();
   return articles.map((article) => ({
     params: { slug: article.id },
-    props: { article, more: articles.filter((a) => a.id !== article.id).slice(0, 2) },
+    props: { article, more: relatedArticles(article, articles) },
   }));
 }
 
@@ -19,9 +19,15 @@ interface Props {
 }
 
 const { article, more } = Astro.props;
-const { title, description, date, updated, author, authorRole, readingTime, watchUrl, references } = article.data;
-const { Content } = await render(article);
+const { title, description, date, updated, author, authorRole, readingTime, watchUrl, references, topics } = article.data;
+const { Content, headings } = await render(article);
+// "In this article": a contents list for longer articles with three or more sections
+const sections = headings.filter((h) => h.depth === 2);
 const isoDate = date.toISOString().slice(0, 10);
+// External articles: this page is our short summary, so it says so clearly and links to the original
+const external = isExternal(article);
+const credit = authorRole ? `${authorRole}, ${author}` : author;
+const originalSite = watchUrl && new URL(watchUrl).hostname.replace(/^www\./, '');
 ---
 
 <BaseLayout
@@ -44,37 +50,70 @@ const isoDate = date.toISOString().slice(0, 10);
         <a class="text-link back enter" href="/articles/">
           <span class="arrow" aria-hidden="true">←</span> All articles
         </a>
+        {external && <p class="kicker summary-kicker enter">Summary</p>}
         <h1 class="article__title" style={`view-transition-name: ${titleTransition(article)}`}>{title}</h1>
         <p class="article__dek enter" style="--i: 1">{description}</p>
         <p class="article__meta meta-list enter" style="--i: 2">
-          <span>{author}</span>
+          <span>{external ? `Summary by ${teamName}` : `By ${teamName}`}</span>
           <time datetime={isoDate}>{formatDate(date)}</time>
-          <span>{readingTime}</span>
+          <span>{external ? `Full article: ${readingTime}` : readingTime}</span>
         </p>
-        {watchUrl && (
-          <p class="enter" style="--i: 3">
-            <a class="button" href={watchUrl}>View the original</a>
-          </p>
+        {topics.length > 0 && (
+          <ul class="topics enter" style="--i: 2" role="list" aria-label="Topics">
+            {topics.map((t) => <li>{t}</li>)}
+          </ul>
+        )}
+        {external && (
+          <div class="original enter" style="--i: 3">
+            <p>
+              This is a short summary by the Lockstep team. The full article, by {credit}, is
+              published on {originalSite}.
+            </p>
+            <a class="button button--light" href={watchUrl}>
+              Read the full article <span class="arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
         )}
       </div>
     </header>
 
     <div class="container">
-      <div class="prose enter" style="--i: 3">
+      {sections.length >= 3 && (
+        <nav class="toc enter" style="--i: 3" aria-labelledby="toc-heading">
+          <h2 id="toc-heading" class="toc__heading">In this article</h2>
+          <ol class="toc__list">
+            {sections.map((h) => (
+              <li><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+
+      <div class:list={['prose enter', !external && 'prose--dropcap']} style="--i: 3">
         <Content />
       </div>
 
-      <footer class="signoff">
-        <p class="signoff__name">{author}</p>
-        {authorRole && <p>{authorRole}</p>}
-      </footer>
+      {external ? (
+        <aside class="original original--end" aria-labelledby="original-heading">
+          <h2 id="original-heading" class="original__heading">Read the full article</h2>
+          <p>“{title}”, by {credit}, on {originalSite}.</p>
+          <a class="button button--light" href={watchUrl}>
+            Read the full article <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </aside>
+      ) : (
+        <footer class="signoff">
+          <p class="signoff__name">{author}</p>
+          {authorRole && <p>{authorRole}</p>}
+        </footer>
+      )}
 
       {references.length > 0 && (
         <details class="references" id="references">
           <summary>References <span class="references__count">({references.length})</span></summary>
           <ol>
-            {references.map((ref) => (
-              <li>
+            {references.map((ref, i) => (
+              <li id={`ref-${i + 1}`}>
                 {ref.citation}
                 {ref.url && (
                   <>
@@ -179,7 +218,8 @@ const isoDate = date.toISOString().slice(0, 10);
     margin-top: 1.25em;
   }
 
-  .prose :global(p:first-child::first-letter) {
+  /* Large first letter on our own articles only, so a summary doesn't look like the full article */
+  .prose--dropcap :global(p:first-child::first-letter) {
     float: left;
     margin: 0.08em 0.12em 0 0;
     color: var(--color-green);
@@ -199,6 +239,116 @@ const isoDate = date.toISOString().slice(0, 10);
     color: var(--color-green);
     font-family: var(--font-heading);
     font-size: 1.25em;
+  }
+
+  /* Summaries: credit box with the link to the full article, at the top and the end */
+  /* Same pill as the "Summary" tag on article cards */
+  .summary-kicker {
+    width: fit-content;
+    padding: 0.15em 0.7em;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-pill);
+  }
+
+  .summary-kicker + .article__title {
+    margin-top: var(--space-xs);
+  }
+
+  .original {
+    display: grid;
+    gap: var(--space-sm);
+    justify-items: start;
+    max-width: var(--measure);
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--color-emerald);
+    color: var(--color-on-emerald-muted);
+  }
+
+  .original :focus-visible {
+    outline-color: var(--color-cream);
+  }
+
+  .original--end {
+    max-width: 40rem;
+    margin: var(--space-md) auto var(--space-2xl);
+  }
+
+  .original__heading {
+    color: var(--color-cream);
+    font-size: var(--text-xl);
+  }
+
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    padding: 0;
+    list-style: none;
+  }
+
+  .topics li {
+    padding: 0.15em 0.7em;
+    border-radius: var(--radius-pill);
+    background: var(--color-sage);
+    color: var(--color-emerald);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  /* In this article */
+  .toc {
+    max-width: 40rem;
+    margin: var(--space-md) auto 0;
+    padding: var(--space-sm) var(--space-md);
+    border-left: 3px solid var(--color-green);
+    background: var(--color-sage);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .toc__heading {
+    margin-bottom: var(--space-2xs);
+    color: var(--color-emerald);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .toc__list {
+    display: grid;
+    gap: var(--space-3xs);
+    padding-left: 1.25em;
+  }
+
+  .toc__list a {
+    display: inline-block;
+    padding-block: var(--space-3xs);
+    color: var(--color-heading);
+    font-weight: 500;
+  }
+
+  /* Section headings and references clear the sticky header when jumped to */
+  .prose :global(h2[id]),
+  .references li {
+    scroll-margin-top: 6rem;
+  }
+
+  /* In-text citations that link to the References list */
+  .prose :global(a.cite) {
+    color: inherit;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--color-emerald);
+  }
+
+  .prose :global(a.cite:hover) {
+    color: var(--color-link);
+  }
+
+  /* A reference jumped to from the text is briefly highlighted */
+  .references li:target {
+    background: var(--color-sage);
+    border-radius: var(--radius-sm);
   }
 
   .signoff {
@@ -262,6 +412,7 @@ const isoDate = date.toISOString().slice(0, 10);
 
   .more li {
     max-width: none;
+    display: grid;
   }
 
   @media (min-width: 48rem) {

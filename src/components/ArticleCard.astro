@@ -1,28 +1,36 @@
 ---
-import { articleUrl, formatDate, titleTransition, type Article } from '../lib/articles';
+import { articleUrl, formatDate, isExternal, teamName, titleTransition, type Article } from '../lib/articles';
 
 interface Props {
   article: Article;
   /** "feature" is the large dark card used for the newest article. */
   variant?: 'feature' | 'row';
   headingLevel?: 'h2' | 'h3';
+  /** Show the description on a row card too (two lines at most), e.g. on the all-articles grid. */
+  showDescription?: boolean;
 }
 
-const { article, variant = 'row', headingLevel: Heading = 'h3' } = Astro.props;
+const { article, variant = 'row', headingLevel: Heading = 'h3', showDescription = false } = Astro.props;
 const { title, description, date, author, readingTime } = article.data;
+// Our own articles show "By The Lockstep Team" (the writer's name is at the end of the article).
+// Summaries of external articles are tinted and labelled, and credit the original's author.
+const external = isExternal(article);
 ---
 
-<article class:list={['article-card', `article-card--${variant}`, 'lift']}>
+<article class:list={['article-card', `article-card--${variant}`, external && 'article-card--external', 'lift']}>
   <div class="article-card__body">
-    <p class="article-card__meta meta-list">
-      <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>
-      <span>{readingTime}</span>
-    </p>
+    <div class="article-card__top">
+      {external && <p class="article-card__tag">Summary</p>}
+      <p class="article-card__meta meta-list">
+        <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>
+        <span>{readingTime}</span>
+      </p>
+    </div>
     <Heading class="article-card__title" style={`view-transition-name: ${titleTransition(article)}`}>
       <a href={articleUrl(article)}>{title}</a>
     </Heading>
-    {variant === 'feature' && <p class="article-card__desc">{description}</p>}
-    <p class="article-card__author">{author}</p>
+    {(variant === 'feature' || showDescription) && <p class="article-card__desc">{description}</p>}
+    <p class="article-card__author">{external ? `Original by ${author}` : `By ${teamName}`}</p>
   </div>
   <span class="article-card__go arrow" aria-hidden="true">→</span>
 </article>
@@ -83,11 +91,32 @@ const { title, description, date, author, readingTime } = article.data;
     font-size: 1.25rem;
   }
 
-  /* Row: light card on the page background */
+  /* Row: light card on the page background. It fills its list item, so cards side by side
+     are the same height, with the author line and arrow lined up along the bottom. */
   .article-card--row {
+    height: 100%;
     padding: var(--space-md);
     background: var(--color-white);
     border: 1px solid var(--color-border);
+  }
+
+  .article-card--row .article-card__body {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+  }
+
+  .article-card--row .article-card__desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-size: var(--text-sm);
+  }
+
+  .article-card--row .article-card__author {
+    margin-top: auto;
+    padding-top: var(--space-2xs);
   }
 
   .article-card--row .article-card__meta {
@@ -96,11 +125,59 @@ const { title, description, date, author, readingTime } = article.data;
 
   .article-card--row .article-card__title {
     font-size: var(--text-xl);
+    text-wrap: balance;
   }
 
   .article-card--row .article-card__go {
     background: var(--color-sage);
     color: var(--color-primary);
+  }
+
+  /* Summaries of external articles: Muted Emerald with cream text and a "Summary" tag, so they
+     read as different from the team's own (white) articles at a glance */
+  .article-card--row.article-card--external {
+    background: var(--color-emerald);
+    border-color: var(--color-emerald);
+    color: var(--color-on-emerald-muted);
+  }
+
+  .article-card--row.article-card--external :is(.article-card__meta, .article-card__tag) {
+    color: var(--color-on-emerald-muted);
+  }
+
+  .article-card--row.article-card--external .article-card__title {
+    color: var(--color-cream);
+  }
+
+  .article-card--row.article-card--external .article-card__go {
+    background: var(--color-cream);
+    color: var(--color-green);
+  }
+
+  /* "Summary" tag and date share a line, wrapping on narrow cards */
+  .article-card__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3xs) var(--space-xs);
+  }
+
+  .article-card__tag {
+    display: inline-block;
+    padding: 0.15em 0.7em;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-pill);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .article-card--row .article-card__tag {
+    color: var(--color-emerald);
+  }
+
+  .article-card--feature .article-card__tag {
+    color: var(--color-cream);
   }
 
   /* Feature: dark green, larger type */
@@ -119,7 +196,7 @@ const { title, description, date, author, readingTime } = article.data;
     align-self: stretch;
   }
 
-  .article-card--feature .article-card__meta {
+  .article-card--feature .article-card__top {
     margin-bottom: auto;
     padding-bottom: var(--space-md);
   }

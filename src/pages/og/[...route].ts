@@ -1,7 +1,7 @@
 // Social sharing images (1200×630 PNG), generated at build time.
 // /og/default.png is the site-wide image; each article gets /og/articles/<slug>.png.
 import { OGImageRoute } from 'astro-og-canvas';
-import { getArticles } from '../../lib/articles';
+import { getArticles, isExternal, teamName } from '../../lib/articles';
 import { site } from '../../data/site';
 import { tagline } from '../../data/product';
 
@@ -12,7 +12,14 @@ type OGPage = { title: string; description: string };
 const pages: Record<string, OGPage> = {
   default: { title: tagline.headline, description: tagline.summary },
   ...Object.fromEntries(
-    articles.map((a) => [`articles/${a.id}`, { title: a.data.title, description: `${a.data.author}  /  ${site.name}` }]),
+    articles.map((a) => [
+      `articles/${a.id}`,
+      {
+        title: a.data.title,
+        // Matches the cards: our own articles are by the team; summaries credit the original's author
+        description: isExternal(a) ? `Summary  /  Original by ${a.data.author}` : `By ${teamName}  /  ${site.name}`,
+      },
+    ]),
   ),
 };
 
