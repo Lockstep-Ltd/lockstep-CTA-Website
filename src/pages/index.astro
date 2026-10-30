@@ -4,7 +4,6 @@ import LockMark from '../components/LockMark.astro';
 import Staircase from '../components/Staircase.astro';
 import SwapDeck from '../components/SwapDeck.astro';
 import ArticleCard from '../components/ArticleCard.astro';
-import PartnerIcon from '../components/PartnerIcon.astro';
 import { getArticles } from '../lib/articles';
 import { about, commitments, heroNote, status, steps, tagline } from '../data/product';
 import { site } from '../data/site';
@@ -156,11 +155,6 @@ const [latest, ...recent] = await getArticles();
     <div class="container">
       <div class="cta-panel section--dark partner reveal">
         <div class="stack-lg">
-          <div class="partner__icons">
-            <PartnerIcon name="university" />
-            <PartnerIcon name="charity" />
-            <PartnerIcon name="funder" />
-          </div>
           <h2 id="partner-heading">Working with universities, charities and funders</h2>
           <p class="lead">
             If your organisation supports people affected by gambling, or you'd like to help
@@ -581,23 +575,13 @@ const [latest, ...recent] = await getArticles();
   .partner {
     display: grid;
     gap: var(--space-lg);
-    align-items: end;
+    align-items: center;
   }
 
   .partner h2 {
     font-size: var(--text-3xl);
     line-height: 1.08;
     letter-spacing: -0.015em;
-  }
-
-  .partner__icons {
-    display: flex;
-    gap: var(--space-md);
-  }
-
-  .partner__icons :global(.partner-icon) {
-    width: 2.5rem;
-    height: 2.5rem;
   }
 
   @media (min-width: 48rem) {
