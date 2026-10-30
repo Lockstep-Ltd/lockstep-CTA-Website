@@ -29,6 +29,9 @@
   --color-focus: var(--color-green);
   /* Tinted surfaces mixed from the brand colours (no new hues) */
   --color-sage: color-mix(in srgb, var(--color-green) 7%, var(--color-cream));
+  /* Secondary text on Muted Emerald surfaces (summaries of external articles): 6.08:1.
+     Cream on emerald is 7.03:1. */
+  --color-on-emerald-muted: color-mix(in srgb, var(--color-cream) 90%, var(--color-emerald));
   --color-on-dark-muted: color-mix(in srgb, var(--color-cream) 78%, var(--color-green));
 
   /* Typography: Lockstep's brand fonts, as used on the original site.

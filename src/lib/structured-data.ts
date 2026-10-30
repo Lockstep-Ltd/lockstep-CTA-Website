@@ -95,7 +95,7 @@ export function pageGraph(nodes: Record<string, unknown>[] = []) {
 
 /** An article, with breadcrumbs (Home › Articles › title). */
 export function articleNodes(article: Article): Record<string, unknown>[] {
-  const { title, description, date, updated, author, authorRole } = article.data;
+  const { title, description, date, updated, author, authorRole, watchUrl } = article.data;
   const url = abs(`/articles/${article.id}/`);
   return [
     {
@@ -106,10 +106,15 @@ export function articleNodes(article: Article): Record<string, unknown>[] {
       datePublished: date.toISOString().slice(0, 10),
       ...(updated && { dateModified: updated.toISOString().slice(0, 10) }),
       // The founder's articles point to the founder described above (with a link to the About page)
-      author:
-        author === site.founder.name
+      // A summary of an external article is written by Lockstep and based on the original
+      author: watchUrl
+        ? { '@id': orgId }
+        : author === site.founder.name
           ? { '@id': founderId }
           : { '@type': 'Person', name: author, ...(authorRole && { jobTitle: authorRole }) },
+      ...(watchUrl && {
+        isBasedOn: { '@type': 'CreativeWork', url: watchUrl, author: { '@type': 'Organization', name: author } },
+      }),
       publisher: { '@id': orgId },
       isPartOf: { '@id': websiteId },
       mainEntityOfPage: url,

@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import { formatDate, getArticles, titleTransition, type Article } from '../../lib/articles';
+import { formatDate, getArticles, isExternal, teamName, titleTransition, type Article } from '../../lib/articles';
 import { articleNodes } from '../../lib/structured-data';
 
 export async function getStaticPaths() {
@@ -22,6 +22,10 @@ const { article, more } = Astro.props;
 const { title, description, date, updated, author, authorRole, readingTime, watchUrl, references } = article.data;
 const { Content } = await render(article);
 const isoDate = date.toISOString().slice(0, 10);
+// External articles: this page is our short summary, so it says so clearly and links to the original
+const external = isExternal(article);
+const credit = authorRole ? `${authorRole}, ${author}` : author;
+const originalSite = watchUrl && new URL(watchUrl).hostname.replace(/^www\./, '');
 ---
 
 <BaseLayout
@@ -44,17 +48,24 @@ const isoDate = date.toISOString().slice(0, 10);
         <a class="text-link back enter" href="/articles/">
           <span class="arrow" aria-hidden="true">←</span> All articles
         </a>
+        {external && <p class="kicker summary-kicker enter">Summary</p>}
         <h1 class="article__title" style={`view-transition-name: ${titleTransition(article)}`}>{title}</h1>
         <p class="article__dek enter" style="--i: 1">{description}</p>
         <p class="article__meta meta-list enter" style="--i: 2">
-          <span>{author}</span>
+          <span>{external ? `Summary by ${teamName}` : `By ${teamName}`}</span>
           <time datetime={isoDate}>{formatDate(date)}</time>
-          <span>{readingTime}</span>
+          <span>{external ? `Full article: ${readingTime}` : readingTime}</span>
         </p>
-        {watchUrl && (
-          <p class="enter" style="--i: 3">
-            <a class="button" href={watchUrl}>View the original</a>
-          </p>
+        {external && (
+          <div class="original enter" style="--i: 3">
+            <p>
+              This is a short summary by the Lockstep team. The full article, by {credit}, is
+              published on {originalSite}.
+            </p>
+            <a class="button button--light" href={watchUrl}>
+              Read the full article <span class="arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
         )}
       </div>
     </header>
@@ -64,10 +75,20 @@ const isoDate = date.toISOString().slice(0, 10);
         <Content />
       </div>
 
-      <footer class="signoff">
-        <p class="signoff__name">{author}</p>
-        {authorRole && <p>{authorRole}</p>}
-      </footer>
+      {external ? (
+        <aside class="original original--end" aria-labelledby="original-heading">
+          <h2 id="original-heading" class="original__heading">Read the full article</h2>
+          <p>“{title}”, by {credit}, on {originalSite}.</p>
+          <a class="button button--light" href={watchUrl}>
+            Read the full article <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </aside>
+      ) : (
+        <footer class="signoff">
+          <p class="signoff__name">{author}</p>
+          {authorRole && <p>{authorRole}</p>}
+        </footer>
+      )}
 
       {references.length > 0 && (
         <details class="references" id="references">
@@ -201,6 +222,44 @@ const isoDate = date.toISOString().slice(0, 10);
     font-size: 1.25em;
   }
 
+  /* Summaries: credit box with the link to the full article, at the top and the end */
+  /* Same pill as the "Summary" tag on article cards */
+  .summary-kicker {
+    width: fit-content;
+    padding: 0.15em 0.7em;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-pill);
+  }
+
+  .summary-kicker + .article__title {
+    margin-top: var(--space-xs);
+  }
+
+  .original {
+    display: grid;
+    gap: var(--space-sm);
+    justify-items: start;
+    max-width: var(--measure);
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--color-emerald);
+    color: var(--color-on-emerald-muted);
+  }
+
+  .original :focus-visible {
+    outline-color: var(--color-cream);
+  }
+
+  .original--end {
+    max-width: 40rem;
+    margin: var(--space-md) auto var(--space-2xl);
+  }
+
+  .original__heading {
+    color: var(--color-cream);
+    font-size: var(--text-xl);
+  }
+
   .signoff {
     max-width: 40rem;
     margin: 0 auto var(--space-2xl);
@@ -262,6 +321,7 @@ const isoDate = date.toISOString().slice(0, 10);
 
   .more li {
     max-width: none;
+    display: grid;
   }
 
   @media (min-width: 48rem) {
